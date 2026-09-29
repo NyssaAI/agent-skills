@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plugin Builder"
+  short_description: "Build and organize plugins across agent harnesses"
+  default_prompt: "Use $plugin-builder to build a plugin with shared skills and packaging for my selected agent harnesses."

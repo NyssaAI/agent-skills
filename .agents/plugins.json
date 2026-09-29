@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "skills": [
     "./skills/para-vault",
-    "./skills/file-management"
+    "./skills/file-management",
+    "./skills/plugin-builder"
   ]
 }

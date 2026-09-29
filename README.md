@@ -49,6 +49,7 @@ Point your agent runtime or extra skills directory to `./skills/`.
 | :--- | :--- | :--- |
 | [**`para-vault`**](skills/para-vault/) | Apply PARA placement and vault conventions for layout, metadata, indexes, and archiving. | AGY, Claude, Codex, OpenClaw, Hermes |
 | [**`file-management`**](skills/file-management/) | Manage files and folders generally, including time-bound naming, `.temp/` intermediate work, and safe operations. | AGY, Claude, Codex, OpenClaw, Hermes |
+| [**`plugin-builder`**](skills/plugin-builder/) | Build and organize plugins with shared skills, host adapters, and verified packaging. | Defaults to AGY, Codex, Claude Code, Claude Cowork, Hermes, OpenClaw; Muse provisional |
 
 ---
 
@@ -77,11 +78,15 @@ Point your agent runtime or extra skills directory to `./skills/`.
 │   │       ├── navigation.md
 │   │       ├── frontmatter-schemas.md
 │   │       └── file-workflows.md
-│   └── file-management/               # File conventions and operations
+│   ├── file-management/               # File conventions and operations
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── references/
+│   │       └── safe-operations.md
+│   └── plugin-builder/                # Plugin packaging across harnesses
 │       ├── SKILL.md
 │       ├── agents/openai.yaml
 │       └── references/
-│           └── safe-operations.md
 ├── LICENSE                            # MIT License
 └── README.md
 ```

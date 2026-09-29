@@ -13,3 +13,16 @@ Before retrying a partially completed create, copy, move, or archive, inspect th
 If the destination belongs to the same operation, reuse verified completed work and finish only the missing steps. Verify destination content and references before removing a remaining source. If the source is already gone, finish missing references or metadata without recreating it. Do not reconstruct lost evidence by guessing.
 
 If copies diverged beyond the intended changes or identity is uncertain, preserve both and resolve the difference before overwriting, merging, or removing either. Report unresolved recovery work instead of claiming completion.
+
+## Moves, revisions, and archives
+
+Use the destination supplied by the user or the existing organization. Do not
+create a new top-level structure merely to complete a move. When moving or
+renaming, verify destination content and repair affected links or references
+before removing the working source. Update existing source and destination
+folder indexes or registers to reflect the move, preserving useful
+cross-references. Keep recoverable history for substantive revisions.
+
+Archive in the existing archive location when the item's lifecycle or the
+user's instruction calls for it. Preserve a folder's internal structure and
+links. Delete retained content only when explicitly authorized.

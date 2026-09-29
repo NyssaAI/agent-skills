@@ -1,3 +1,6 @@
 # Claude Code Instructions
 
-Refer to [AGENTS.md](./AGENTS.md) for full cross-agent instructions, repository conventions, and skill authoring standards.
+@AGENTS.md
+
+Keep shared repository instructions in AGENTS.md. Add Claude-specific guidance
+here only when the harness requires it.

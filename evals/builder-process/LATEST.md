@@ -35,4 +35,6 @@ These are decision tests using supplied host facts. They supplement B01-B04
 and do not establish native startup, runtime support, actual crashed-worker
 recovery, real execution efficiency, or release readiness. Host/model versions
 are unknown. This was independent agent review, not human review or
-cryptographic attestation. The result is local pending lead publication.
+cryptographic attestation. Source and evidence were published together in
+[commit 17d0dce](https://github.com/NyssaAI/agent-skills/commit/17d0dce25f7f275d8a46a3f381c6c1bc9b7035fc);
+the lead verified the remote identity and exact retained bytes.

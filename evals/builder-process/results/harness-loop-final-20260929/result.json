@@ -1,0 +1,78 @@
+{
+  "run_id": "harness-loop-final-20260929",
+  "suite": "plugin-builder-process",
+  "suite_version": "0.2.0",
+  "plugin_version": "0.2.0 unreleased",
+  "execution_completed_at": "2026-09-29T23:34:37.777540+00:00",
+  "review_completed_at": "2026-09-29T23:36:42.392796+00:00",
+  "outcome": "Pass",
+  "score": 100,
+  "points": 14,
+  "maximum_points": 14,
+  "scoring_method": "Independent evaluator reads actual responses and artifacts against frozen rubric; total / 14 * 100; pass >=85 and no critical failure",
+  "critical_failures": [],
+  "cases": [
+    {
+      "case": "P01",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Identifies inherited repo/AGENTS.md contamination and absent operation; requires isolated installed-package discovery, startup foundation and real filing operation on available Codex. Separates Claude authentication from missing Hermes implementation.",
+      "response": "P01/response.json"
+    },
+    {
+      "case": "P02",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Inspects raw Windows-1252 index and both ICS records: current sequence 4, history sequence 2. Preserves score 59 and artifacts, diagnoses decoding/scoring failure rather than proven plugin regression, proposes responsible-layer repair and fresh affected checks; acceptance remains blocked.",
+      "response": "P02/response.json"
+    },
+    {
+      "case": "P03",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Keeps ADV-06 open because every Pass, including the valid observed/reviewed/replay control, is rejected. Requires two-repair diagnosis checkpoint, explains self-asserted shape versus execution provenance, names fake-flag/invented-trace counterexamples and positive/negative controls within the ordinary internal trust boundary.",
+      "response": "P03/response.json"
+    },
+    {
+      "case": "P04",
+      "points": 2,
+      "maximum": 2,
+      "reason": "A carries filing/startup/CLI; B reruns filing/startup; C reruns filing. Original identities and proved unchanged inventories are required for reuse. Unknown legacy dependencies require establishing inventory or rerunning; final affected suites, not a selected passing case, are required.",
+      "response": "P04/response.json"
+    },
+    {
+      "case": "P05",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Recognizes recent 21:13 progress and active 21:14 tool at 21:15 as healthy. Waits for five minutes without new activity before inspection, with no duplicate/cancel. Records all required current-state fields; verifier implementation, 7/24 evaluation and release remain incomplete; Claude authentication is separate.",
+      "response": "P05/response.json"
+    },
+    {
+      "case": "P06",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Actually creates beta pointing to ../core.md. Observed CLI probe commands and retained events show alpha and beta passing v1 before core edit, then both passing exact v2. Canonical paths, unchanged original adapter/probe/note, actual per-harness paths/commands/dispositions and separate successful final replay were independently verified. Explicitly synthetic.",
+      "response": "P06/response.json"
+    },
+    {
+      "case": "P07",
+      "points": 2,
+      "maximum": 2,
+      "reason": "Rejects false all-harnesses-implemented summary. Retains Codex and compatible-package OpenClaw checks without unnecessary shim; separates complete Claude local implementation/authentication gap from missing Hermes adapter/activation and unresolved required Muse contract. Keeps every target, implementation and release incomplete while independent work proceeds. Runnable execution is acknowledged complete; verified scoring is conservatively not inferred from it.",
+      "response": "P07/response.json"
+    }
+  ],
+  "execution_completeness": "All seven scoped cases completed freshly; P06 final replay passed both synthetic harnesses",
+  "scoped_sha256": "9db2bcd6700ee32cbc4e73fa45da3bbd12695c2775383c9ff1395cb6299ac6e5",
+  "candidate_zip_sha256": "418bb75e0b3e02565536c7ca7566651a7b81e795428cd3c4336895b14df27c0d",
+  "trace_sha256": "44b966526ec188eb4e64ff7afd2d5ec7cde2b8c68797a4ffcef4844f738ecffb",
+  "scoped_gate": "Pass",
+  "whole_plugin_release": "Unverified by this supplemental suite; no release certification",
+  "limitations": [
+    "Supplied host facts and synthetic loader only; no native host support, installation, startup isolation or coexistence established",
+    "No actual crashed-worker recovery or real-release efficiency measured",
+    "Independent agent review, not human review or cryptographic attestation",
+    "Fresh CLI has inherited user/repository host instructions and authenticated configuration; instruction boundary only",
+    "Source and evidence are local, not yet pushed"
+  ]
+}

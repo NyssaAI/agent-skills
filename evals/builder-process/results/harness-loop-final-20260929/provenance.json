@@ -1,0 +1,46 @@
+{
+  "host": "Codex CLI",
+  "host_version": "0.155.1",
+  "command": [
+    "powershell",
+    "-NoProfile",
+    "-Command",
+    "& 'C:/Users/jmayn/AppData/Roaming/npm/codex.ps1' exec --json --sandbox danger-full-access --color never -"
+  ],
+  "cwd": "D:/repos/NyssaAI/skills/.temp/plugin-review/harness-loop-final-20260929/candidate",
+  "started_at": "2026-09-29T23:31:50.067569+00:00",
+  "fresh_session": true,
+  "prior_collaboration_spawn": {
+    "outcome": "Rejected",
+    "diagnostic": "agent thread limit reached",
+    "candidate_started": false
+  },
+  "isolation": "Instruction boundary; native ancestor/user instructions and existing authenticated config remain. No OS isolation claim.",
+  "completed_at": "2026-09-29T23:34:37.777540+00:00",
+  "exit_code": 0,
+  "trace_sha256": "44b966526ec188eb4e64ff7afd2d5ec7cde2b8c68797a4ffcef4844f738ecffb",
+  "os": "Windows-11-10.0.26200-SP0",
+  "architecture": "AMD64",
+  "model": "unknown",
+  "model_version": "unknown",
+  "model_configuration": "Existing authenticated user configuration; no model or reasoning override; effective values unknown",
+  "reviewer_task_id": "/root/harness_loop_eval",
+  "candidate_task_id": "01a0ef82-a15f-7ce3-be05-605bfceafe8d",
+  "candidate_fork_turns": "fresh CLI session; no resume/fork",
+  "candidate_explicit_request": "candidate-request.txt",
+  "trace": "execution-events.jsonl",
+  "independence": "Separate fresh candidate from evaluator; candidate received prepared path and verbatim README execution request only. Rubric and prior results withheld.",
+  "observed_activity": [
+    "item_2 and item_4: read frozen skill and references",
+    "item_8: alpha v1 probe exit 0",
+    "item_9: beta adapter created",
+    "item_10: beta v1 probe exit 0",
+    "item_12: core v2 edit",
+    "item_13 and item_14: alpha/beta v2 probes exit 0",
+    "item_16 and item_17: seven responses and loop record written",
+    "item_19: candidate JSON/core/event checks exit 0",
+    "turn.completed; CLI process exit 0"
+  ],
+  "trace_limits": "Some command aggregated_output fields are empty despite successful exit; full retained artifacts and chronological probe events support those outcomes. Trace exposes neither effective model nor all inherited instruction text.",
+  "trust_boundary": "Observed CLI task and command events plus independent artifact inspection and disposable replay. Ordinary internal evaluation, not malicious-maintainer attestation; no OS/native context isolation claimed."
+}

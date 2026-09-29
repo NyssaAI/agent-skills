@@ -1,0 +1,13 @@
+{
+  "case": "P04",
+  "observed_facts": ["Old-candidate filing, startup, CLI, and legacy suites passed.", "The filing, startup, and CLI dependency inventories are declared complete and other input bytes and host configuration are unchanged; legacy dependencies are unknown."],
+  "diagnosis": "Reuse depends on proved identical suite inputs, not the prior pass alone. Legacy cannot be carried forward from an unknown dependency inventory.",
+  "per_change": {
+    "A": {"changed": ["docs/review-history.md"], "rerun": ["legacy unless its dependencies are established and shown unchanged"], "carry_forward": ["filing", "startup", "cli"], "reason": "Review history is absent from each complete declared inventory."},
+    "B": {"changed": ["core.md"], "rerun": ["filing", "startup", "legacy"], "carry_forward": ["cli"], "reason": "The shared core is a declared filing and startup dependency; CLI inventory excludes it."},
+    "C": {"changed": ["filing-scorer"], "rerun": ["filing", "legacy"], "carry_forward": ["startup", "cli"], "reason": "The scorer is a declared filing dependency; legacy impact is unknown."}
+  },
+  "next_actions": ["For each independent change, compare frozen dependency inventories and bytes with the old run, execute affected suites on the changed candidate, and preserve all prior results.", "Label reused scores carried-forward with original run identity and proved matching inputs; never label them newly executed.", "For legacy, establish a complete inventory and compare it, or rerun it. If changes are combined, use the union of affected suites and recheck all dependencies."],
+  "acceptance_checks": ["Each current row links a fresh verified run or an explicitly carried-forward original result with identical declared inputs.", "Legacy has fresh evidence unless its previously unknown dependencies are proved unchanged.", "Release acceptance is evaluated separately after the current matrix is complete."],
+  "status": {"evaluation": "planned; old results are historical until dependency checks or reruns complete", "release": "not established"}
+}

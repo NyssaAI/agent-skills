@@ -167,13 +167,20 @@ the specific blocker and finish independent implementation and static checks.
    implementation when the plugin owns it. Add a small executable shim for
    operations that need a process-call surface; use the same operation contract
    for native CLI and MCP adapters.
-4. Implement host adapters for startup loading, command syntax, tool registration,
-   MCP connection, event translation, and authentication as needed. Each adapter
-   calls the shared implementation with explicit project scope when applicable
-   and uses the shared settings resolver; a manifest alone implements no behavior.
-5. Assemble a host-specific package only when the host cannot consume the shared
-   source package directly. Generate it from the same core plus its adapter;
-   never hand-edit generated copies or create empty adapters.
+4. For **each required harness**, establish its contract and record actual
+   deliverable paths, activation steps, and implementation/runtime checks. Run
+   the [per-harness loop](references/improvement-loop.md#iterate-per-harness):
+   implement the smallest adapter, assemble, verify in isolation, diagnose and
+   repair failures, then record a disposition before advancing. Each adapter
+   calls the same core with explicit settings scope. Missing implementation or
+   an unresolved contract remains open even when the host is unavailable;
+   neither documentation nor a manifest substitutes for working integration.
+5. Generate host-specific packages only where the shared source cannot be used
+   directly. After the individual loops, verify installation coexistence and
+   shared-content consistency. Shared-core or loader changes reopen affected
+   earlier harness checks. Never hand-edit generated copies or create empty
+   adapters. All required implementation checks must pass before declaring the
+   update implemented; runtime-only external blockers remain release blockers.
 6. If adapting an existing plugin, inventory its components before moving them.
    Preserve behavior, public names, and user settings; update consumers of
    moved paths, and explain omissions or replacements.
@@ -214,11 +221,13 @@ the specific blocker and finish independent implementation and static checks.
 
 ## Analyze and improve an existing plugin
 
-Follow the [issue-by-issue improvement loop](references/improvement-loop.md)
+Follow the [per-harness improvement loop](references/improvement-loop.md)
 when asked to evaluate or repair a plugin. Inspect and record the full baseline,
 load the maintained [adversary agent](agents/adversary.md) into an independent
 subagent for the baseline review, then resolve one
-finding at a time with a focused acceptance check. Before advancing, verify it,
+finding at a time within its affected harness loop. Verify that harness before
+advancing; shared changes reopen affected earlier harness checks. For a finding,
+verify it,
 record a specific external blocker, or reject it with evidence; do not accumulate
 partially repaired findings. The subagent deposits its
 findings in a dated review receipt; reconcile them into the durable task list.

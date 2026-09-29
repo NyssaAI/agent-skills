@@ -1,0 +1,24 @@
+{
+  "case": "P02",
+  "observed_facts": [
+    "The retained score is 59 and lists current link regressed as a critical failure.",
+    "The check evidence is a UnicodeDecodeError while decoding byte 0x97 as UTF-8; calendar-index.md actually contains that byte and decodes as Windows-1252.",
+    "The index points Current to current.ics and Historical to old.ics. Both have UID planning; current.ics has SEQUENCE 4 and old.ics has SEQUENCE 2."
+  ],
+  "uncertainty": [
+    "The supplied checker never successfully graded the index, so the asserted link regression is not established by that check.",
+    "No plugin execution trace or scorer implementation is supplied; whether plugin behavior also has a defect remains unknown."
+  ],
+  "diagnosis": "The immediate failure is in evidence decoding or scoring. The raw calendar links appear correctly ordered, but an encoding failure prevents a valid behavioral verdict.",
+  "next_actions": [
+    "Preserve the original score and workspace artifacts; inspect the scorer's decoding contract and make a focused repair to read the declared Windows-1252 fixture or otherwise normalize input at the responsible boundary.",
+    "Re-run the focused scorer against the unchanged artifact, including a negative fixture with swapped current and historical links, then run the affected evaluation and retain its new result separately.",
+    "If valid decoding reveals a real plugin regression, repair that behavior in its harness loop and repeat the affected checks."
+  ],
+  "acceptance_checks": [
+    "The scorer reads the supplied byte 0x97 without an exception and distinguishes SEQUENCE 4 current from SEQUENCE 2 historical.",
+    "The unchanged index passes the current-link check and a swapped-link counterexample fails.",
+    "A new completed, verified score exists for the repaired scorer; the original 59 remains historical evidence."
+  ],
+  "status": {"finding": "unverified behavioral regression; verified encoding failure", "evaluation": "blocked by scorer error", "release": "not ready"}
+}

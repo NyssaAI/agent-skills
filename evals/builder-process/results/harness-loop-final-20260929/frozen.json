@@ -1,0 +1,27 @@
+{
+  "suite": "plugin-builder-process",
+  "suite_version": "0.2.0",
+  "started_at": "2026-09-29T23:28:01.942871+00:00",
+  "inputs": {
+    "evals/builder-process/cases.json": "3315f77991f910942eab6adb1abbd6c4f41ab5fef0163dfd794d7c67f4c40d3d",
+    "evals/builder-process/README.md": "b26d664b26ff834eec3d18cce870ab48905ada235acd44a6e51f1ec02ef7dce8",
+    "evals/builder-process/rubric.md": "5a3feb18196ea13355be9de7ba21cbdc9a2949f2e13b5839b3231749e1a65e67",
+    "skills/plugin-builder/agents/adversary.md": "7af5a4ab7ab93c17c915936d6bc633a7007e40dbe017a3970c24e43f50b219f1",
+    "skills/plugin-builder/agents/eval.md": "772c9d423879294b3173541db7cfa261528bb7fd3430eaf1a43a99dc5d300bdd",
+    "skills/plugin-builder/agents/openai.yaml": "2140c91036cab6472575b6e9bb378232ae58b77239bf39e5e9d191bb1cd57c34",
+    "skills/plugin-builder/references/antigravity.md": "92871289c89562f6c210d6380f394ddf8c5387a7849669c075fe140905fb10e8",
+    "skills/plugin-builder/references/claude.md": "f8340b9ad5275c6ebf672e1876fff2dded38a79b9ba4405a4e54e604b9b38376",
+    "skills/plugin-builder/references/codex.md": "21ca853e863b390637643f893643fec004b6781357a6e04694d18f07d2655862",
+    "skills/plugin-builder/references/executable-contract.md": "1e129038031ed7fc5ff72aba0a2d79caa6e8b024b809be109d5ecb528e24e34b",
+    "skills/plugin-builder/references/hermes.md": "94e830956383e476b3c29a0132fb95cffe349fbfb40e9e1446b9750d7ff549a9",
+    "skills/plugin-builder/references/improvement-loop.md": "d1b4b05749e5021db1b3d88e22545fab0d3b16a9b9a4edf661b51e45fb3668ea",
+    "skills/plugin-builder/references/muse.md": "a677311c5b40c1b116df2afc2ca3a2a207ef88ffad3d8b144e2ce348e8ced49e",
+    "skills/plugin-builder/references/openclaw.md": "9a0e8e6ad8e9a4abc6e76cad5a92ac5353a0e74218db831702cfe7b0e8a171fb",
+    "skills/plugin-builder/references/package-organization.md": "0d1cfb6ba6636b31688639f7ef37fe6c9949f48dbb9cf3330e9e99154adb8658",
+    "skills/plugin-builder/references/runtime-capabilities.md": "fbb82e1efeb25db93bb3f9236decac0b3310503e034814c482de7e3254e12b70",
+    "skills/plugin-builder/references/validation.md": "306840ea5887d9f3a771ea93a81cf90e6d50891501e1aa99bee4d641042f7a8d",
+    "skills/plugin-builder/references/workspace-installation.md": "3e0e1309a8f57b0057c14cb4f43ee4450af9952b63955e0d58a02435338d420a",
+    "skills/plugin-builder/SKILL.md": "bbf68baa2943bd326eba5acd17d57eb3ce06806d58bcbbec8dc04ec683e434e8"
+  },
+  "scoped_sha256": "9db2bcd6700ee32cbc4e73fa45da3bbd12695c2775383c9ff1395cb6299ac6e5"
+}

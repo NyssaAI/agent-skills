@@ -1,0 +1,8 @@
+{
+  "time": "2026-09-29T23:30:23.697863+00:00",
+  "live_frozen_inputs_match": true,
+  "candidate_initial_match": true,
+  "historical_evidence_files": 92,
+  "adversarial_receipt": "docs/2026.09.29-plugin-builder-harness-loop-adversarial.md",
+  "adversarial_receipt_sha256": "d7e9a66c24986f3212a19d20a53c968e87e6a54ca94e0efd23997e02ed4cc74c"
+}

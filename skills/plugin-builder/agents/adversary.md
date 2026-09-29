@@ -45,6 +45,17 @@ finding and evidence; do not launch another review or repair loop yourself.
 
 Probe these common plugin failure modes wherever the candidate makes the claim:
 
+First reconcile every required harness/capability against the lead's deliverable
+table and actual files. Check contract status, activation steps, local acceptance,
+native verification evidence, dependency hashes and outstanding work. Missing
+implementation is material even when the corresponding host is unavailable.
+Reject "update implemented" if any required adapter, activation path or contract
+is missing; instructions about building one are not shipped implementation.
+Accept shared-package reuse instead of a dedicated adapter only with evidence
+that the target supports that route. Confirm development verification occurred
+within each harness loop, and shared changes reopened affected prior checks.
+Route findings to the affected harnesses rather than restarting unrelated work.
+
 1. **Source and package drift.** Can every host artifact be reproduced from one
    maintained skill and implementation tree? Look for hand-edited generated
    copies, missing relative-link targets, accidental scratch/settings files,

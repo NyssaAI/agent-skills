@@ -1,0 +1,13 @@
+{
+  "case": "P06",
+  "observed_facts": ["The supplied alpha adapter resolved the canonical v1 core and passed the synthetic probe.", "A beta adapter with the same relative core path was created and passed the v1 probe.", "After core.md changed to the exact requested v2 line with a real newline, both alpha and beta probes passed again.", "probe-events.jsonl retains four append-only Pass events in order: alpha v1, beta v1, alpha v2, beta v2.", "The supplied alpha adapter, host-probe.py, and notes/keep.txt were preserved."],
+  "diagnosis": "Both synthetic adapters load one canonical core. The shared-core edit made the first two probe results stale, so both harnesses required repeat checks.",
+  "deliverables": ["P06/workspace/core.md", "P06/workspace/adapters/beta.json", "P06/workspace/docs/loop.md", "P06/workspace/probe-events.jsonl"],
+  "per_harness": [
+    {"host": "alpha", "adapter": "P06/workspace/adapters/alpha.json", "contract": "core path resolves relative to adapter to core.md", "verification": "python host-probe.py alpha", "initial": "Pass", "final": "Pass", "final_core_sha256": "5efbe8548220ea844d7974b4f4783dcc774faf3e4d09c217c89585f8284db09a", "disposition": "synthetic local integration verified; native runtime unverified"},
+    {"host": "beta", "adapter": "P06/workspace/adapters/beta.json", "contract": "core path resolves relative to adapter to core.md", "verification": "python host-probe.py beta", "initial": "Pass", "final": "Pass", "final_core_sha256": "5efbe8548220ea844d7974b4f4783dcc774faf3e4d09c217c89585f8284db09a", "disposition": "synthetic local integration verified; native runtime unverified"}
+  ],
+  "acceptance_checks": ["Both adapters resolve to the same canonical core.md and report Pass on v1 before the edit.", "core.md bytes equal the requested v2 text plus newline.", "Both adapters report Pass and the same v2 core hash after the edit; prior events remain intact."],
+  "uncertainty": ["The supplied probe is synthetic; no real host discovery, activation, startup behavior, or independent agent evaluation was tested."],
+  "status": {"implementation": "complete for supplied synthetic contract", "evaluation": "both supplied local probes passed on final v2 core", "release": "native certification and release readiness not established"}
+}

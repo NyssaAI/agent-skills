@@ -1,4 +1,4 @@
-# Issue-by-issue improvement loop
+# Per-harness implementation and verification loop
 
 Use this loop for evaluating an existing plugin and, when repair is in scope,
 working through its findings. Honor a narrower user request or an established
@@ -153,7 +153,69 @@ that directory from package assembly and Git. Preserve completed failed eval
 exports under `evals/results/` and incomplete or aborted attempt receipts under
 `evals/attempts/` as required by the eval contract, not only in `.temp/`.
 
-## Repair one finding at a time
+## Iterate per harness
+
+After establishing the shared core and acceptance checks, work through each
+required harness with the loop below. Start with an available representative
+host so the early installed-package probe informs the other integrations.
+Keep one canonical implementation; this is an execution order, not permission
+to fork workflows or create a separate business implementation for each host.
+
+1. **Establish the contract.** Confirm the target's package, loader, activation,
+   and capability requirements. An unknown contract stays unresolved. A
+   provisional target such as Muse must have an explicit disposition; do not
+   invent its interface, imply support, or silently remove a required target.
+2. **Record deliverables.** Give each required capability its actual source and
+   assembled file paths, registration/activation command or host step, local
+   implementation acceptance check, and native runtime verification check.
+   Include discovery, foundation, routing, and applicable hooks, agents, CLI/MCP
+   connections and settings behavior. Reference shared files when no dedicated
+   adapter is necessary, with evidence that the host can consume them. A guide
+   describing an adapter is not the adapter; metadata alone is not activation.
+3. **Implement and assemble.** Build the smallest adapter to the shared core,
+   register its capabilities, and generate any required host-specific package.
+   Resolve this harness's findings using the repair loop below.
+4. **Verify before advancing.** Run local package/reference checks, then install
+   and activate in an isolated host when available. Confirm discovery, promised
+   startup foundation before routing, selected procedures, and real operations
+   for applicable capabilities. Check repeat installation and user-settings
+   preservation. Retain commands, observations, source/artifact identities and
+   dependencies, including honest failures; do not defer all host checks until
+   the final evaluator.
+5. **Diagnose and repeat on failure.** Classify the cause, repair the responsible
+   layer, regenerate artifacts, and repeat affected checks for this harness.
+   Keep the repeated-repair diagnosis checkpoint and stable finding IDs.
+6. **Record the disposition.** Keep implementation and runtime verification in
+   separate columns. Advance from a verified harness, or one whose complete
+   implementation passes local checks but whose runtime is externally blocked.
+   Record the exact external dependency and next check; it remains a release
+   blocker. Missing code, adapter, activation path, or contract is incomplete
+   implementation, even if that host is also unavailable. Keep it open while
+   doing independent work on other targets; do not count advancing as completion.
+
+The durable per-harness table must contain target/capability, contract status,
+actual deliverable paths, activation path, implementation status/evidence,
+runtime status/evidence, dependency hashes, and remaining action. Label an
+inapplicable capability with its reason instead of creating an empty adapter.
+Only a user-authorized scope change can remove a required target or capability.
+
+After the individual loops, verify cross-harness interactions: installing or
+updating one artifact preserves the others and their registrations/settings,
+and all adapters still use the canonical content. A shared-core, assembly,
+settings, or loader change reopens affected earlier harness verifications.
+Identify consumers from the dependency inventories; when impact is unknown,
+treat all possible consumers as affected. Reverify their changed behavior and
+record new evidence before marking them verified again. This is development
+verification; the independent final evaluator still owns the last quality gate.
+
+**Implementation completion gate:** every required harness/capability must have
+real deliverables and passing local implementation acceptance. Missing or
+unresolved implementation blocks "update implemented", even when all runnable
+behavioral evals pass. External runtime blockers may coexist with implementation
+completion, but never with a release-ready claim. Adversary and eval findings
+return to the affected harness loop; shared findings reopen all affected loops.
+
+## Repair one finding at a time within the loop
 
 1. Order findings by user impact and release risk, then dependencies. Address
    misleading claims, broken behavior, and required release gates before optional
@@ -233,7 +295,7 @@ Report three separate outcomes:
 
 | Outcome | Completion condition |
 | --- | --- |
-| Update implemented | Scoped implementation is finished and its local acceptance checks pass; no locally actionable material defect remains. |
+| Update implemented | Every required harness/capability has actual deliverables, an established activation path, and passing local implementation checks; no required implementation or contract is missing or unresolved. Runtime-only external blockers are reported separately. |
 | Evaluation complete for available environments | Every runnable required case executed and its outcome/evidence is retained; unavailable targets and exact next checks are recorded. This can include failing scores. |
 | Release ready | All required release checks pass and no material defect or required unverified target remains. |
 

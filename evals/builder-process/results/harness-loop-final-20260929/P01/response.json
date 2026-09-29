@@ -1,0 +1,24 @@
+{
+  "case": "P01",
+  "observed_facts": [
+    "Probe response says the foundation is present, but loaded_sources contains only repo/AGENTS.md while the purported installed package is cache/sample.",
+    "The probe ran under repo/.temp/probe and did not run an operation.",
+    "Codex is available and authenticated with an adapter; Claude Code has an adapter but lacks authentication; Hermes has neither a host nor an adapter."
+  ],
+  "uncertainty": [
+    "The loaded rule may have come from an ancestor repository instruction rather than the installed package; package activation and startup loading are unverified.",
+    "No discovery, filing operation, isolated host trace, or Hermes contract evidence is supplied."
+  ],
+  "diagnosis": "The first development probe is contaminated and incomplete. It cannot establish that the installed candidate supplies startup rules or performs filing. Hermes also has missing implementation, not merely an unavailable runtime.",
+  "next_actions": [
+    "Record baseline package, version, source paths, host contracts, adapter and authentication inventory, and acceptance checks before broad repairs.",
+    "Repeat the development probe in isolated authenticated Codex without inherited repository instructions or prior context; retain actual loaded package paths and host output, check discovery and startup foundation before selection, then run one real filing operation.",
+    "Record Claude Code native verification as blocked by authentication while continuing local adapter checks; establish and implement Hermes contract and adapter independently of host availability."
+  ],
+  "acceptance_checks": [
+    "An isolated Codex session shows the installed package discovered, its foundation loaded from the package before any router call, and a filing operation produces the expected artifact.",
+    "Claude Code local integration checks pass and its fresh-session native check remains explicitly pending authentication.",
+    "Hermes has real deliverables, activation path, and passing local checks before implementation completion is claimed."
+  ],
+  "status": {"implementation": "unverified; Hermes adapter missing", "evaluation": "initial probe invalid for installed behavior", "release": "not ready"}
+}

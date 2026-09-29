@@ -40,6 +40,17 @@ the final gate. Installed-host claims require isolation from ancestor/user
 instructions and previously loaded context, with actual loaded paths or host
 evidence retained. A contaminated probe remains unverified.
 
+Reconcile the required harness/capability matrix with actual delivered files,
+activation paths and the per-harness development-verification record. Missing
+adapter code, activation or an unresolved required contract blocks implementation
+completion, regardless of scores on other hosts. Keep this separate from complete
+implementation awaiting external runtime access. Do not silently waive a target.
+Check that shared changes reopened affected earlier harness checks and that
+installation coexistence was covered where applicable. Continue independent
+runnable cases while recording incomplete implementation; return failures to
+their affected harness loops. Development receipts do not replace this final
+independent evaluation or imply native runtime success.
+
 For a repair rerun, execute affected suites and check carried-forward evidence
 against declared dependencies and original run identities. Shared foundation,
 loading, or scoring changes require coverage of their consumers; unknown

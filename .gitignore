@@ -1,0 +1,7 @@
+# Prerequisites
+node_modules/
+__pycache__/
+.temp/
+*.log
+.DS_Store
+Thumbs.db

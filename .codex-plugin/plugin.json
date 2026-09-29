@@ -1,0 +1,36 @@
+{
+  "name": "agent-skills",
+  "version": "0.1.0",
+  "description": "Foundational skills and conventions for Jeremy and NyssaAI's AI agents.",
+  "author": {
+    "name": "NyssaAI"
+  },
+  "homepage": "https://github.com/NyssaAI/agent-skills",
+  "repository": "https://github.com/NyssaAI/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "nyssa",
+    "skills",
+    "agent",
+    "para-vault",
+    "workflows"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "NyssaAI Agent Skills",
+    "shortDescription": "Foundational skills and conventions for AI agents",
+    "longDescription": "Foundational skills and conventions for how Jeremy and NyssaAI's AI agents organize information, manage files, and carry out work.",
+    "developerName": "NyssaAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/NyssaAI/agent-skills",
+    "defaultPrompt": [
+      "Organize my PARA vault",
+      "File these notes into PARA"
+    ]
+  }
+}

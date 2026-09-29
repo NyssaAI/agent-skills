@@ -1,0 +1,3 @@
+interface:
+  display_name: "PARA Vault"
+  short_description: "Apply PARA placement and vault conventions"

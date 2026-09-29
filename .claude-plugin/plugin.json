@@ -1,0 +1,17 @@
+{
+  "name": "agent-skills",
+  "version": "0.1.0",
+  "description": "Foundational skills and conventions for Jeremy and NyssaAI's AI agents.",
+  "author": {
+    "name": "NyssaAI"
+  },
+  "repository": "https://github.com/NyssaAI/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "nyssa",
+    "agent",
+    "skills",
+    "workflows",
+    "tools"
+  ]
+}

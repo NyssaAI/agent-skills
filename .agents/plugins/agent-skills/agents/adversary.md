@@ -31,6 +31,18 @@ not resolve it; do not repeat an undirected broad review. Finish when the scoped
 checks yield actionable findings or a clean result. Unavailable runtime checks
 remain verification gaps and do not by themselves require another code repair.
 
+Read the evidence contract and acceptance scope before challenging a verifier.
+Require observed execution, retained artifacts, independent review, and applicable
+replay; do not infer resistance to a malicious authorized evaluator unless that
+threat is in scope. Check both known-valid and known-invalid evidence. Rejecting
+all passes is missing implementation, not a successful verifier repair. Check
+that an installed-package probe excludes inherited repository/user context.
+Inspect raw artifacts before attributing a failed assertion to plugin behavior;
+an unreadable artifact may indicate a runner or encoding fault instead.
+When the same finding survives two repairs, link its stable ID and require the
+lead's diagnosis checkpoint before another attempted fix. Return the scoped
+finding and evidence; do not launch another review or repair loop yourself.
+
 Probe these common plugin failure modes wherever the candidate makes the claim:
 
 1. **Source and package drift.** Can every host artifact be reproduced from one

@@ -1,0 +1,21 @@
+{
+  "evals/builder-process/cases.json": "8b467cd31a469130fa2b2960dad918f9253165421383cfc07d3c35b795df5b8d",
+  "evals/builder-process/README.md": "a70d67e874f911add428e6ef1c5cb4c4378abb9e00870faeffbddcd8b719c8e6",
+  "evals/builder-process/rubric.md": "116af7c71930a2e9e46fe292c47f634137c8be41fde4154574819f9dadc7d79c",
+  "skills/plugin-builder/agents/adversary.md": "766d8b2e2cfacdfa912c2527efaaf6860f93eeabfc921baa6cfcd2b586185b56",
+  "skills/plugin-builder/agents/eval.md": "8005c0a6d5acddf3aac9ff7c2e243c668f5648028636bb561f21d6c2a69060f7",
+  "skills/plugin-builder/agents/openai.yaml": "2140c91036cab6472575b6e9bb378232ae58b77239bf39e5e9d191bb1cd57c34",
+  "skills/plugin-builder/references/antigravity.md": "92871289c89562f6c210d6380f394ddf8c5387a7849669c075fe140905fb10e8",
+  "skills/plugin-builder/references/claude.md": "f8340b9ad5275c6ebf672e1876fff2dded38a79b9ba4405a4e54e604b9b38376",
+  "skills/plugin-builder/references/codex.md": "21ca853e863b390637643f893643fec004b6781357a6e04694d18f07d2655862",
+  "skills/plugin-builder/references/executable-contract.md": "1e129038031ed7fc5ff72aba0a2d79caa6e8b024b809be109d5ecb528e24e34b",
+  "skills/plugin-builder/references/hermes.md": "94e830956383e476b3c29a0132fb95cffe349fbfb40e9e1446b9750d7ff549a9",
+  "skills/plugin-builder/references/improvement-loop.md": "6c88a318063a2688bce2a0a83d8d5fa2ea7a0f03a51ce9f9111b87a660ee1085",
+  "skills/plugin-builder/references/muse.md": "a677311c5b40c1b116df2afc2ca3a2a207ef88ffad3d8b144e2ce348e8ced49e",
+  "skills/plugin-builder/references/openclaw.md": "9a0e8e6ad8e9a4abc6e76cad5a92ac5353a0e74218db831702cfe7b0e8a171fb",
+  "skills/plugin-builder/references/package-organization.md": "0d1cfb6ba6636b31688639f7ef37fe6c9949f48dbb9cf3330e9e99154adb8658",
+  "skills/plugin-builder/references/runtime-capabilities.md": "fbb82e1efeb25db93bb3f9236decac0b3310503e034814c482de7e3254e12b70",
+  "skills/plugin-builder/references/validation.md": "306840ea5887d9f3a771ea93a81cf90e6d50891501e1aa99bee4d641042f7a8d",
+  "skills/plugin-builder/references/workspace-installation.md": "3e0e1309a8f57b0057c14cb4f43ee4450af9952b63955e0d58a02435338d420a",
+  "skills/plugin-builder/SKILL.md": "b8ac3a9a5cc38081759c426d2b9ed5ad5c85eb549974e2929ecce1c67d005c2e"
+}

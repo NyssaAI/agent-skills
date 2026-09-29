@@ -143,8 +143,13 @@ source package alone does not make all seven runtimes supported.
 Before editing, record the requested change, deliverables, acceptance checks,
 and available execution paths. Check harness versions, authentication, adapters,
 and existing eval commands; retain every target in the matrix and distinguish
-missing implementation from an external verification blocker. Run one small,
-representative behavioral case on an available harness early. Reuse the existing
+missing implementation from an external verification blocker. Before substantial
+repairs, probe the installed candidate's discovery, promised startup foundation,
+and one real operation in an isolated available harness. An explicitly scoped
+component edit uses a component probe instead. Establish the evidence trust
+boundary and positive/negative verifier checks before extending verification;
+follow the [improvement loop](references/improvement-loop.md) for entry checks,
+failure classification, repeated-repair recovery, and visible run state. Reuse the existing
 runner, scorer, and evidence verifier before adding infrastructure. This
 development probe does not replace the final eval. If no harness can run, record
 the specific blocker and finish independent implementation and static checks.

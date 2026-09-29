@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-09-29T22:13:34.502180+00:00",
+  "checks": [
+    "score arithmetic and all five case scores",
+    "live source freeze matches",
+    "all protected candidate hashes preserved",
+    "response hashes match retained outputs",
+    "ZIP integrity and all 34 member hashes",
+    "retained rubric and README match freeze",
+    "latest score, case table and scoped digest match result",
+    "dated receipt replaces pending placeholder",
+    "all local Markdown links in receipt/latest/reviewer exist"
+  ],
+  "local_links_checked": 35,
+  "result": "Pass",
+  "method": "Non-mutating independent Python assertions; no new runner or evaluation framework introduced."
+}

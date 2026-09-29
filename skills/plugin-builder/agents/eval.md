@@ -30,6 +30,23 @@ A deferred material issue blocks acceptance while its capability remains claimed
 only an explicitly removed claim with an updated required matrix can leave scope.
 A source or artifact mismatch is a blocker, not permission to reuse an old score.
 
+Check the declared evidence contract and suite dependency inventories before
+execution. A known-valid fixture must be accepted by each applicable verifier,
+and relevant invalid fixtures rejected. A reject-all verifier is missing local
+implementation, not an external host blocker. Calibration is not behavioral
+evaluation. Use observed host execution and independently reviewed artifacts
+within the declared trust boundary; do not add an attestation system during
+the final gate. Installed-host claims require isolation from ancestor/user
+instructions and previously loaded context, with actual loaded paths or host
+evidence retained. A contaminated probe remains unverified.
+
+For a repair rerun, execute affected suites and check carried-forward evidence
+against declared dependencies and original run identities. Shared foundation,
+loading, or scoring changes require coverage of their consumers; unknown
+dependencies require rerunning. Distinguish carried-forward results from fresh
+execution. The lead owns phase and worker state in the dated review; return
+observable milestones and blockers so that record stays current.
+
 Check that the suite has executable cases for the plugin's actual promises:
 startup foundation on an unrelated task, router and specialist selection where
 present, host discovery and activation, each implemented CLI/MCP/hook/subagent
@@ -107,3 +124,11 @@ that evidence publication. After this evaluation, source changes require scoped
 repair, adversarial delta review, and affected reevaluation. The lead must
 compare the committed and pushed inventory and published artifact bytes with
 your frozen candidate before treating a local pass as a release result.
+
+Before reporting a failed assertion as a plugin defect, inspect its raw artifact
+and classify the cause: plugin behavior, runner/encoding/scoring, missing
+implementation, or external execution blocker. An unreadable index does not
+prove an incorrect link. Preserve any emitted score with its diagnostic limits;
+do not repair the candidate, rewrite historical results, award a pass, or treat
+an unresolved grading error as successful acceptance. Return the evidence and
+affected scope to the builder for repair and reevaluation.

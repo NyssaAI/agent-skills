@@ -1,0 +1,19 @@
+{
+  "verified_at": "2026-09-29T22:11:15.475689+00:00",
+  "protected_candidate_count": 29,
+  "protected_candidate_unchanged": true,
+  "live_source_count": 19,
+  "live_source_unchanged": true,
+  "historical_evidence_count": 69,
+  "historical_evidence_unchanged": true,
+  "added_candidate_files": [
+    "P01/response.json",
+    "P02/response.json",
+    "P03/response.json",
+    "P04/response.json",
+    "P05/response.json"
+  ],
+  "missing_candidate_files": [],
+  "unexpected_candidate_files": [],
+  "scoped_sha256": "6a02d7bf543c2e5c7d8a7310b324ce69157ff57ee57e8d35d9cc05a88c3567c9"
+}

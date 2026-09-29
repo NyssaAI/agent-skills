@@ -1,14 +1,16 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9`. Suite revision: `0.4.0`.
+Candidate SHA-256: `401e6ab2ef0507476941ad97cec032204ca8bbecbcf92e65d6c7419d789cc019`. Suite revision: `0.4.0`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 
+Supplemental builder process decisions: [latest scoped scores](builder-process/LATEST.md) (not native-host release certification).
+
 | Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [final-c24-v2-20260929](results/final-c24-v2-20260929/metadata.json) | Pass / 100.0/100 | Current | Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
-| plugin-builder | Codex | windows-x86_64 | default | Yes | [final-builder-v2-20260929](results/final-builder-v2-20260929/metadata.json) | Pass / 100.0/100 | Current | Run builder, adversary, and eval cases in a fresh Codex agent with isolated plugin fixtures. |
+| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [final-c24-v2-20260929](results/final-c24-v2-20260929/metadata.json) | Pass / 100.0/100 | Stale | Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
+| plugin-builder | Codex | windows-x86_64 | default | Yes | [final-builder-v2-20260929](results/final-builder-v2-20260929/metadata.json) | Pass / 100.0/100 | Stale | Run builder, adversary, and eval cases in a fresh Codex agent with isolated plugin fixtures. |
 | startup-and-discovery | Codex | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v2-codex-startup-20260929](attempts/final-v2-codex-startup-20260929/metadata.json): unverified; Rerun installed-package H01-H03 with a durable native host trace; determine why the bundled hook is not activated, then add trusted host-export verification before any startup Pass. |
 | startup-and-discovery | Claude Code | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v2-claude-code-startup-20260929](attempts/final-v2-claude-code-startup-20260929/metadata.json): incomplete; Renew Claude Code authentication, install the package, and retain fresh H01-H03 host evidence. |
 | startup-and-discovery | Claude Cowork | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v2-claude-cowork-startup-20260929](attempts/final-v2-claude-cowork-startup-20260929/metadata.json): incomplete; Open an authenticated Claude Cowork session, upload the package, and run H01-H03. |

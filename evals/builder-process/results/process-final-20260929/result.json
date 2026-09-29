@@ -1,0 +1,84 @@
+{
+  "run_id": "process-final-20260929",
+  "suite": "plugin-builder-process",
+  "suite_version": "0.1.0",
+  "plugin_version": "0.2.0 unreleased",
+  "completed_at_utc": "2026-09-29T22:11:15.475689+00:00",
+  "execution_state": "completed",
+  "outcome": "Pass",
+  "score": 100,
+  "possible_score": 100,
+  "points": 10,
+  "possible_points": 10,
+  "passing_threshold": 85,
+  "critical_failures": [],
+  "scoring_method": "Independent evaluator read all actual responses and raw fixture bytes; rubric 0-2 per case, points / 10 * 100. No keyword scorer or self-awarded candidate score.",
+  "reviewer": "/root/process_eval",
+  "candidate": "/root/process_eval/process_candidate",
+  "scope": "Supplemental decision cases P01-P05 only",
+  "scoped_sha256": "6a02d7bf543c2e5c7d8a7310b324ce69157ff57ee57e8d35d9cc05a88c3567c9",
+  "cases_sha256": "8b467cd31a469130fa2b2960dad918f9253165421383cfc07d3c35b795df5b8d",
+  "rubric_sha256": "116af7c71930a2e9e46fe292c47f634137c8be41fde4154574819f9dadc7d79c",
+  "candidate_archive_sha256": "bc6676576acac52119d38fec44542ec9c593bc8d53555a9ce3b2ae3cd772cec0",
+  "case_results": [
+    {
+      "case_id": "P01",
+      "points": 2,
+      "possible_points": 2,
+      "outcome": "Pass",
+      "evidence": "P01/response.json",
+      "response_sha256": "b2ff9d3955745d9204432095c91d1ef31c90d06696e052b37510d5a018f220d1",
+      "reviewer_reason": "Identifies repo/AGENTS.md inheritance as contamination and operation_run=false; proposes isolated installed discovery, startup foundation and real filing operation before broad repairs on available Codex. Separates Claude authentication from missing Hermes adapter."
+    },
+    {
+      "case_id": "P02",
+      "points": 2,
+      "possible_points": 2,
+      "outcome": "Pass",
+      "evidence": "P02/response.json",
+      "response_sha256": "f9a4550bf114c516cf2965974c2cd7f056c00065c6f32c0dd48ad724c61765cf",
+      "reviewer_reason": "Reads CP1252 index and both ICS records accurately: Current points to sequence 4, Historical to sequence 2. Attributes decoding to grading, retains score 59 and workspace, proposes responsible-layer repair and fresh affected suites, with acceptance blocked."
+    },
+    {
+      "case_id": "P03",
+      "points": 2,
+      "possible_points": 2,
+      "outcome": "Pass",
+      "evidence": "P03/response.json",
+      "response_sha256": "19e2f570c383c1fc853071728b338236d3e64b129517942a02338d7fc505f018",
+      "reviewer_reason": "Keeps ADV-06 open for missing verifier implementation, mandates diagnosis after two failed repairs, explains metadata shape versus actual provenance, identifies valid/invalid counterexample pair and concrete controls, trusts observed independent review without new attestation."
+    },
+    {
+      "case_id": "P04",
+      "points": 2,
+      "possible_points": 2,
+      "outcome": "Pass",
+      "evidence": "P04/response.json",
+      "response_sha256": "83c2c635457e883416cb3ab05ce5a1db41fecc2ad36c5f3d124ff3013473fac3",
+      "reviewer_reason": "A carries filing/startup/cli forward; B reruns filing/startup; C reruns filing. Requires dependency equality and original run identity. Conservatively reruns legacy for unknown dependencies; final affected suites are required."
+    },
+    {
+      "case_id": "P05",
+      "points": 2,
+      "possible_points": 2,
+      "outcome": "Pass",
+      "evidence": "P05/response.json",
+      "response_sha256": "353d237b8f1c0abb143e098c9127dadf9ad19cd3c8de3238785ca5431c0cba89",
+      "reviewer_reason": "Recent C07 and active C08 are within the interval; keeps worker and proposes inspection at 21:19Z if no progress. Complete current-state block, missing local verifier versus external authentication, incomplete 7/24 evaluation and release not ready."
+    }
+  ],
+  "preservation": "preservation.json",
+  "reviewer_evidence": "reviewer.md",
+  "provenance": "provenance.json",
+  "scoped_gate": "Pass",
+  "release_gate": "Incomplete: native startup, B01-B04, all-host release and verifier implementation were not evaluated in this scoped run.",
+  "limitations": [
+    "Decision-test success only; supplied host facts were not live host probes.",
+    "Native installation, discovery, startup isolation and activation are not certified.",
+    "No measurement of real runtime efficiency, elapsed release work or actual crashed-worker recovery.",
+    "Independent agent review, not human review or cryptographic attestation.",
+    "Host/model versions unknown; detailed candidate tool transcript unavailable.",
+    "Scoped input freshness is separate from root whole-plugin release freshness.",
+    "Local result only; no commit or push by evaluator."
+  ]
+}

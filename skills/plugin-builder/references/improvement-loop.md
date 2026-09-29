@@ -22,11 +22,42 @@ those results from fresh-host behavior and agent evals. Use the applicable
 [validation checks](validation.md) and host references to identify gaps. For
 each finding, record the affected requirement, observed evidence, consequence,
 and a concrete acceptance check. Mark unavailable host tests unverified rather
-than calling them failures or passes. Run one representative behavioral case
-early on an available host, using the existing runner, scorer, and evidence
-verifier. Repair only the prerequisites needed for that first path before
-expanding evaluation infrastructure. If execution is externally blocked, record
-the evidence and continue independent work. Leave final scoring to `eval`.
+than calling them failures or passes.
+
+The first development probe must exercise the installed candidate on an available
+target before substantial repairs: discovery, the startup foundation before
+selection when promised, and one real operation. Keep fixtures under `.temp/`,
+but establish host isolation explicitly: repository ancestors, user instructions,
+registrations, and previously loaded context must not supply the plugin's rules.
+A nested scratch directory alone does not establish isolation. Retain the actual
+loaded paths and redacted host output; a self-report that the foundation loaded
+is insufficient when an inherited copy could explain it. A contaminated probe
+is unverified and must be repeated with isolation before claiming activation.
+For a new plugin, build only the minimal installable path needed for this probe.
+For an explicitly scoped component or instruction edit, exercise that component
+instead and record that native installation is outside this acceptance scope.
+Use the existing runner, scorer, and verifier. Missing adapters or verifier code
+are implementation work; unavailable authentication or hosts are external
+blockers. Record either before continuing independent work. Leave final scoring
+to `eval`.
+
+## Agree on evidence before changing its verifier
+
+For each claimed capability, record its acceptance check, evidence producer,
+retained artifacts or host trace, independent review, and replay method. State
+what is trusted: ordinary evaluation relies on observed execution and independent
+review; hashes detect changed bytes, not whether a trusted evaluator fabricated
+them. Require stronger attestation only when the task's threat model calls for
+it. Do not silently turn ordinary evaluation into resistance to a malicious
+authorized evaluator. A field such as `verified: true` alone proves nothing.
+
+Before accepting a verifier repair, exercise a known-valid evidence fixture and
+relevant invalid fixtures, including the actual counterexample. Calibration is
+not a model run. A verifier that rejects every Pass is unfinished implementation,
+even if it blocks the counterexample. Keep the acceptance requirement visible;
+do not relabel absent verifier code as an unavailable host or waive the gate.
+
+## Maintain visible run state
 
 Keep one durable review file at `docs/YYYY.MM.DD-plugin-review.md`, using the
 date the review begins. Continue updating that same file if work spans several
@@ -39,6 +70,17 @@ acceptance checks, decisions, evidence links, check results, and a final release
 summary. Update it after each verified fix rather than reconstructing history
 at the end. Link an existing issue tracker when it carries additional discussion;
 do not duplicate long logs or transcripts in the review file.
+
+At the top, maintain one short current-state block: phase, candidate identity,
+active finding, worker/task ID, last completed action with timestamp, next action,
+and blocker. Update it at phase changes and after each verified fix; keep the
+append-only history below it. Define an inactivity check interval at run start
+(default five minutes). If no observable action or artifact appears in that
+interval, inspect worker status, last tool result, and resource contention.
+Distinguish a long-running command from a failed worker before intervening.
+Record the diagnosis and recovery; elapsed time alone is not cancellation or
+permission to duplicate an active worker. Continue giving concise user updates
+while waiting. Disposable logs and analysis belong in `.temp/`.
 
 ## Independent adversarial review
 
@@ -97,6 +139,14 @@ and stopping condition: return actionable findings or a clean result for that
 scope. Avoid open-ended requests to keep looking, and never turn a repeated
 review into a waiver of an unresolved material defect.
 
+After two unsuccessful repairs of the same finding, pause further edits to that
+finding for a mandatory diagnosis checkpoint. Record the smallest reproducer,
+why both checks missed it, the revised causal explanation and acceptance check,
+and a materially different next action. Then resume the scoped repair; this is
+not a waiver, a request to restart broad review, or an automatic end to the task.
+A reviewer must link repeated findings to their stable ID so renaming them does
+not reset this count.
+
 Put disposable analysis, trial assemblies, fixtures, command logs, and
 downloaded artifacts under the working root's `.temp/plugin-review/`; exclude
 that directory from package assembly and Git. Preserve completed failed eval
@@ -118,6 +168,13 @@ exports under `evals/results/` and incomplete or aborted attempt receipts under
    distinguish an external blocker from missing implementation that can be
    completed locally. Split independent implementation and host-verification
    acceptance checks so neither is mislabeled as the other.
+   Before prescribing a fix, inspect raw outputs and classify the cause as
+   plugin behavior, runner/encoding/scoring, missing implementation, or external
+   execution blocker. Separate observed facts from unverified hypotheses. A
+   parser error means the behavior could not be graded, not that the asserted
+   behavior was violated. Preserve the original score and artifact; repair the
+   responsible layer without editing the evaluated workspace or inventing a
+   pass. An unresolved grading error still blocks acceptance.
 4. Immediately update the durable record with the change, evidence, source
    revision or content hashes, checks run, and status. Mark `Verified` only when
    the stated acceptance check passes. Record newly discovered issues with new
@@ -160,6 +217,15 @@ mismatch, return to the relevant finding. Repair, regenerate affected artifacts,
 review the delta and affected requirements, and rerun affected evaluations.
 Preserve prior results and do not relabel them current; unchanged checks may be
 reused only when the declared dependency inventory proves their inputs identical.
+Declare each suite's source, shared guidance, adapter, runtime configuration,
+fixture, runner, and scoring dependencies before using selective reevaluation.
+Run focused cases during repair; the final evaluator runs the affected suites
+and verifies any carried-forward results against those inventories. Changes to
+shared foundation, discovery/loading, or scoring require broader coverage of
+their consumers. If dependencies are unknown, rerun rather than assume isolation.
+Record reuse as carried-forward evidence with its original run identity, never
+as a fresh execution. Review-only history or unrelated documentation changes
+do not force behavioral reruns when the dependency evidence establishes that.
 Link failures and attempts to findings and keep the same unreleased version.
 An external execution blocker stays in the matrix while independent work proceeds.
 

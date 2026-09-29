@@ -1,0 +1,48 @@
+{
+  "suite": "plugin-builder-process",
+  "version": "0.1.0",
+  "cases": [
+    {
+      "id": "P01",
+      "request": "You are starting an update of a plugin promising startup file rules and a filing skill. Decide what to do next before broad repairs. Assess the supplied probe and host inventory.",
+      "files": {
+        "probe.json": {"text": "{\"workspace\":\"repo/.temp/probe\",\"response\":\"The foundation is present\",\"loaded_sources\":[\"repo/AGENTS.md\"],\"installed_package\":\"cache/sample\",\"operation_run\":false}"},
+        "hosts.json": {"text": "{\"Codex\":{\"available\":true,\"authenticated\":true,\"adapter\":true},\"Claude Code\":{\"available\":true,\"authenticated\":false,\"adapter\":true},\"Hermes\":{\"available\":false,\"adapter\":false}}"}
+      }
+    },
+    {
+      "id": "P02",
+      "request": "The evaluator reported a calendar regression and a score of 59. Diagnose the supplied evidence and propose the next repair and acceptance checks.",
+      "files": {
+        "score.json": {"text": "{\"score\":59,\"critical_failures\":[\"current link regressed\"],\"check_evidence\":\"UnicodeDecodeError: utf-8 cannot decode byte 0x97\"}"},
+        "calendar-index.md": {"encoding": "cp1252", "text": "Current: [Planning](current.ics)\nHistorical: [Planning](old.ics) — older invitation.\n"},
+        "current.ics": {"text": "BEGIN:VEVENT\nUID:planning\nSEQUENCE:4\nEND:VEVENT\n"},
+        "old.ics": {"text": "BEGIN:VEVENT\nUID:planning\nSEQUENCE:2\nEND:VEVENT\n"}
+      }
+    },
+    {
+      "id": "P03",
+      "request": "Finding ADV-06 returned after two repairs. The newest gate below rejects the counterexample. Decide whether to close the finding and give the next concrete action. The task is ordinary internal plugin evaluation with an independent evaluator, not certification against malicious authorized maintainers.",
+      "files": {
+        "history.json": {"text": "{\"finding\":\"ADV-06\",\"repairs\":[{\"change\":\"require verified flag\",\"counterexample\":\"fake flag accepted\"},{\"change\":\"require shaped trace\",\"counterexample\":\"invented shaped trace accepted\"}]}"},
+        "gate.py": {"text": "def accept(result):\n    if result['outcome'] == 'Pass':\n        return False\n    return result['outcome'] == 'Fail'\n"},
+        "controls.json": {"text": "{\"valid\":{\"observed_execution\":true,\"independent_review\":true,\"replay_matches\":true,\"outcome\":\"Pass\",\"accepted\":false},\"invalid\":{\"observed_execution\":false,\"outcome\":\"Pass\",\"accepted\":false}}"}
+      }
+    },
+    {
+      "id": "P04",
+      "request": "Plan final reevaluation for each independent change A, B, and C in changes.json. State which previous results can be used, how to label them, and what to do when dependencies are unknown.",
+      "files": {
+        "dependencies.json": {"text": "{\"filing\":[\"core.md\",\"filing.md\",\"filing-fixtures\",\"filing-runner\",\"filing-scorer\",\"host-config\"],\"startup\":[\"core.md\",\"hook.py\",\"startup-fixtures\",\"startup-runner\",\"startup-scorer\",\"host-config\"],\"cli\":[\"bin/tool\",\"cli-fixtures\",\"cli-runner\",\"cli-scorer\",\"host-config\"],\"legacy\":null}"},
+        "changes.json": {"text": "{\"A\":[\"docs/review-history.md\"],\"B\":[\"core.md\"],\"C\":[\"filing-scorer\"],\"prior_results\":\"Each suite passed on the old candidate; all unlisted input bytes and host configuration are unchanged. Declared inventories are complete except legacy.\"}"}
+      }
+    },
+    {
+      "id": "P05",
+      "request": "The user says this has run for 15 minutes and seems stuck. Use the supplied worker and task state to give the next action and a current-state block suitable for the review record. Assess whether any completion claim is justified.",
+      "files": {
+        "state.json": {"text": "{\"now\":\"2026-09-29T21:15:00Z\",\"candidate\":\"candidate-02\",\"phase\":\"final eval\",\"active_finding\":\"F-09\",\"inactivity_interval_minutes\":5,\"worker\":\"eval-2\",\"last_completed_action\":\"case C07 retained at 21:13Z\",\"tool\":{\"running\":true,\"started\":\"21:14Z\",\"action\":\"case C08\"},\"behavioral_cases\":{\"completed\":7,\"total\":24},\"startup_verifier\":\"not implemented\",\"Claude_Code\":\"authentication unavailable\"}"}
+      }
+    }
+  ]
+}

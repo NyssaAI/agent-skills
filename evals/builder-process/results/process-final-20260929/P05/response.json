@@ -1,0 +1,52 @@
+{
+  "case_id": "P05",
+  "observed_facts": [
+    "At 2026-09-29T21:15:00Z, candidate-02 is in final eval with active finding F-09 and worker eval-2.",
+    "C07 was retained at 21:13Z. C08 is reported running since 21:14Z. Seven of 24 behavioral cases are completed.",
+    "The inactivity interval is five minutes. The startup verifier is not implemented; Claude Code authentication is unavailable."
+  ],
+  "uncertainty": [
+    "The snapshot does not reveal C08's eventual outcome, individual case scores, startup verifier dependencies, or whether F-09 corresponds to either known gap.",
+    "The running-tool report has not been independently polled during this fixture assessment."
+  ],
+  "diagnosis": {
+    "worker_health": "No evidence of a stuck worker: a retained result appeared two minutes ago and the current tool started one minute ago, both within the five-minute inactivity interval.",
+    "user_intent": "The complaint is a status request, not cancellation or permission to terminate or duplicate eval-2.",
+    "startup_verifier": "Missing local implementation. It must be repaired by the builder and calibrated, then reviewed and reevaluated; it is not an external host blocker.",
+    "claude_code": "External authentication blocker for that target; preserve the unavailable row and continue other valid runnable cases."
+  },
+  "next_actions": [
+    "Report the actual milestone: 7 of 24 cases complete, C08 running, latest retained result two minutes ago. Continue the existing worker and collect its next result; do not launch a duplicate or interrupt solely because total elapsed time is 15 minutes.",
+    "Keep concise progress updates and update the current-state block on observable milestones. If no further observable action or artifact appears within five minutes of the 21:14Z tool start, inspect eval-2 at 21:19Z: worker status, last tool result/output, expected command duration, resource contention and errors. Intervene only on a concrete diagnosis and record recovery.",
+    "Preserve completed C01-C07 evidence and any later valid results. Record startup checks as unverified due to missing verifier implementation. Continue independent cases with valid execution and grading; do not change candidate bytes beneath an active final evaluator.",
+    "Return the missing startup verifier to the builder as local work for a revised frozen candidate, followed by known-valid/invalid calibration, adversarial delta review and affected reevaluation. Preserve current attempts/results and reuse unchanged coverage only with declared dependency proof.",
+    "Record Claude Code's next check as restoring authentication and executing its required cases in a fresh isolated host session. Do not let that unavailable row stop independent available environments."
+  ],
+  "current_state_block": {
+    "as_of_utc": "2026-09-29T21:15:00Z",
+    "phase": "Final eval in progress; startup verifier repair remains required",
+    "candidate": "candidate-02",
+    "active_finding": "F-09",
+    "worker_task": "eval-2 / C08",
+    "last_completed_action": "C07 retained at 2026-09-29T21:13:00Z",
+    "active_action": "C08 running since 2026-09-29T21:14:00Z",
+    "progress": "7/24 behavioral cases complete; 17 not complete, including running C08",
+    "next_action": "Collect C08 result and continue valid independent cases; if no observable progress by 21:19Z, inspect worker/tool/resource state before intervening",
+    "blocker": "Startup verifier not implemented (local repair required); Claude Code authentication unavailable (external verification blocker)",
+    "inactivity_check_interval_minutes": 5
+  },
+  "acceptance_checks": [
+    "Every runnable required case is executed and its outcome/evidence retained, even if some scores fail; unavailable rows include exact next checks.",
+    "Startup verifier implementation accepts a known-valid evidence control and rejects relevant invalid controls, then affected actual behavioral cases run on the reviewed candidate.",
+    "Latest report consistency and release acceptance are checked separately; required unverified hosts or material defects prevent release readiness.",
+    "Any worker recovery is grounded in an observed error or lack of progress and preserves completed evidence and incomplete-attempt diagnostics."
+  ],
+  "status": {
+    "implementation": "Incomplete: startup verifier missing.",
+    "evaluation": "Incomplete for available environments: only 7 of 24 cases completed, with C08 running.",
+    "release": "Not ready: missing implementation, unfinished evaluation and required host verification gap remain.",
+    "completion_claim_justified": false
+  },
+  "checks_actually_performed": ["Read state.json and compared its supplied timestamps with the five-minute inactivity interval."],
+  "limitations": ["Snapshot assessment only; no worker was polled, interrupted, duplicated, or delegated, and no plugin update was executed."]
+}

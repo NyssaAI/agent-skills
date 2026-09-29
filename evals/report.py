@@ -280,6 +280,7 @@ def render() -> tuple[str, bool]:
              "Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.",
              f"Candidate SHA-256: `{current}`. Suite revision: `{matrix['suite_revision']}`.", "",
              "A missing or failing required row blocks release. A consistent report does not imply release readiness.", "",
+             "Supplemental builder process decisions: [latest scoped scores](builder-process/LATEST.md) (not native-host release certification).", "",
              "| Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |",
              "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     ready = True

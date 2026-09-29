@@ -44,7 +44,9 @@ this is an instruction-bounded decision test, not native startup certification.
 These supplied-host decisions and synthetic probes supplement B01-B04; they
 do not certify real harness support, installation, coexistence, crashed-worker
 recovery, actual release efficiency or whole-plugin release readiness. Source
-and this new evidence are local pending publication.
+and evidence were published together in
+[commit 59bb97b](https://github.com/NyssaAI/agent-skills/commit/59bb97bf98e342fbb051b3db77326b2aa6e57403);
+the lead confirmed the remote identity and exact retained bytes.
 
 Historical result: [process-final-20260929](results/process-final-20260929/result.json)
 scored 100/100 on corpus 0.1.0 (P01-P05). Its evidence remains unchanged; its

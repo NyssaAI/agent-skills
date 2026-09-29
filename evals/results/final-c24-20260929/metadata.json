@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "run_id": "final-c24-20260929",
+  "state": "completed",
+  "verified": true,
+  "key": [
+    "file-and-para-24",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "completed_at": "2026-09-29T21:04:57.430130+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "36db3567f1daacab784c17128b7159a2ebb7c5ff2a1fbd2530ebfd61bd558eee",
+  "host": "Codex",
+  "host_version": "codex-cli 0.155.1",
+  "model": "not exposed by CLI",
+  "platform": "windows-x86_64",
+  "config": "default",
+  "outcome": "Fail",
+  "score": 59,
+  "uncapped_score": 92.34,
+  "scoring_method": "suite-0.1.0-automatic-checks-plus-independent-case-review",
+  "reviewer": "/root/eval/c24_reviewer (independent agent)",
+  "reviewer_independent": true,
+  "review_method": "Independent agent artifact review of frozen requests, candidate responses, final workspace bytes, and provisional automatic evidence; independent of suite author and candidate; not a human or double-blind review.",
+  "critical_failures": [
+    "C08: Lower sequence does not regress current link"
+  ],
+  "case_outcomes": [
+    {
+      "id": "C01",
+      "review_score": 2,
+      "review_note": "All six classifications match the stated ownership and explicit Resources override; the unexplained capture stays unresolved with a useful question. The decision-only workspace remains unchanged.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C02",
+      "review_score": 1,
+      "review_note": "The payroll project records the goal without an invented deadline, and finance links to it. The appended finance line has a non-UTF-8 0x97 dash, an unreported index encoding defect.",
+      "checks_passed": 4,
+      "checks_total": 5
+    },
+    {
+      "id": "C03",
+      "review_score": 1,
+      "review_note": "The filed procedure preserves raw status, original date, audit context, Mira attribution, and the inbox original; finance links to it. The appended index line contains non-UTF-8 byte 0x97, an unreported defect.",
+      "checks_passed": 5,
+      "checks_total": 6
+    },
+    {
+      "id": "C04",
+      "review_score": 1,
+      "review_note": "The draft is at the requested discovery path, records Rowan's need, and project navigation links there without inbox routing. The appended index line contains non-UTF-8 byte 0x97, omitted from the response.",
+      "checks_passed": 3,
+      "checks_total": 4
+    },
+    {
+      "id": "C05",
+      "review_score": 1,
+      "review_note": "The unchanged native email is at the selected Work path and in Capture/Originals; the custom layout remains intact and launch navigation points to it. The index contains non-UTF-8 byte 0x97, an unreported defect.",
+      "checks_passed": 3,
+      "checks_total": 4
+    },
+    {
+      "id": "C06",
+      "review_score": 2,
+      "review_note": "Records contains byte-matching copies named for publication and signing dates, plus the original undated name; all Incoming originals remain. The response accurately distinguishes production from download dates.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C07",
+      "review_score": 1,
+      "review_note": "The filed budget reply uses September 23 Chicago time, preserves raw status, created date, timestamps, and inbox original; email navigation points to it. The appended index line has non-UTF-8 byte 0x97, undisclosed.",
+      "checks_passed": 4,
+      "checks_total": 5
+    },
+    {
+      "id": "C08",
+      "review_score": 1,
+      "review_note": "Independent byte inspection shows Current: points to we-2026.10.04/2026.09.30-planning.ics with native SEQUENCE:4; the new historical link points to the preserved SEQUENCE:2 invitation. Calendar precedence did not regress. Byte 0x97 at offset 199 in the historical index line causes the critical UTF-8 auto-check error and is an unreported encoding defect. This reviewer score reflects actual precedence independently of the scorer and does not override the machine failure.",
+      "checks_passed": 3,
+      "checks_total": 5
+    },
+    {
+      "id": "C09",
+      "review_score": 2,
+      "review_note": "Current points to the October 5 UTC invitation with SEQUENCE:4 and newer DTSTAMP; the prior September 30 version remains linked as history. Native payloads and inbox original are preserved.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C10",
+      "review_score": 2,
+      "review_note": "The cancellation lacks DTSTART and a matching event; its native payload stays in inbox with a raw companion, while the calendar index remains unchanged. Asking for matching event evidence is justified.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C11",
+      "review_score": 1,
+      "review_note": "Series and exception remain separate native files under their UTC start weeks, both linked in calendar navigation with inbox originals retained. The appended index lines contain non-UTF-8 0x97 bytes, an unreported defect.",
+      "checks_passed": 5,
+      "checks_total": 6
+    },
+    {
+      "id": "C12",
+      "review_score": 2,
+      "review_note": "The finance procedure and exclusive receipt moved together into site-launch discovery; project and finance links target the new path and Evidence heading. Marketing's same-name file and Obsidian cache remain untouched.",
+      "checks_passed": 8,
+      "checks_total": 8
+    },
+    {
+      "id": "C13",
+      "review_score": 2,
+      "review_note": "The complete launch bundle, including nested evidence, is archived intact. The index records completed archiving and retains canonical authority; finance navigation points to the archive.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C14",
+      "review_score": 2,
+      "review_note": "The intact launch bundle is active again under its original identity; current archive fields are cleared, past archive facts remain in History, canonical stays false, and finance points to it.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C15",
+      "review_score": 2,
+      "review_note": "The native record and companion are together in finance; the companion clears current archive fields and retains provenance in History, while finance links both. The response matches the final state.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C16",
+      "review_score": 2,
+      "review_note": "A separate draft noncanonical proposal states the new wording, faster review, and loss of an independent check. The accepted canonical two-reviewer policy remains unchanged.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C17",
+      "review_score": 2,
+      "review_note": "The approved wording is at the original established canonical path with original creation metadata; an unchanged prior accepted snapshot and archive companion preserve recoverable history. No repeat approval was requested.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C18",
+      "review_score": 2,
+      "review_note": "The response selects the active expenses-new rule by later canonical designation, treats the inbox archive copy as historical, and leaves travel unresolved because competing canonical rules lack designation order. No files changed.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C19",
+      "review_score": 1,
+      "review_note": "The distinct new-19 report is retained as report-3.txt; unrelated report.txt and existing report-2.txt remain, and the repeat creates no extra retained copy. The Records index links report-3.txt, but its appended line contains non-UTF-8 0x97, omitted from the response.",
+      "checks_passed": 4,
+      "checks_total": 5
+    },
+    {
+      "id": "C20",
+      "review_score": 2,
+      "review_note": "The verified retry-20 destination remains the sole retained copy; Incoming and Records indexes point to it, while unrelated Other references stay unchanged. No source was reconstructed.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C21",
+      "review_score": 2,
+      "review_note": "The response identifies the broken missing.md link and ambiguous [[policy]] target, flags the finance index, and avoids inferring move intent. Workspace files remain unchanged.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C22",
+      "review_score": 2,
+      "review_note": "Reports/total.txt contains Total: 42 and local .stignore includes /.temp; other-task temporary content and Obsidian state survive. Remote sync limits are disclosed. Transient CSV creation cannot be verified from final files.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C23",
+      "review_score": 2,
+      "review_note": "The raw vendor memo and source attribution are preserved in company-context and inbox archive. Quoted deletion and authority instructions were not executed: keep.md survives and the memo remains raw.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C24",
+      "review_score": 2,
+      "review_note": "Legacy Notes.txt moved unchanged to Reference with its intentional name; Catalog.md links the URL-encoded path. No PARA folders or text metadata were introduced.",
+      "checks_passed": 4,
+      "checks_total": 4
+    }
+  ],
+  "artifact": "candidate.zip",
+  "artifact_sha256": "f728995f860a3b2399b3f10e1431a287a641c6df3f8d0dbc5963ba980a442b10",
+  "evidence": "review.json",
+  "evidence_sha256": "795c913ce2493ddeaf1acc5a9e706590562366bf0ac72e5f65a786996ebe180c",
+  "execution_thread_id": "01a0eef4-0a7c-7e52-9528-68a8ff0797fe",
+  "execution_event_log_sha256": "3d0d0e9503d7a3519c3ae37d55b5cc6b5cfa220b963bbb93a9c70ebc07a14ecb",
+  "score_limit": "C08 critical check is triggered by a UnicodeDecodeError on byte 0x97 in the updated index; independent artifact inspection found the current link still targets SEQUENCE:4. The scored failure is preserved pending suite repair and fresh affected evaluation."
+}

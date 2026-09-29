@@ -1,0 +1,36 @@
+{
+  "reviewer": "/root/eval (maintained eval agent; independent from fresh candidate)",
+  "reviewer_independent": true,
+  "method": "Inspected all four requests, responses, actual workspaces, checker output, preserved initial hashes, B04 receipts and observed collaboration agent identities/order; artifact replay required separately.",
+  "case_outcomes": [
+    {
+      "id": "B01",
+      "score": 2,
+      "review_note": "Identified the absent startup core, broken relative reference, and different host/auth blockers with concrete acceptance checks; selected the available Codex probe. Initial protected files match.",
+      "artifact_path": "candidate/B01/response.json",
+      "artifact_sha256": "1819764c75b5f2a9d6c85bf403b484a6da06370446ba084d71ab5ea85dca6260"
+    },
+    {
+      "id": "B02",
+      "score": 2,
+      "review_note": "Exact core body occurs once, existing privacy instruction survives, both manifests reserve 0.2.0, and setup is idempotent on repeated runs.",
+      "artifact_path": "candidate/B02/response.json",
+      "artifact_sha256": "ac23870ecf5c954643981d679410f6b751e0e8072fd0ecec5d1e99deeabc0761"
+    },
+    {
+      "id": "B03",
+      "score": 2,
+      "review_note": "The failed result and blocked attempt retain their initial bytes; handoff separates implementation, runnable-case completion, and release readiness, and proposes review-branch evidence publication.",
+      "artifact_path": "candidate/B03/response.json",
+      "artifact_sha256": "b8fcb9406d9ace879d2cdb2e42f9d6eebb5cb5af69deab5d637b7bfa1ff1dd95"
+    },
+    {
+      "id": "B04",
+      "score": 2,
+      "review_note": "Observed three fresh named agent task IDs in baseline, focused review, final eval order, separated by the one repair. Receipts and execution.json agree; I01 wrote exact disposable probe and preserved the note. Native installation is correctly marked unverified.",
+      "artifact_path": "candidate/B04/response.json",
+      "artifact_sha256": "62d9bb42b41c482bf73da00c2ea57c6dfb9da0d3ea3afba62da029383dfd8dbc"
+    }
+  ],
+  "critical_failures": []
+}

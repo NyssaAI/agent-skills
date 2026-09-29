@@ -1,0 +1,33 @@
+{
+  "method": "Independent replay on disposable copy of final B02 artifacts; candidate artifacts not modified",
+  "before": {
+    "AGENTS.md": "5d270952952ff8ccb551c3de904e74b9af994f46509c7039d575a04253f63e0d",
+    "plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948",
+    ".claude-plugin/plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "hashes": {
+        "AGENTS.md": "5d270952952ff8ccb551c3de904e74b9af994f46509c7039d575a04253f63e0d",
+        "plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948",
+        ".claude-plugin/plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948"
+      }
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "hashes": {
+        "AGENTS.md": "5d270952952ff8ccb551c3de904e74b9af994f46509c7039d575a04253f63e0d",
+        "plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948",
+        ".claude-plugin/plugin.json": "25f9bfd76e3b1ecdb6a0d74cbbe808cd675871069168981a8bcd91b556636948"
+      }
+    }
+  ],
+  "byte_identical": true
+}

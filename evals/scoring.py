@@ -199,9 +199,11 @@ def evaluate_check(assertion, workspace, original, response, original_directorie
     if operation in {"links_to", "links_valid"}:
         sources = [workspace / assertion["source"]] if operation == "links_to" else paths()
         targets = {path.resolve() for path in select_paths(workspace, [assertion["target"]])} if operation == "links_to" else set()
-        failures, resolved_links = [], []
+        failures, resolved_links, decode_warnings = [], [], []
         for source in sources:
-            text = source.read_text(encoding="utf-8-sig")
+            text = source.read_text(encoding="utf-8-sig", errors="replace")
+            if "\ufffd" in text:
+                decode_warnings.append(source.relative_to(workspace).as_posix())
             if "line_prefix" in assertion:
                 text = "\n".join(line for line in text.splitlines() if line.startswith(assertion["line_prefix"]))
             for target, wiki in extract_links(text):
@@ -212,8 +214,8 @@ def evaluate_check(assertion, workspace, original, response, original_directorie
                     resolved_links.append(resolved)
         if operation == "links_to":
             matched = set(resolved_links) & targets
-            return bool(matched), f"Matching targets: {[path.relative_to(workspace.resolve()).as_posix() for path in sorted(matched)]}; link errors: {failures}"
-        return bool(sources) and not failures, f"{len(sources)} source files; {len(resolved_links)} links resolved; errors: {failures}"
+            return bool(matched), f"Matching targets: {[path.relative_to(workspace.resolve()).as_posix() for path in sorted(matched)]}; link errors: {failures}; malformed text replaced in: {decode_warnings}"
+        return bool(sources) and not failures, f"{len(sources)} source files; {len(resolved_links)} links resolved; errors: {failures}; malformed text replaced in: {decode_warnings}"
     if operation == "text_any":
         matched = [path.relative_to(workspace).as_posix() for path in paths()
                    if re.search(assertion["pattern"], path.read_text(encoding="utf-8-sig"))]

@@ -1,0 +1,26 @@
+{
+  "host_version": "1.2.13",
+  "assembled_package": "fresh isolated temp workspace/.agents/plugins/agent-skills",
+  "host_json": {
+    "conversation_id": "7cd80807-3e25-43b3-a0ea-a6cd06edcd25",
+    "status": "SUCCESS",
+    "response": "",
+    "duration_seconds": 4.292139,
+    "num_turns": 1,
+    "usage": {
+      "input_tokens": 16893,
+      "output_tokens": 1011,
+      "thinking_tokens": 920,
+      "cache_read_tokens": 0,
+      "total_tokens": 17904
+    },
+    "denied_actions": [
+      {
+        "action": "command",
+        "display_name": "RunCommand"
+      }
+    ]
+  },
+  "stderr": "jetski: no output produced — a tool required the command permission that headless mode cannot prompt for, so it was auto-denied.",
+  "raw_json_sha256": "7aa49b4b63c842fc37def7a974c5688effd707c05f796b73a0a65d47a07d5fa5"
+}

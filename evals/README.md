@@ -1,8 +1,63 @@
 # Plugin evaluation CLI
 
-This suite exercises the `para-vault` and `file-management` skills through 24 isolated user tasks. A run means one independent candidate executes **all 24 cases**, producing real workspace artifacts and one JSON response per case. Three runs mean 72 case executions, not three executions of a linter.
+The current 0.2.0 scored suite exercises `para-vault` and `file-management` through
+24 isolated user tasks. A run means one independent candidate executes **all
+24 cases**, producing real workspace artifacts and one JSON response per case.
+The additional required suites below have their own case scopes;
+the [latest report](LATEST.md) identifies completed runs and remaining gaps.
+Link checks decode valid UTF-8 and replace malformed bytes while reporting the
+affected file in check evidence. A malformed byte in surrounding prose no
+longer hides an otherwise valid navigation link.
 
 Use `run.py` to prepare, execute, score, export, and verify runs. The [scoring rubric and coverage map](../docs/eval-suite.md) define what the scores mean.
+
+## Suite catalog and coverage
+
+| Suite | Cases and purpose | Entry and observable success | Reproduction |
+| --- | --- | --- | --- |
+| `file-and-para-24` | C01–C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct `para-vault` or `file-management` invocation; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
+| `plugin-builder` | B01 finding detection; B02 one repair/version reservation; B03 evidence handoff; B04 bounded review/repair/eval integration | Invoke `plugin-builder` on isolated [builder cases](builder-cases.md); inspect preserved artifacts, runnable-path decisions, repair, evidence handoff, and actual independent agent activity | `python evals/builder_run.py prepare <run-id>`, execute `candidate/PACKET.md` in a fresh agent, then `check <run-id>` and independent review |
+| `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, named-agent invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
+
+The machine-readable [coverage matrix](matrix.json) defines each required
+suite, harness, OS/architecture, and configuration row. Muse is provisional and
+explicitly non-required pending a verified loader. The matrix currently
+records Windows x86-64 as the available development platform; macOS/Linux
+binary behavior is inapplicable because this package bundles no binary. This
+does not imply other platforms are runtime verified.
+
+`evals/results/<run-id>/metadata.json` identifies a completed Pass or Fail
+run, UTC completion, exact row key, candidate, frozen suite, and artifact
+hashes, host/version/platform/configuration/model, case outcomes, scoring
+method, independent reviewer/method, and critical failures. It links a hashed
+evidence file and inspectable artifact ZIP. For C01–C24, `report.py check`
+replays the suite's export verifier and compares the recomputed score. For
+B01–B04 and H01–H03, it checks every case's reviewed artifact bytes in the ZIP,
+recomputes the score, and requires a host invocation trace. The latter is
+reviewable evidence, not cryptographic proof of a host session; independent
+review must verify its provenance before setting `verified: true`. A bare
+`verified` flag and text file cannot qualify. Completed failures remain results.
+`evals/attempts/<run-id>/metadata.json` records an incomplete, aborted, or
+unverified run with the same key, UTC start/end, candidate hash, last stage,
+redacted diagnostic, and exact next check. Raw or bulky logs may stay in
+`.temp/`; the durable receipt must explain the failure without them. Missing
+attempts and scores are shown as `Not run`.
+
+The report currently refuses a `Pass` for `startup-and-discovery`. The host
+probe artifacts and reviewer fields can be written by a submitter, and no
+trusted host-export verifier is available for those rows yet. Keep a genuine
+run's evidence and review receipt, but record it as unverified until that
+verifier can establish provenance; a self-authored ZIP cannot certify release.
+
+After adding evidence, run `python evals/report.py generate` and inspect the
+diff. `python evals/report.py check` is non-mutating and fails when the report
+disagrees with the matrix or evidence; `python evals/report.py release` is the
+separate release gate and fails on any required missing, stale, or failing row.
+`python evals/report.py hash` prints the content hash of the declared candidate
+inventory (skills, scripts, host manifests and generated artifact, startup
+anchors, eval source and rubric). Evidence outputs, review receipts, and
+`.temp/` are excluded. These commands must run after the final adversarial
+review; the permanent `eval` agent owns the final scored run.
 
 ## Set up
 

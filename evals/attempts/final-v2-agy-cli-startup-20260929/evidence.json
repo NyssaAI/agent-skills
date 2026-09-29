@@ -1,0 +1,6 @@
+{
+  "host_version": "1.2.13",
+  "response_excerpt": "### Startup File-Management Rule\n\n* **Exact Source Path**: [D:/repos/NyssaAI/skills/.agents/plugins/agent-skills/rules/file-management.md](file:///D:/repos/NyssaAI/skills/.agents/plugins/agent-skills/rules/file-management.md) *(also referenced inline within [D:/repos/NyssaAI/skills/AGENTS.md](file:///D:/repos/NyssaAI/skills/AGENTS.md))*\n* **Rule Content**:\n  > **File-management foundation**\n  > \n  > Follow the user's destination and existing folder scheme. Preserve names and extensions unless a rename is requested. For new files, use lowercase kebab-case; for dated files, use the real creation or production date in `YYYY.MM.DD-descriptive-slug`, never an invented or import date.\n  > \n  > Keep disposable task output under the working root's `.temp/`, separate from retained deliverables. Check identity and collisions before writing. Verify a move and its links before removing the source. Preserve recoverable history for substantive revisions. Delete retained content only with explicit authorization.\n  > \n  > Use `para-vault` only when the task concerns a recognized PARA vault. Load file-management and PARA details from their skills only when needed.\n\n---\n\n### Project Plugin Skills (f",
+  "source_paths_from_parent_repository": true,
+  "denied_actions": null
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "run_id": "final-claude-cowork-startup-20260929",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Claude Cowork",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T21:07:22.962014+00:00",
+  "completed_at": "2026-09-29T21:07:22.962018+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "artifact_inventory": "See evals/results/final-builder-20260929/frozen-evaluation.json for the frozen 34-file assembled inventory",
+  "stage": "host UI unavailable; upload not attempted",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "inventory available CLI/UI surfaces; no Cowork upload UI available"
+  ],
+  "exit_status": "Not run: UI unavailable",
+  "diagnostic": "No Claude Cowork upload/session UI is exposed in this CLI evaluation environment, so no package upload or fresh Cowork session was performed.",
+  "next_check": "Open Claude Cowork UI, upload the exact 0.2.0 package, run H01-H03 in fresh sessions, and export observable host evidence.",
+  "evidence_omitted": "Bulky raw CLI logs remain in ignored .temp/ and are not the sole record; only redacted synthetic responses and diagnostics are retained."
+}

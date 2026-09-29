@@ -27,7 +27,7 @@ import zipfile
 
 from cases import build_cases
 
-SUITE_VERSION = "0.1.0"
+SUITE_VERSION = "0.2.0"
 
 
 def write_json(path, value):
@@ -72,7 +72,7 @@ def prepare(repository, run_id):
     run_root.mkdir(parents=True, exist_ok=False)
     candidate = run_root / "candidate"
     plugin = candidate / "plugin"
-    for relative in ["skills", ".codex-plugin", ".claude-plugin", ".agents"]:
+    for relative in ["skills", "hooks", ".codex-plugin", ".claude-plugin", ".agents"]:
         source = repository / relative
         if source.exists():
             shutil.copytree(source, plugin / relative)
@@ -222,9 +222,7 @@ def verify(export_path, repository):
     actual.pop("artifact-hashes.json", None)
     if actual != expected:
         raise ValueError("Export artifact hashes do not match")
-    work = repository / ".temp" / "eval-verification"
-    work.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(dir=work) as scratch:
+    with tempfile.TemporaryDirectory(prefix="nyssa-eval-verification-") as scratch:
         root = Path(scratch)
         candidate = root / "candidate"
         candidate.mkdir()
@@ -241,8 +239,24 @@ def verify(export_path, repository):
         (root / "control").mkdir()
         for filename in ["manifest.json", "suite.json"]:
             shutil.copyfile(export_path / filename, root / "control" / filename)
+        grader = root / "grader"
+        grader.mkdir()
+        grader_files = read_json(export_path / "grader-files.json")
+        with zipfile.ZipFile(export_path / "grader.zip") as archive:
+            if set(archive.namelist()) != set(grader_files):
+                raise ValueError("Frozen grader file inventory differs from export")
+            for member in archive.namelist():
+                destination = safe_child(grader, member)
+                content = archive.read(member)
+                if hashlib.sha256(content).hexdigest() != grader_files[member]:
+                    raise ValueError(f"Frozen grader hash mismatch: {member}")
+                destination.write_bytes(content)
         review = export_path / "review.json"
-        actual_score = score(root, review if review.exists() else None)
+        command = [sys.executable, str(grader / "run.py"), "score", str(root)]
+        if review.exists():
+            command.extend(("--review", str(review)))
+        subprocess.run(command, check=True, capture_output=True, text=True, timeout=120)
+        actual_score = read_json(root / "control" / "score.json")
         if actual_score != read_json(export_path / "score.json"):
             raise ValueError("Recomputed score differs from exported score")
     print("Export verified and score reproduced exactly.")

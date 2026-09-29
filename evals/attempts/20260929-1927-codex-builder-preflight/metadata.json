@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "run_id": "20260929-1927-codex-builder-preflight",
+  "state": "incomplete",
+  "key": [
+    "plugin-builder",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T19:28:06.655363+00:00",
+  "completed_at": "2026-09-29T19:28:06.655363+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "9e1edab2f1a4e5f65bfe8039fd3ce9dd8a833910cd3193935613b1b1da2e8a19",
+  "suite_revision": "0.2.0",
+  "suite_sha256": "240a87ca210b94fedd28df3139fbd4d13c787d4f4b859c3f25dc842d14de7ecf",
+  "artifact_path": ".agents/plugins/agent-skills/",
+  "artifact_inventory_sha256": "778ec6b0b411adfe8145390f3e789c784ae52c1b6613b8d46b04394203f72737",
+  "assembly_source_sha256": "f854838c48531b90cd0fdd84c6b73f69b191b5f5222832ff0b4a529fc8b7bba5",
+  "stage": "preflight: source and suite identity frozen; behavioral case execution not started",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "python evals/report.py hash",
+    "python scripts/assemble.py check",
+    "read evals/matrix.json and declared builder/host cases"
+  ],
+  "exit_status": "preflight stopped before host execution; no scored run",
+  "diagnostic": "Final adversarial rerun after ADV-06 repair was interrupted, so the current candidate has no completed adversarial release receipt. No B01/B02 host run or verified export exists; all ten required matrix rows lack current scores.",
+  "next_check": "Complete fresh adversarial review of candidate hash 9e1edab2f1a4e5f65bfe8039fd3ce9dd8a833910cd3193935613b1b1da2e8a19 and resolve material findings; then execute B01/B02 with a fresh Codex agent, independently review artifacts and agent receipts, export/verify the result, and complete the other required matrix rows.",
+  "evidence_omitted": "No case output or host trace exists because no behavioral case was started. No raw logs were produced.",
+  "source_inventory": "candidate-inventory.json",
+  "artifact_inventory": "artifact-inventory.json"
+}

@@ -77,5 +77,31 @@ def validate_plugin(repository):
                     findings.append("Declared skill directories differ from catalog inventory")
         except (OSError, ValueError, KeyError, TypeError) as error:
             findings.append(f"{filename}: {error}")
+    rule = repository / ".agents/plugins/agent-skills/rules/file-management.md"
+    checks += 1
+    try:
+        content = rule.read_text(encoding="utf-8")
+        match = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n", content, re.S)
+        metadata = yaml.safe_load(match.group(1)) if match else None
+        if not isinstance(metadata, dict) or metadata.get("trigger") != "always_on":
+            findings.append("Antigravity foundation rule lacks an always_on trigger")
+        body = content[match.end():].strip() if match else ""
+        core = (repository / "skills/file-management/core.md").read_text(encoding="utf-8").strip()
+        if body != core:
+            findings.append("Antigravity foundation rule differs from canonical core")
+    except (OSError, yaml.YAMLError) as error:
+        findings.append(f"Antigravity foundation rule: {error}")
+    checks += 1
+    try:
+        hooks = json.loads((repository / "hooks/hooks.json").read_text(encoding="utf-8"))
+        handlers = hooks["hooks"]["SessionStart"][0]["hooks"]
+        if not any(handler.get("type") == "command" and
+                   "${CLAUDE_PLUGIN_ROOT}/hooks/session-start.py" in handler.get("command", "")
+                   for handler in handlers):
+            findings.append("Codex/Claude startup hook is not registered")
+        if not (repository / "hooks/session-start.py").is_file():
+            findings.append("Codex/Claude startup hook script is missing")
+    except (OSError, ValueError, KeyError, IndexError, TypeError) as error:
+        findings.append(f"Codex/Claude startup hook: {error}")
     return {"passed": not findings, "checks": checks, "skills": len(skills), "findings": findings,
             "scope": "Local packaging and references only; no runtime installation claims"}

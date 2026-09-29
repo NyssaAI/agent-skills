@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "run_id": "final-agy-cli-startup-20260929",
+  "state": "unverified",
+  "key": [
+    "startup-and-discovery",
+    "Antigravity CLI",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T21:05:43.454023+00:00",
+  "completed_at": "2026-09-29T21:05:55.751779+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "artifact_inventory": "See evals/results/final-builder-20260929/frozen-evaluation.json for the frozen 34-file assembled inventory",
+  "stage": "isolated assembled-package startup probe; no response after headless command denial",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "agy --version",
+    "agy plugin list",
+    "agy --mode plan --print-timeout 60s --output-format json --print=<read-only startup probe>"
+  ],
+  "exit_status": "CLI exit 0 with denied action and empty response",
+  "diagnostic": "Antigravity CLI 1.2.13 returned response='' and denied_actions=[{action: command, display_name: RunCommand}]. stderr reported headless command permission auto-denial. No plugin discovery or H01-H03 behavior was established.",
+  "next_check": "In an interactive Antigravity CLI project session, inspect .agents/plugins/agent-skills discovery and run H01-H03 with a permitted read-only command rule, then retain independently observable session evidence.",
+  "evidence_omitted": "Bulky raw CLI logs remain in ignored .temp/ and are not the sole record; only redacted synthetic responses and diagnostics are retained.",
+  "evidence": "evidence.json"
+}

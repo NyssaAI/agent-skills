@@ -32,7 +32,9 @@ EvidenceExportTests
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -117,6 +119,51 @@ class OutcomeScoringTests(unittest.TestCase):
         self.write("index.md", "[[projects/2026.09.29-project-index]]")
         self.write("projects/2026.09.29-project-index.md", "# Project")
         self.assertTrue(self.evaluate(check("Links", "navigation", "links_valid", glob="index.md")))
+
+    def test_malformed_prose_byte_does_not_hide_current_link(self):
+        index = self.root / "index.md"
+        index.write_bytes(b"Current: [Planning](event.ics)\nHistorical: older\x97invitation\n")
+        self.write("event.ics", "BEGIN:VCALENDAR\nEND:VCALENDAR\n")
+        assertion = check("Current link", "task", "links_to", source="index.md",
+                          target="event.ics", line_prefix="Current:")
+        passed, evidence = evaluate_check(assertion, self.root, {}, {})
+        self.assertTrue(passed)
+        self.assertIn("malformed text replaced", evidence)
+
+    def test_startup_hook_loads_core_in_fresh_project(self):
+        project = self.root / "fresh-project"
+        project.mkdir()
+        (project / ".git").mkdir()
+        environment = {**os.environ, "CLAUDE_PLUGIN_ROOT": str(REPOSITORY)}
+        command = [sys.executable, str(REPOSITORY / "hooks/session-start.py")]
+        first = subprocess.run(command, cwd=project, env=environment,
+                               capture_output=True, text=True, check=True)
+        core = (REPOSITORY / "skills/file-management/core.md").read_text(encoding="utf-8").strip()
+        self.assertEqual(first.stdout.strip(), core)
+        (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\n" + core +
+                                           "\n<!-- agent-skills:file-management:end -->",
+                                           encoding="utf-8")
+        second = subprocess.run(command, cwd=project, env=environment,
+                                capture_output=True, text=True, check=True)
+        self.assertEqual(second.stdout, "")
+        (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
+                                           "<!-- agent-skills:file-management:end -->", encoding="utf-8")
+        third = subprocess.run(command, cwd=project, env=environment,
+                               capture_output=True, text=True, check=True)
+        self.assertEqual(third.stdout.strip(), core)
+        (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\n" + core +
+                                           "\n<!-- agent-skills:file-management:end -->",
+                                           encoding="utf-8")
+        nested = project / "nested"
+        nested.mkdir()
+        inherited = subprocess.run(command, cwd=nested, env=environment,
+                                   capture_output=True, text=True, check=True)
+        self.assertEqual(inherited.stdout, "")
+        (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
+                                           "<!-- agent-skills:file-management:end -->", encoding="utf-8")
+        stale_inherited = subprocess.run(command, cwd=nested, env=environment,
+                                        capture_output=True, text=True, check=True)
+        self.assertEqual(stale_inherited.stdout.strip(), core)
 
     def sample_run(self):
         self.write("PACKET.md", "Frozen packet")

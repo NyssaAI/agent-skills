@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "run_id": "workflow-final-20260929",
+  "state": "completed",
+  "verified": true,
+  "key": [
+    "plugin-builder",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "completed_at": "2026-09-29T19:52:50.680238+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "b5d0016995a81d6bef8a3c0a6639b098286b39400f27b9fa29766904290c78c0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "16c68caa021e2c144fb7d7d7df5d6eb6dd984a3955f9c3cede5e7aaf7f85aa63",
+  "host": "Codex",
+  "host_version": "unavailable",
+  "model": "GPT-6 system identity; exact runtime model identifier unavailable",
+  "platform": "windows-x86_64",
+  "config": "default",
+  "outcome": "Pass",
+  "score": 100.0,
+  "scoring_method": "independent-case-review-v1",
+  "reviewer": "/root/eval_workflow (maintained eval agent definition; independent from candidate)",
+  "reviewer_independent": true,
+  "review_method": "Read all four requests, responses, filesystem artifacts and B04 receipts; independently verify preservation and B02 replay; observe each B04 host subagent while running and compare identity/order to execution.json. Candidate forked with no conversation history and only packet/boundaries; grader and rubric not supplied.",
+  "critical_failures": [],
+  "case_outcomes": [
+    {
+      "id": "B01",
+      "score": 2,
+      "review_note": "2/2. Identifies absent startup core and broken relative reference with concrete file-specific acceptance checks; separates missing Hermes adapter from unavailable Hermes host and unauthenticated Claude Code; selects available Codex probe without running it. Initial protected hashes and artifact inspector confirm review-only preservation.",
+      "artifact_path": "candidate/B01/response.json",
+      "artifact_sha256": "8427c4c61a8a1e69b4cd9486ca66bb7d4dadfd03262ee4e67e4ab5bfe79b5c28"
+    },
+    {
+      "id": "B02",
+      "score": 2,
+      "review_note": "2/2. Actual AGENTS bytes retain original instruction plus exact core once; both manifests are 0.2.0. Reviewed setup.py and independently replayed it twice on a disposable copy: both rounds exited zero and all three hashes stayed identical. Candidate reports actual two-run setup with matching hashes.",
+      "artifact_path": "candidate/B02/response.json",
+      "artifact_sha256": "1dcd6eb3416b1bb0460ea9d60165035c345db4364c7ed0ee9cf812754f6f8822"
+    },
+    {
+      "id": "B03",
+      "score": 2,
+      "review_note": "2/2. Actual failed score and blocked receipt retain initial hashes. Handoff separates reported implementation, available-environment execution, and false release readiness; proposes review-branch publication of source and failure/block evidence without claiming a pass or pushing.",
+      "artifact_path": "candidate/B03/response.json",
+      "artifact_sha256": "3ce47631111da8fe7ee0db2811cac24334a39afdebeda2936924cf7e5506d78c"
+    },
+    {
+      "id": "B04",
+      "score": 2,
+      "review_note": "2/2. Actual fresh baseline adversary, fresh focused adversary, and fresh final eval identities observed through list_agents in the recorded order; exact prompts load maintained definitions. Baseline receipt preceded repair; final clean receipt preceded I01. Actual core/version repair is preserved; I01 created exact .temp/probe.txt content and retained-note hash is unchanged. All seven I01 input hashes independently match final artifacts; limitations correctly exclude native installation certification. UTF-16/BOM result.json parses from bytes and is preserved unchanged.",
+      "artifact_path": "candidate/B04/response.json",
+      "artifact_sha256": "14e422b4ab5e35be2d03ea47fd06555013876c5fd9dd5853051b5abdd7e50c7d"
+    }
+  ],
+  "artifact": "artifact.zip",
+  "artifact_sha256": "a7e268a769a859feef5bdb5c3962c15ec9a37fa9a47c88abaa35e98ae480a093",
+  "evidence": "evidence.json",
+  "evidence_sha256": "a46fccd7265a356af72e3557045c185d7120c408e207a57334419af1507ecf0e",
+  "scope": "B01-B04 workflow behavioral evaluation; not native install certification",
+  "source_inventory": "frozen-evaluation.json",
+  "assembled_artifact_inventory_sha256": "c35bbd14bb9719d1f4151bb36b4424326992e468db9f8a4743b50ff90ef7cf6e"
+}

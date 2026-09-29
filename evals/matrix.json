@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "suite_revision": "0.4.0",
+  "rows": [
+    {"suite": "file-and-para-24", "harness": "Codex", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Execute all 24 cases in a fresh Codex agent and export reviewed evidence."},
+    {"suite": "plugin-builder", "harness": "Codex", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Run builder, adversary, and eval cases in a fresh Codex agent with isolated plugin fixtures."},
+    {"suite": "startup-and-discovery", "harness": "Codex", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Install the package and probe fresh-session foundation, routing, and specialist selection."},
+    {"suite": "startup-and-discovery", "harness": "Claude Code", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Renew Claude authentication; install and invoke skills and named agents in a fresh project."},
+    {"suite": "startup-and-discovery", "harness": "Claude Cowork", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Upload the package and probe a fresh Cowork session."},
+    {"suite": "startup-and-discovery", "harness": "Antigravity CLI", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Inspect project plugin loading and invoke a bundled skill in a fresh CLI session."},
+    {"suite": "startup-and-discovery", "harness": "Antigravity 2.0", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Inspect workspace plugin loading and invoke a bundled skill in a fresh 2.0 session."},
+    {"suite": "startup-and-discovery", "harness": "Antigravity IDE", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Inspect workspace plugin loading and invoke a bundled skill in a fresh IDE session."},
+    {"suite": "startup-and-discovery", "harness": "OpenClaw", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Install the compatible bundle, inspect detected skills, then probe startup and invocation in a fresh session."},
+    {"suite": "startup-and-discovery", "harness": "Hermes Agent", "platform": "windows-x86_64", "config": "default", "required": true, "remaining": "Install and enable a project plugin adapter, then probe startup and skill invocation."},
+    {"suite": "startup-and-discovery", "harness": "Muse", "platform": "unknown", "config": "provisional", "required": false, "remaining": "Identify the product and verify its loader and manifest before adding a required runtime row."}
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "host": "Codex CLI 0.155.1",
+  "installed_plugin_id": "agent-skills@nyssa-eval-local",
+  "installed_path": "C:\\Users\\jmayn\\.codex\\plugins\\cache\\nyssa-eval-local\\agent-skills\\0.2.0",
+  "installed_inventory_sha256": "c98d79646261fdb042f9b2805a37fa85e62c6acdaa68f9ec291d2e4864fe50ac",
+  "installed_inventory": {
+    ".agents/plugins/agent-skills/agents/adversary.md": "554ed33195af10a3007910694a18378c2ece712dcfd3f770300b6a1b12b18d3d",
+    ".agents/plugins/agent-skills/agents/eval.md": "78c4274e9123d8a838a148d9389f2c83448b6e70d066a318cb259464db7ddf5c",
+    ".agents/plugins/agent-skills/assembly.json": "383504b738cd8ce5c4a11d19dc822b073982e15ca268fdce606095f6fdeb26b2",
+    ".agents/plugins/agent-skills/plugin.json": "2f60af597e8ad0929fad0abfe175e0908436a4fdf0b0c306980bbb807096f16a",
+    ".agents/plugins/agent-skills/rules/file-management.md": "eeeed67589e4fd8cc2cb98a7fd0d35dc7875b199c50fde8a1bdd78097661ee3a",
+    ".agents/plugins/agent-skills/skills/file-management/agents/openai.yaml": "e46a166721039c5b81f93683c340f5a6ca7963c2def86a94dac04a24ee466718",
+    ".agents/plugins/agent-skills/skills/file-management/core.md": "33772fdfeb73c354b9d12a3d74fda19b3f995d98b61869264f1405e316f90bc6",
+    ".agents/plugins/agent-skills/skills/file-management/references/intermediate-work.md": "0d5e20f06c417f2abea408ed542b33313a94db904a75f8f2b31e42569f4d1447",
+    ".agents/plugins/agent-skills/skills/file-management/references/naming.md": "22d020eed251d77533bc207856701692143a6722cc3e0dc3014e8aaf6ef57be8",
+    ".agents/plugins/agent-skills/skills/file-management/references/safe-operations.md": "bd36ebfc53186caccae4452265f76e85cf51910292b0909664f28e2c24311b8a",
+    ".agents/plugins/agent-skills/skills/file-management/SKILL.md": "e7611c9bed441e8d1f83068755656fdf4cd23084ef08c0711fdbcd237a5d73da",
+    ".agents/plugins/agent-skills/skills/para-vault/agents/openai.yaml": "d4a7a56bafd0ec95bed3f54b42375f06a7d0179777da27789ebf5ac753353ced",
+    ".agents/plugins/agent-skills/skills/para-vault/references/file-workflows.md": "4cbacdeb4f57d904548433130b70e2e8f5c93e8dbd8622c74a70754b8a8fa170",
+    ".agents/plugins/agent-skills/skills/para-vault/references/folder-conventions.md": "dfa43b4d1252305a0b71dddde73d7801db6c4424f83de9e2aeaa31439cd81ca4",
+    ".agents/plugins/agent-skills/skills/para-vault/references/frontmatter-schemas.md": "230387db84fab102c37597f47ce259293b31c909ca3a5f68a4af3db62a15efe7",
+    ".agents/plugins/agent-skills/skills/para-vault/references/navigation.md": "4f4b4602717d645220327cefd6d202cf8b1234b64be7d9dbe9853c17e5a0f5d8",
+    ".agents/plugins/agent-skills/skills/para-vault/SKILL.md": "15f158caab07b28291f899b6af4e8a207c9daf2ef98fcdd1fcd3c3c366900fd0",
+    ".agents/plugins/agent-skills/skills/plugin-builder/agents/adversary.md": "554ed33195af10a3007910694a18378c2ece712dcfd3f770300b6a1b12b18d3d",
+    ".agents/plugins/agent-skills/skills/plugin-builder/agents/eval.md": "78c4274e9123d8a838a148d9389f2c83448b6e70d066a318cb259464db7ddf5c",
+    ".agents/plugins/agent-skills/skills/plugin-builder/agents/openai.yaml": "2140c91036cab6472575b6e9bb378232ae58b77239bf39e5e9d191bb1cd57c34",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/antigravity.md": "92871289c89562f6c210d6380f394ddf8c5387a7849669c075fe140905fb10e8",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/claude.md": "f8340b9ad5275c6ebf672e1876fff2dded38a79b9ba4405a4e54e604b9b38376",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/codex.md": "21ca853e863b390637643f893643fec004b6781357a6e04694d18f07d2655862",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/executable-contract.md": "1e129038031ed7fc5ff72aba0a2d79caa6e8b024b809be109d5ecb528e24e34b",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/hermes.md": "94e830956383e476b3c29a0132fb95cffe349fbfb40e9e1446b9750d7ff549a9",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/improvement-loop.md": "1590585889c39402669e7a314469d13c401bc5d9b22b6e0c043ff623010a67ee",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/muse.md": "a677311c5b40c1b116df2afc2ca3a2a207ef88ffad3d8b144e2ce348e8ced49e",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/openclaw.md": "9a0e8e6ad8e9a4abc6e76cad5a92ac5353a0e74218db831702cfe7b0e8a171fb",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/package-organization.md": "0d1cfb6ba6636b31688639f7ef37fe6c9949f48dbb9cf3330e9e99154adb8658",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/runtime-capabilities.md": "fbb82e1efeb25db93bb3f9236decac0b3310503e034814c482de7e3254e12b70",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/validation.md": "306840ea5887d9f3a771ea93a81cf90e6d50891501e1aa99bee4d641042f7a8d",
+    ".agents/plugins/agent-skills/skills/plugin-builder/references/workspace-installation.md": "3e0e1309a8f57b0057c14cb4f43ee4450af9952b63955e0d58a02435338d420a",
+    ".agents/plugins/agent-skills/skills/plugin-builder/SKILL.md": "fda9047d046e337ab9a8673ec8806f3b503880edaf09ed6f3be7679319fed13a",
+    ".agents/plugins/agent-skills/skills/README.md": "51ae4480b492d47e649730d6115964e38b2c2ae9d2b39400b5191402158d1a06",
+    ".agents/plugins.json": "4a559b0c6431060125389059804b2732859ebd46e1d96237c0e7b2216874e3cf",
+    ".claude-plugin/plugin.json": "d4923c44bb3c24e0d159b7b8fc905d867b5775b84319dff0c45d5ff23c7b5c29",
+    ".codex-plugin/plugin.json": "9bc9818ffea2cfa35fde87cdcd0540818ecf2ba2621d44c70d751f0c00884972",
+    "gemini-extension.json": "6f888d841c0baa7d2792f0a5d062432af5f3e633674fdd82541194a9ce751613",
+    "plugin.json": "ff7b032cd3cd7dcba8dc56d72653074db33ab1bc36f9d0aed93253331d898b79",
+    "skills/file-management/agents/openai.yaml": "e46a166721039c5b81f93683c340f5a6ca7963c2def86a94dac04a24ee466718",
+    "skills/file-management/core.md": "33772fdfeb73c354b9d12a3d74fda19b3f995d98b61869264f1405e316f90bc6",
+    "skills/file-management/references/intermediate-work.md": "0d5e20f06c417f2abea408ed542b33313a94db904a75f8f2b31e42569f4d1447",
+    "skills/file-management/references/naming.md": "22d020eed251d77533bc207856701692143a6722cc3e0dc3014e8aaf6ef57be8",
+    "skills/file-management/references/safe-operations.md": "bd36ebfc53186caccae4452265f76e85cf51910292b0909664f28e2c24311b8a",
+    "skills/file-management/SKILL.md": "e7611c9bed441e8d1f83068755656fdf4cd23084ef08c0711fdbcd237a5d73da",
+    "skills/para-vault/agents/openai.yaml": "d4a7a56bafd0ec95bed3f54b42375f06a7d0179777da27789ebf5ac753353ced",
+    "skills/para-vault/references/file-workflows.md": "4cbacdeb4f57d904548433130b70e2e8f5c93e8dbd8622c74a70754b8a8fa170",
+    "skills/para-vault/references/folder-conventions.md": "dfa43b4d1252305a0b71dddde73d7801db6c4424f83de9e2aeaa31439cd81ca4",
+    "skills/para-vault/references/frontmatter-schemas.md": "230387db84fab102c37597f47ce259293b31c909ca3a5f68a4af3db62a15efe7",
+    "skills/para-vault/references/navigation.md": "4f4b4602717d645220327cefd6d202cf8b1234b64be7d9dbe9853c17e5a0f5d8",
+    "skills/para-vault/SKILL.md": "15f158caab07b28291f899b6af4e8a207c9daf2ef98fcdd1fcd3c3c366900fd0",
+    "skills/plugin-builder/agents/adversary.md": "554ed33195af10a3007910694a18378c2ece712dcfd3f770300b6a1b12b18d3d",
+    "skills/plugin-builder/agents/eval.md": "78c4274e9123d8a838a148d9389f2c83448b6e70d066a318cb259464db7ddf5c",
+    "skills/plugin-builder/agents/openai.yaml": "2140c91036cab6472575b6e9bb378232ae58b77239bf39e5e9d191bb1cd57c34",
+    "skills/plugin-builder/references/antigravity.md": "92871289c89562f6c210d6380f394ddf8c5387a7849669c075fe140905fb10e8",
+    "skills/plugin-builder/references/claude.md": "f8340b9ad5275c6ebf672e1876fff2dded38a79b9ba4405a4e54e604b9b38376",
+    "skills/plugin-builder/references/codex.md": "21ca853e863b390637643f893643fec004b6781357a6e04694d18f07d2655862",
+    "skills/plugin-builder/references/executable-contract.md": "1e129038031ed7fc5ff72aba0a2d79caa6e8b024b809be109d5ecb528e24e34b",
+    "skills/plugin-builder/references/hermes.md": "94e830956383e476b3c29a0132fb95cffe349fbfb40e9e1446b9750d7ff549a9",
+    "skills/plugin-builder/references/improvement-loop.md": "1590585889c39402669e7a314469d13c401bc5d9b22b6e0c043ff623010a67ee",
+    "skills/plugin-builder/references/muse.md": "a677311c5b40c1b116df2afc2ca3a2a207ef88ffad3d8b144e2ce348e8ced49e",
+    "skills/plugin-builder/references/openclaw.md": "9a0e8e6ad8e9a4abc6e76cad5a92ac5353a0e74218db831702cfe7b0e8a171fb",
+    "skills/plugin-builder/references/package-organization.md": "0d1cfb6ba6636b31688639f7ef37fe6c9949f48dbb9cf3330e9e99154adb8658",
+    "skills/plugin-builder/references/runtime-capabilities.md": "fbb82e1efeb25db93bb3f9236decac0b3310503e034814c482de7e3254e12b70",
+    "skills/plugin-builder/references/validation.md": "306840ea5887d9f3a771ea93a81cf90e6d50891501e1aa99bee4d641042f7a8d",
+    "skills/plugin-builder/references/workspace-installation.md": "3e0e1309a8f57b0057c14cb4f43ee4450af9952b63955e0d58a02435338d420a",
+    "skills/plugin-builder/SKILL.md": "fda9047d046e337ab9a8673ec8806f3b503880edaf09ed6f3be7679319fed13a",
+    "skills/README.md": "51ae4480b492d47e649730d6115964e38b2c2ae9d2b39400b5191402158d1a06"
+  },
+  "install_commands": [
+    "codex plugin marketplace add D:\\repos\\NyssaAI\\skills\\.temp\\codex-host-marketplace --json",
+    "codex plugin add agent-skills@nyssa-eval-local --json"
+  ],
+  "case_records": [
+    {
+      "case": "H01",
+      "raw_log_sha256": "efb8eb13cbffca43a7d053c3ecdc34d429349d8a7063182c9d9017ba4dcb7af0",
+      "session_id": "01a0eef8-b6db-78b3-938a-2c0770c4e9ae",
+      "agent_messages": [
+        "I’ll check the folder and its local instructions, then move the two files into the requested folders and verify their names and contents. I’ll also report which plugin skills and startup rules were available at the start.",
+        "The folder has exactly the two files you described. The file-management skill is available and points to a startup rule I need to read before moving them. I found no `AGENTS.md` in the folder or its immediate parent.",
+        "Moved [Client Brief.txt](<C:/Users/jmayn/AppData/Local/Temp/nyssa-eval-host-20260929/Reference/Client Brief.txt>) to `Reference` and [2026.09.12-meeting-notes.txt](<C:/Users/jmayn/AppData/Local/Temp/nyssa-eval-host-20260929/Meetings/2026.09.12-meeting-notes.txt>) to `Meetings`. Their names and extensions are unchanged, and both files’ SHA-256 hashes match the originals. I did not assign a date to the brief.\n\nBefore the task, the `agent-skills:file-management` plugin skill was available. Its `core.md` startup rules were available to read but had not been loaded by the host; I read them before moving the files. No applicable `AGENTS.md` was present."
+      ]
+    },
+    {
+      "case": "H02",
+      "raw_log_sha256": "96421dc7d387577962c61a928850cfceda133c97b6186bd0a1174111b7007619",
+      "session_id": "01a0eef8-b6db-78b3-938a-2c0770c4e9ae",
+      "agent_messages": [
+        "I’ll apply the PARA vault guidance for this task. I’ll inspect the vault and the capture, file it under the active launch project, then verify that the original remains intact and points clearly to the filed copy. I can report what guidance I read; I can’t directly inspect earlier context-loading telemetry.",
+        "The shell is failing before it starts any command, so I’m switching to the available file-viewing interface to inspect the vault and skill text. I haven’t changed any files yet.",
+        "I couldn’t safely file `vault/0-inbox/rough-plan.md`, and I made no changes. The shell failed before it could read the vault or skill files. The browser also blocked access to the local files under its security policy, so I couldn’t inspect the capture, choose a verified destination, or create navigation to a filed copy.\n\n**Guidance selected:** the repository’s `para-vault` skill for placement and navigation, alongside the file-management foundation in the `AGENTS.md` instructions you supplied. I did not load the `para-vault` skill file, so I can’t claim it was loaded only for this task. I can observe the tool failures and the instructions supplied here; earlier context-loading telemetry is unavailable to me.\n\nPlease provide the vault tree, the capture’s contents, and `skills/para-vault/SKILL.md`, or retry when local file access is working."
+      ]
+    },
+    {
+      "case": "H03",
+      "raw_log_sha256": "70b5ce9b65d6ee4fac4fe697246d3957d9778524dd30b86e38f549c9ffb5bf74",
+      "session_id": "01a0eefb-5b8f-7fb2-8acc-2f86d15adafe",
+      "agent_messages": [
+        "I’ll inspect the installed plugin and the host’s registered capabilities, then invoke only named agents that the host actually exposes. I’ll keep the checks read only.",
+        "The host lists three skills from this package. I found agent definition files in the plugin, but files alone do not show that the host registered them. I’ll check the manifest and available invocation tools next. I’m using the plugin-builder skill’s runtime guidance for this inspection.",
+        "The package contains `adversary.md` and `eval.md`, while `plugin-builder` appears as a skill. So far, the active host exposes those three skills but no plugin-specific named-agent invocation. I’m doing one final read-only check of the host surface before reporting that limit.",
+        "The installed `nyssa-eval-local/agent-skills` package is **version 0.2.0**. This Codex host discovers three skills: `file-management`, `para-vault`, and `plugin-builder`. I read the [plugin-builder skill](/C:/Users/jmayn/.codex/plugins/cache/nyssa-eval-local/agent-skills/0.2.0/skills/plugin-builder/SKILL.md) for this inspection.\n\nThe package contains [adversary](/C:/Users/jmayn/.codex/plugins/cache/nyssa-eval-local/agent-skills/0.2.0/skills/plugin-builder/agents/adversary.md) and [eval](/C:/Users/jmayn/.codex/plugins/cache/nyssa-eval-local/agent-skills/0.2.0/skills/plugin-builder/agents/eval.md) agent definition files. **None of `plugin-builder`, `adversary`, or `eval` is exposed here as a registered named agent.** The host offers generic agent spawning, but no plugin-specific named-agent invocation for them. I therefore invoked none and cannot provide agent receipts.\n\nThe verified host capability is skill discovery and use. The package’s manifest declares `Read` and `Write`, but that declaration does not establish named-agent registration or runtime behavior. I found no MCP, CLI, or hook surface in this installed package. The inspection was read only; I changed no project files, plugins, or settings."
+      ]
+    }
+  ],
+  "H01_file_hashes": {
+    "Reference/Client Brief.txt": "b98e57838bdaad5e49f4354ed472fc5b8a0c8131f4f9f0a7945620c135e6a31a",
+    "Meetings/2026.09.12-meeting-notes.txt": "136732f39aa16567f0ada0e12ecd5a51b36060d1944a8deb31377ed38ef75196"
+  },
+  "H02_tool_error": "exec_command failed: Failed to create unified exec process: helper_unknown_error: setup refresh had errors",
+  "H03_missing": "No registered named-agent invocation for plugin-builder, adversary, or eval was exposed. Package contains definition files only. Update isolation was not exercised."
+}

@@ -1,123 +1,51 @@
 # NyssaAI Agent Skills
 
-Version: **0.1.0**
+Version: **0.2.0** (candidate; see [latest evaluation](evals/LATEST.md)).
 
-Foundational skills and conventions for how Jeremy and NyssaAI's AI agents organize information, manage files, and carry out work. Built with a universal layout compatible with **Google Antigravity (AGY)**, **Claude Code**, **OpenAI Codex**, **OpenClaw**, and **Hermes Agent**.
+Three skills share one maintained source tree: [file-management](skills/file-management/SKILL.md),
+[para-vault](skills/para-vault/SKILL.md), and
+[plugin-builder](skills/plugin-builder/SKILL.md). File-management has a lean
+[startup foundation](skills/file-management/core.md); PARA guidance is selected
+only for vault work. The plugin-builder skill provides the review, adversary,
+assembly, and eval method for updates to this repository.
 
----
+## Package and activation
 
-## Installation & Usage
+The canonical content lives under `skills/`. The root `plugin.json`,
+`.codex-plugin/plugin.json`, and `.claude-plugin/plugin.json` identify portable
+and host packages. `scripts/assemble.py write` builds the project Antigravity
+plugin at `.agents/plugins/agent-skills/` and refreshes the managed foundation
+in `AGENTS.md`; the generated Antigravity rule and `hooks/hooks.json` deliver
+the same core to supported plugin sessions. Codex requires users to trust the
+installed hook before it runs. `scripts/assemble.py check` verifies exact source equality
+without modifying files. `CLAUDE.md` imports the root anchor for a project that
+loads it. A plugin installed into an unrelated project does not automatically
+bring that project's startup anchor with it; startup delivery depends on the
+host's hook or rule activation.
 
-### 1. Claude Code
+| Host | Package route | Activation evidence |
+| --- | --- | --- |
+| Antigravity CLI / 2.0 / IDE | The generated `.agents/plugins/agent-skills/` is the [documented workspace plugin location](https://antigravity.google/docs/plugins). | Native discovery and fresh-session behavior remain to be tested per surface. `gemini-extension.json` is Gemini CLI metadata, not an Antigravity plugin manifest. |
+| Codex | The root and `.codex-plugin` manifests plus `skills/` form the [portable package source](https://developers.openai.com/plugins/build/plugins). | An arbitrary clone does not register a plugin. Use a supported plugin catalog/install flow and verify the skills appear in a new session. |
+| Claude Code | `.claude-plugin/plugin.json` declares the skills and the named `agent-skills:adversary` and `agent-skills:eval` agents. Use the [Claude plugin manager](https://code.claude.com/docs/en/plugins-reference) or local `--plugin-dir` for development. | Manifest validation passes; this machine's expired OAuth prevents a fresh agent invocation. A project's root `CLAUDE.md` must be installed separately for startup rules. |
+| Claude Cowork | The Claude package may be uploaded through its supported plugin flow. | Upload and runtime behavior have not been verified here. |
+| OpenClaw | Install this package as a [compatible bundle](https://docs.openclaw.ai/plugins/bundles) with `openclaw plugins install <package-path>`, then inspect the detected format and loaded skills. | Bundle installation, startup guidance, and skill invocation remain unverified here. A native runtime adapter is unnecessary for these Markdown skills. |
+| Hermes Agent | Shared Agent Skills content is available for its [plugin/skill flow](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins). | No Hermes project plugin has been assembled or activated yet. |
+| Muse | Only a proposed JSON-executable shim contract is known. | Loader, manifest, and installation are unverified; no support claim. |
 
-#### Via NyssaAI Curated Marketplace (Recommended)
-```bash
-/plugin marketplace add github.com/NyssaAI/plugin-marketplace
-/plugin install agent-skills@nyssaai
-```
+The exact per-host status and missing tests are in the
+[review record](docs/2026.09.29-plugin-review.md) and
+[coverage matrix](evals/matrix.json). Placement, manifest parsing, and skill
+invocation are separate checks. Do not infer runtime support from a shared
+`SKILL.md` alone.
 
-#### Direct Repository Add
-```bash
-/plugin add github.com/NyssaAI/agent-skills
-```
+## Development and evaluation
 
-### 2. OpenAI Codex
+Run `python scripts/assemble.py write` after changing any skill, then
+`python scripts/assemble.py check`. The [eval catalog](evals/README.md)
+contains the behavioral cases, run commands, retained result format, and
+latest-score checks. Temporary work belongs under `.temp/`; retained review
+history belongs under `docs/`. User settings, when a plugin needs them, belong
+in a separate `.{plugin-name}/` directory outside installed code.
 
-Add to your `.codex` configuration or clone into your skills directory:
-```bash
-git clone https://github.com/NyssaAI/agent-skills.git
-```
-Codex discovers skills via `.codex-plugin/plugin.json` and `skills/`.
-
-### 3. Google Antigravity (AGY)
-
-Include as a workspace customization in `.agents/` or install globally via `~/.gemini/config/plugins/`. Discovered automatically via `gemini-extension.json` and `.agents/plugins.json`.
-
-### 4. OpenClaw & Hermes Agent
-
-Both runtimes natively read the AgentSkills.io standard directory:
-```bash
-git clone https://github.com/NyssaAI/agent-skills.git
-```
-Point your agent runtime or extra skills directory to `./skills/`.
-
----
-
-## Skills Catalog
-
-| Skill | Description | Supported Agents |
-| :--- | :--- | :--- |
-| [**`para-vault`**](skills/para-vault/) | Apply PARA placement and vault conventions for layout, metadata, indexes, and archiving. | AGY, Claude, Codex, OpenClaw, Hermes |
-| [**`file-management`**](skills/file-management/) | Manage files and folders generally, including time-bound naming, `.temp/` intermediate work, and safe operations. | AGY, Claude, Codex, OpenClaw, Hermes |
-| [**`plugin-builder`**](skills/plugin-builder/) | Build and organize plugins with shared skills, host adapters, and verified packaging. | Defaults to AGY, Codex, Claude Code, Claude Cowork, Hermes, OpenClaw; Muse provisional |
-
----
-
-`file-management` handles general naming and safe file operations. `para-vault` adds the folder, metadata, navigation, and workflow conventions for PARA vaults. Use both when a vault task needs general file operations.
-
-## Repository Structure
-
-```
-.
-├── .agents/
-│   └── plugins.json                   # Antigravity skill declarations
-├── .claude-plugin/
-│   └── plugin.json                    # Claude Code plugin manifest
-├── .codex-plugin/
-│   └── plugin.json                    # Codex plugin manifest
-├── gemini-extension.json              # Antigravity extension metadata
-├── AGENTS.md                          # Universal agent instruction anchor
-├── CLAUDE.md                          # Claude Code reference
-├── GEMINI.md                          # Antigravity reference
-├── skills/                            # Canonical skills directory
-│   ├── para-vault/                    # PARA placement and vault conventions
-│   │   ├── SKILL.md
-│   │   ├── agents/openai.yaml
-│   │   └── references/
-│   │       ├── folder-conventions.md
-│   │       ├── navigation.md
-│   │       ├── frontmatter-schemas.md
-│   │       └── file-workflows.md
-│   ├── file-management/               # File conventions and operations
-│   │   ├── SKILL.md
-│   │   ├── agents/openai.yaml
-│   │   └── references/
-│   │       └── safe-operations.md
-│   └── plugin-builder/                # Plugin packaging across harnesses
-│       ├── SKILL.md
-│       ├── agents/openai.yaml
-│       └── references/
-├── LICENSE                            # MIT License
-└── README.md
-```
-
----
-
-## Adding a New Skill
-
-1. Create a new directory under `skills/<skill-name>/`.
-2. Add a `SKILL.md` with standard frontmatter:
-   ```yaml
-   ---
-   name: <skill-name>
-   description: >-
-     A concise description explaining when the agent should trigger this skill.
-   ---
-
-   # Skill Name
-
-   ## Workflow
-   Step-by-step guidance.
-   ```
-3. If the skill has complex rules or schemas, put them into `references/` and link to them using relative paths.
-4. Optional: add `agents/openai.yaml` if you want custom prompt starters or titles in OpenAI Codex UI.
-
----
-
-## Evaluation
-
-The [evaluation suite](evals/README.md) provides 24 isolated behavioral cases, a weighted scoring rubric with critical failure gates, and reproducible evidence exports. See the [rubric and coverage](docs/eval-suite.md).
-
-## License
-
-[MIT](LICENSE) © 2026 NyssaAI
+[MIT License](LICENSE) © 2026 NyssaAI.

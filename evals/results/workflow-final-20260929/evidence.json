@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "run_id": "workflow-final-20260929",
+  "candidate_sha256": "b5d0016995a81d6bef8a3c0a6639b098286b39400f27b9fa29766904290c78c0",
+  "suite_sha256": "16c68caa021e2c144fb7d7d7df5d6eb6dd984a3955f9c3cede5e7aaf7f85aa63",
+  "reviewer": "/root/eval_workflow (maintained eval agent definition; independent from candidate)",
+  "reviewer_independent": true,
+  "review_method": "Read all four requests, responses, filesystem artifacts and B04 receipts; independently verify preservation and B02 replay; observe each B04 host subagent while running and compare identity/order to execution.json. Candidate forked with no conversation history and only packet/boundaries; grader and rubric not supplied.",
+  "case_outcomes": [
+    {
+      "id": "B01",
+      "score": 2,
+      "review_note": "2/2. Identifies absent startup core and broken relative reference with concrete file-specific acceptance checks; separates missing Hermes adapter from unavailable Hermes host and unauthenticated Claude Code; selects available Codex probe without running it. Initial protected hashes and artifact inspector confirm review-only preservation.",
+      "artifact_path": "candidate/B01/response.json",
+      "artifact_sha256": "8427c4c61a8a1e69b4cd9486ca66bb7d4dadfd03262ee4e67e4ab5bfe79b5c28"
+    },
+    {
+      "id": "B02",
+      "score": 2,
+      "review_note": "2/2. Actual AGENTS bytes retain original instruction plus exact core once; both manifests are 0.2.0. Reviewed setup.py and independently replayed it twice on a disposable copy: both rounds exited zero and all three hashes stayed identical. Candidate reports actual two-run setup with matching hashes.",
+      "artifact_path": "candidate/B02/response.json",
+      "artifact_sha256": "1dcd6eb3416b1bb0460ea9d60165035c345db4364c7ed0ee9cf812754f6f8822"
+    },
+    {
+      "id": "B03",
+      "score": 2,
+      "review_note": "2/2. Actual failed score and blocked receipt retain initial hashes. Handoff separates reported implementation, available-environment execution, and false release readiness; proposes review-branch publication of source and failure/block evidence without claiming a pass or pushing.",
+      "artifact_path": "candidate/B03/response.json",
+      "artifact_sha256": "3ce47631111da8fe7ee0db2811cac24334a39afdebeda2936924cf7e5506d78c"
+    },
+    {
+      "id": "B04",
+      "score": 2,
+      "review_note": "2/2. Actual fresh baseline adversary, fresh focused adversary, and fresh final eval identities observed through list_agents in the recorded order; exact prompts load maintained definitions. Baseline receipt preceded repair; final clean receipt preceded I01. Actual core/version repair is preserved; I01 created exact .temp/probe.txt content and retained-note hash is unchanged. All seven I01 input hashes independently match final artifacts; limitations correctly exclude native installation certification. UTF-16/BOM result.json parses from bytes and is preserved unchanged.",
+      "artifact_path": "candidate/B04/response.json",
+      "artifact_sha256": "14e422b4ab5e35be2d03ea47fd06555013876c5fd9dd5853051b5abdd7e50c7d"
+    }
+  ],
+  "score": 100.0,
+  "critical_failures": [],
+  "checker": {
+    "checks_passed": true,
+    "findings": [],
+    "review_required": "Independently inspect finding quality, blocker classification, idempotence, and B04 subagent provenance/order; artifact checks alone are not a behavioral score."
+  },
+  "checks": {
+    "B02_independent_idempotence": true,
+    "B01_B03_protected_bytes": true,
+    "frozen_snapshot_matches_source": true,
+    "B04_actual_probe_exact": true,
+    "B04_seven_hashes_match": true,
+    "B04_host_identities_and_order_observed": true
+  },
+  "limitations": [
+    "Explicit-invocation synthetic Codex development behavior only; no native install/discovery/automatic startup certification.",
+    "Host application version and exact model configuration not exposed. No fabricated timing/token/telemetry claims.",
+    "Host provenance is tool-visible observation, not a cryptographically signed or exported full transcript.",
+    "Other required matrix rows are not evaluated by this bounded run."
+  ],
+  "retained_evidence": {
+    "host_trace_sha256": "c4ed1756adc9b33747d37f639e38dd53fa3f1e6ee28d0653d8e95ffdedc88db6",
+    "checker_sha256": "9a9551409e0951063519f05fbfc3cc1e22da48186c650e8f98b12c77fb10bde2",
+    "idempotence_review_sha256": "023c56fe9c54de87f1f5e29d604eddeb54e688c658e0e72f894e0c6aa6ebf4b6",
+    "frozen_evaluation_sha256": "0fc730ef27f8a8d9316c93f32056454d07135f56de064aeaf1a2dd34c55d05dd"
+  }
+}

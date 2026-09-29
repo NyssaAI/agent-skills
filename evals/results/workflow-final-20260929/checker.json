@@ -1,0 +1,5 @@
+{
+  "checks_passed": true,
+  "findings": [],
+  "review_required": "Independently inspect finding quality, blocker classification, idempotence, and B04 subagent provenance/order; artifact checks alone are not a behavioral score."
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "run_id": "final-v2-claude-code-startup-20260929",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Claude Code",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T21:31:57.837304+00:00",
+  "completed_at": "2026-09-29T21:31:57.837640+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9",
+  "suite_revision": "0.4.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "assembled_artifact_inventory_sha256": "b3f2a4fef95289228f58933345890ab74ae9f563c86949ee88cf609a7c65fca1",
+  "stage": "Authentication check; no installed session",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "claude auth status --json"
+  ],
+  "exit_status": "Not run",
+  "diagnostic": "claude auth status --json returned loggedIn:false and authMethod:none. No authenticated installed-plugin H01-H03 session can start.",
+  "next_check": "Renew Claude Code authentication, install the package, and retain fresh H01-H03 host evidence.",
+  "evidence_omitted": "No trusted host export or complete H01-H03 trace exists. Disposable raw AGY output and temporary package copy remain under .temp; the durable diagnostic captures the result."
+}

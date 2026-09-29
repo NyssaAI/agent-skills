@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "run_id": "final-codex-startup-20260929",
+  "state": "unverified",
+  "key": [
+    "startup-and-discovery",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T21:01:11.717939+00:00",
+  "completed_at": "2026-09-29T21:05:09.649086+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "artifact_inventory": "See evals/results/final-builder-20260929/frozen-evaluation.json for the frozen 34-file assembled inventory",
+  "stage": "H01 executed; H02 resumed but aborted on shell initialization; H03 discovery executed; no complete H01-H03 attested run",
+  "last_completed_case": "H01 and H03 partially observed",
+  "command_or_host_action_attempted": [
+    "codex plugin marketplace add <isolated local marketplace> --json",
+    "codex plugin add agent-skills@nyssa-eval-local --json",
+    "codex exec --json --sandbox danger-full-access --skip-git-repo-check --cd <isolated temp project> <H01>",
+    "codex exec resume --json --skip-git-repo-check <H01 thread> <H02>",
+    "codex exec --json --sandbox danger-full-access --skip-git-repo-check --cd <isolated temp project> <H03>"
+  ],
+  "exit_status": "H01 exit 0; H02 exit 0 with no file action after tool errors; H03 exit 0; overall unverified",
+  "diagnostic": "Installed 0.2.0 skill discovery worked, but H01 reported core.md was not loaded at startup. H02 shell setup refresh failed before local read or filing; browser file URL was blocked. H03 found no plugin-specific named agents registered. No trusted host attestation verifier exists for startup Pass.",
+  "next_check": "Repair/startup-deliver canonical core to unrelated Codex projects and confirm native named-agent route or remove that claim; rerun H01-H03 in fresh installed sessions after the update, verify settings isolation, and add trusted host attestation before accepting Pass.",
+  "evidence_omitted": "Bulky raw CLI logs remain in ignored .temp/ and are not the sole record; only redacted synthetic responses and diagnostics are retained.",
+  "evidence": "evidence.json"
+}

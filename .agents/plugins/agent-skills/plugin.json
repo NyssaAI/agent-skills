@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "agent-skills",
+  "description": "Foundational skills and conventions for Jeremy and NyssaAI's AI agents."
+}

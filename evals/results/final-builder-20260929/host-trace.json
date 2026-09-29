@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "host": "Codex",
+  "host_version": "application version unavailable",
+  "model": "GPT-6 system identity; exact runtime model unavailable",
+  "source": "Evaluator-observed collaboration.spawn_agent/list_agents and candidate-retained stage receipts; no signed transcript",
+  "invocations": [
+    {
+      "tool": "collaboration.spawn_agent",
+      "returned_task_name": "/root/eval/builder_candidate",
+      "stage": "fresh B01-B04 candidate",
+      "checks_passed": true
+    },
+    {
+      "tool": "collaboration.spawn_agent",
+      "returned_task_name": "/root/eval/builder_candidate/b04_baseline_adversary",
+      "stage": "B04 baseline",
+      "checks_passed": true
+    },
+    {
+      "tool": "collaboration.spawn_agent",
+      "returned_task_name": "/root/eval/builder_candidate/b04_candidate_adversary",
+      "stage": "B04 focused review",
+      "checks_passed": true
+    },
+    {
+      "tool": "collaboration.spawn_agent",
+      "returned_task_name": "/root/eval/builder_candidate/b04_final_eval",
+      "stage": "B04 final I01",
+      "checks_passed": true
+    }
+  ]
+}

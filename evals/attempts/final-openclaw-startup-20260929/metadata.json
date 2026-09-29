@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "run_id": "final-openclaw-startup-20260929",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "OpenClaw",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-09-29T21:07:22.965221+00:00",
+  "completed_at": "2026-09-29T21:07:22.965233+00:00",
+  "candidate_version": "0.2.0",
+  "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0",
+  "suite_revision": "0.3.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "artifact_inventory": "See evals/results/final-builder-20260929/frozen-evaluation.json for the frozen 34-file assembled inventory",
+  "stage": "executable availability inventory; no behavioral case started",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "Get-Command openclaw -ErrorAction SilentlyContinue",
+    "openclaw --version"
+  ],
+  "exit_status": "Not run: executable not found",
+  "diagnostic": "openclaw executable was absent from PATH; no installed runtime session or package probe could start.",
+  "next_check": "Install OpenClaw CLI, install the exact compatible bundle, inspect detected skills, and execute H01-H03 in a fresh session.",
+  "evidence_omitted": "Bulky raw CLI logs remain in ignored .temp/ and are not the sole record; only redacted synthetic responses and diagnostics are retained."
+}

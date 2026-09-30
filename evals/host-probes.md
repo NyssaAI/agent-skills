@@ -29,6 +29,10 @@ Code/Cowork, use their respective supported plugin flows; a root `CLAUDE.md`
 inside the plugin is not project startup context. For OpenClaw, install this
 package as a compatible bundle and verify detected skill roots; test startup
 guidance separately. For Hermes, first build and enable its native project
-adapter, then run the same probes. If a
-host cannot run, record the exact missing executable, login, or UI step in
+adapter, then run the same probes. For Cursor, install via marketplace or
+InstallPlugin into the plugin cache and probe discovery plus H01-H03; mark
+static package support separately from verified runtime. For Grok Bot, use the
+same Cursor package (no SessionStart hooks — foundation on-demand); if marketplace
+install is unavailable, document any UpdateState / workflows-copy fallback used.
+If a host cannot run, record the exact missing executable, login, or UI step in
 `attempts/` and leave its matrix row without a score.

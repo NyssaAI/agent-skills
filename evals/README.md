@@ -22,7 +22,9 @@ Use `run.py` to prepare, execute, score, export, and verify runs. The [scoring r
 
 The machine-readable [coverage matrix](matrix.json) defines each required
 suite, harness, OS/architecture, and configuration row. Muse is provisional and
-explicitly non-required pending a verified loader. The matrix currently
+explicitly non-required pending a verified loader. Cursor and Grok Bot rows are
+non-required static/package-support entries (shared `.cursor-plugin` shim; Grok
+Bot has no SessionStart); do not treat them as verified runtime. The matrix currently
 records Windows x86-64 as the available development platform; macOS/Linux
 binary behavior is inapplicable because this package bundles no binary. This
 does not imply other platforms are runtime verified.

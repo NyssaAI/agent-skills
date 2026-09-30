@@ -1,6 +1,6 @@
 # NyssaAI Agent Skills
 
-This repository is the canonical public catalog of foundational skills and conventions for Jeremy and NyssaAI's AI agents, engineered for cross-agent compatibility across **Google Antigravity (AGY)**, **Claude Code**, **OpenAI Codex**, **OpenClaw**, and **Hermes Agent**.
+This repository is the canonical public catalog of foundational skills and conventions for Jeremy and NyssaAI's AI agents, engineered for cross-agent compatibility across **Google Antigravity (AGY)**, **Claude Code**, **OpenAI Codex**, **Cursor**, **Grok Bot**, **OpenClaw**, and **Hermes Agent**.
 
 ## Repository Conventions
 
@@ -12,13 +12,14 @@ This repository is the canonical public catalog of foundational skills and conve
   - Codex / OpenAI UI: `skills/<skill-name>/agents/openai.yaml`
   - Claude Code: `.claude-plugin/plugin.json`
   - Codex Plugin: `.codex-plugin/plugin.json`
+  - Cursor / Grok Bot: `.cursor-plugin/plugin.json` (shared shim; Grok Bot has no SessionStart)
   - Antigravity: generated `.agents/plugins/agent-skills/plugin.json`; `gemini-extension.json` is separate Gemini CLI metadata
 
 ## Available Skills
 
 - **para-vault** (`skills/para-vault/`): Apply PARA placement and vault conventions for layout, metadata, indexes, and archiving.
 - **file-management** (`skills/file-management/`): Manage files and folders generally, including time-bound naming, `.temp/` intermediate work, and safe operations within an existing folder scheme.
-- **plugin-builder** (`skills/plugin-builder/`): Build and organize plugins with shared skills and target-specific packaging for Antigravity, Codex, Claude Code, Claude Cowork, Hermes Agent, OpenClaw, and provisional Muse.
+- **plugin-builder** (`skills/plugin-builder/`): Build and organize plugins with shared skills and target-specific packaging for Antigravity, Codex, Claude Code, Claude Cowork, Cursor, Grok Bot, Hermes Agent, OpenClaw, and provisional Muse.
 
 <!-- agent-skills:file-management:begin -->
 # File-management foundation

@@ -2,9 +2,10 @@
 name: plugin-builder
 description: >-
   Build agent plugins for Antigravity, Codex, Claude Code, Claude Cowork,
-  Hermes Agent, OpenClaw, and provisional Muse from one maintained core. Use
-  for plugin packages, routers, startup utilities, CLI or MCP capabilities,
-  host adapters, project installation, and evaluating or improving an existing plugin.
+  Cursor, Grok Bot, Hermes Agent, OpenClaw, and provisional Muse from one
+  maintained core. The Cursor shim also covers Grok Bot. Use for plugin
+  packages, routers, startup utilities, CLI or MCP capabilities, host adapters,
+  project installation, and evaluating or improving an existing plugin.
 ---
 
 # Plugin Builder
@@ -24,10 +25,13 @@ unless the requested change requires reorganizing it.
 Infer the plugin purpose and distribution scope. Unless the user explicitly
 narrows the target set, build and evaluate for **all known targets**:
 Antigravity (2.0, CLI, and IDE where applicable), Codex, Claude Code, Claude
-Cowork, Hermes Agent, OpenClaw, and Muse. Distinguish Claude Cowork from Claude
-Code even when they share a package. Muse has only the user-supplied shim
-proposal so far; include it in the coverage matrix, but do not claim its
-installation or runtime works without a verified loader and manifest schema.
+Cowork, Cursor, Grok Bot, Hermes Agent, OpenClaw, and Muse. Distinguish Claude
+Cowork from Claude Code even when they share a package. The Cursor shim
+(.cursor-plugin/plugin.json + skills/) also covers Grok Bot; Grok Bot has
+no SessionStart hooks, so foundation loads on demand. Muse has only the
+user-supplied shim proposal so far; include it in the coverage matrix, but do
+not claim its installation or runtime works without a verified loader and
+manifest schema.
 Do not omit a target merely because its host is not installed locally: assemble
 and statically validate what can be checked, then record the exact runtime gap.
 Ask only for missing information that changes the implementation. Give
@@ -123,6 +127,7 @@ user explicitly selected:
 | [Codex](references/codex.md) | Shared skills, Codex manifest, local catalogs |
 | [Claude Code and Cowork](references/claude.md) | Shared manifest, different runtime and distribution checks |
 | [Google Antigravity](references/antigravity.md) | Project plugin format, rules, skills, and three surfaces |
+| [Cursor and Grok Bot](references/cursor.md) | Shared .cursor-plugin shim; Grok Bot has no SessionStart |
 | [Hermes Agent](references/hermes.md) | Skills/taps versus Python runtime plugins |
 | [OpenClaw](references/openclaw.md) | Compatible bundles versus native runtime plugins |
 | [Muse](references/muse.md) | Provisional shim proposal; verify loader before claiming support |
@@ -136,7 +141,7 @@ For each target, decide which capabilities work directly, need an adapter, or
 remain unavailable. Keep useful supported behavior when an optional capability is
 missing. If a required capability has no implementation on a target, report that
 gap rather than claiming compatibility. Report coverage per target; a portable
-source package alone does not make all seven runtimes supported.
+source package alone does not make all listed runtimes supported.
 
 ## Build or reorganize
 

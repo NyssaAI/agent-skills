@@ -30,6 +30,7 @@ plugin-root/
   adapters/                    # Only for host-specific behavior, including AGY
   .claude-plugin/plugin.json   # When targeting Claude
   .codex-plugin/plugin.json    # Only for required Codex-specific compatibility
+  .cursor-plugin/plugin.json   # Cursor and Grok Bot shared shim
   evals/
     README.md                    # Suite and case catalog
     LATEST.md                    # Latest verified scores or explicit no-run state
@@ -77,7 +78,9 @@ when present. Codex, Hermes, and OpenClaw can consume supported portions of
 that package; verify their actual format detection. Antigravity's documented
 `plugin.json` schema has a different, narrow shape, so generate an Antigravity
 package from the same source and skills. Claude requires its
-`.claude-plugin/plugin.json` adapter for plugin distribution. Generate host-only
+`.claude-plugin/plugin.json` adapter for plugin distribution. Cursor and Grok
+Bot share `.cursor-plugin/plugin.json` (static shim; assemble.py does not emit
+it). Grok Bot has no SessionStart hooks. Generate host-only
 declarations from the same contract when a schema differs. Do not copy a root
 MCP file by renaming it. Keep shim schemas, examples, and required environment
 variable names in `capabilities.json` or a supported extension namespace; do

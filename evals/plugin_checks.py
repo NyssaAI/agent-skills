@@ -64,7 +64,7 @@ def validate_plugin(repository):
             yaml.safe_load(path.read_text(encoding="utf-8-sig"))
         except yaml.YAMLError as error:
             findings.append(f"{path.relative_to(repository)}: {error}")
-    for filename in ["plugin.json", "gemini-extension.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json", ".agents/plugins.json"]:
+    for filename in ["plugin.json", "gemini-extension.json", ".codex-plugin/plugin.json", ".claude-plugin/plugin.json", ".cursor-plugin/plugin.json", ".agents/plugins.json"]:
         checks += 1
         try:
             manifest = json.loads((repository / filename).read_text(encoding="utf-8-sig"))
@@ -75,6 +75,13 @@ def validate_plugin(repository):
                 actual = {path.parent.resolve() for path in skills}
                 if declared != actual:
                     findings.append("Declared skill directories differ from catalog inventory")
+            if filename == ".cursor-plugin/plugin.json":
+                root_identity = json.loads((repository / "plugin.json").read_text(encoding="utf-8-sig"))
+                for field in ("name", "version", "description", "license"):
+                    if manifest.get(field) != root_identity.get(field):
+                        findings.append(f"Cursor shim {field} differs from root plugin.json")
+                if manifest.get("author") != root_identity.get("author"):
+                    findings.append("Cursor shim author differs from root plugin.json")
         except (OSError, ValueError, KeyError, TypeError) as error:
             findings.append(f"{filename}: {error}")
     rule = repository / ".agents/plugins/agent-skills/rules/file-management.md"

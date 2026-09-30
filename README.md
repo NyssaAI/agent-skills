@@ -12,8 +12,9 @@ assembly, and eval method for updates to this repository.
 ## Package and activation
 
 The canonical content lives under `skills/`. The root `plugin.json`,
-`.codex-plugin/plugin.json`, and `.claude-plugin/plugin.json` identify portable
-and host packages. `scripts/assemble.py write` builds the project Antigravity
+`.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, and
+.cursor-plugin/plugin.json` identify portable and host packages. The Cursor
+shim also covers Grok Bot (same packaging; no SessionStart hooks). `scripts/assemble.py write` builds the project Antigravity
 plugin at `.agents/plugins/agent-skills/` and refreshes the managed foundation
 in `AGENTS.md`; the generated Antigravity rule and `hooks/hooks.json` deliver
 the same core to supported plugin sessions. Codex requires users to trust the
@@ -31,6 +32,8 @@ host's hook or rule activation.
 | Claude Cowork | The Claude package may be uploaded through its supported plugin flow. | Upload and runtime behavior have not been verified here. |
 | OpenClaw | Install this package as a [compatible bundle](https://docs.openclaw.ai/plugins/bundles) with `openclaw plugins install <package-path>`, then inspect the detected format and loaded skills. | Bundle installation, startup guidance, and skill invocation remain unverified here. A native runtime adapter is unnecessary for these Markdown skills. |
 | Hermes Agent | Shared Agent Skills content is available for its [plugin/skill flow](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins). | No Hermes project plugin has been assembled or activated yet. |
+| Cursor | `.cursor-plugin/plugin.json` plus root `skills/` form the [Cursor plugin package](https://cursor.com/docs/reference/plugins). Install via marketplace / InstallPlugin into the plugin cache. | Static package support only so far; fresh-session and skill-invocation runtime remain unverified here. |
+| Grok Bot | Same Cursor package (`.cursor-plugin/plugin.json` + `skills/`). Fallback: UpdateState / workflows copy when marketplace install is unavailable. | Static/package support only. **No SessionStart hooks** — foundation is on-demand, not hook-injected. Runtime install and invocation remain unverified here. |
 | Muse | Only a proposed JSON-executable shim contract is known. | Loader, manifest, and installation are unverified; no support claim. |
 
 The exact per-host status and missing tests are in the

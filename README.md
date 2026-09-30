@@ -1,6 +1,6 @@
 # NyssaAI Agent Skills
 
-Version: **0.2.0** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.3.0** (candidate; see [latest evaluation](evals/LATEST.md)).
 
 Three skills share one maintained source tree: [file-management](skills/file-management/SKILL.md),
 [para-vault](skills/para-vault/SKILL.md), and

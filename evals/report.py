@@ -250,7 +250,9 @@ def suite_sha256(suite: str) -> str:
         raise ValueError(f"Unknown suite: {suite}")
     digest = hashlib.sha256()
     for name in files:
-        digest.update(name.encode() + b"\0" + (EVALS / name).read_bytes() + b"\0")
+        content = (EVALS / name).read_bytes()
+        content = content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        digest.update(name.encode() + b"\0" + content + b"\0")
     return digest.hexdigest()
 
 

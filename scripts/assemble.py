@@ -17,6 +17,11 @@ END = "<!-- agent-skills:file-management:end -->"
 CORE = ROOT / "skills" / "file-management" / "core.md"
 
 
+def canonical_hash_content(content: bytes) -> bytes:
+    """Make generated source hashes independent of platform line endings."""
+    return content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
 def startup_text() -> str:
     core = CORE.read_text(encoding="utf-8").strip()
     return f"{BEGIN}\n{core}\n{END}"
@@ -62,7 +67,10 @@ def expected_files() -> dict[str, bytes]:
         ).read_bytes()
     source_hash = hashlib.sha256()
     for name in sorted(output):
-        source_hash.update(name.encode() + b"\0" + output[name] + b"\0")
+        # Git may check out text files with CRLF on Windows and LF elsewhere.
+        # Normalize line endings so the generated provenance hash is portable.
+        content = canonical_hash_content(output[name])
+        source_hash.update(name.encode() + b"\0" + content + b"\0")
     output["assembly.json"] = (
         json.dumps({
             "format": "antigravity-plugin",

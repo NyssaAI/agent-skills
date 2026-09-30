@@ -36,6 +36,14 @@ class ReportTests(unittest.TestCase):
         (self.evals / "builder_run.py").write_text("builder fixture", encoding="utf-8")
         (self.evals / "builder-cases.md").write_text("case fixture", encoding="utf-8")
 
+    def test_suite_hash_is_stable_across_line_endings(self):
+        (self.evals / "builder_run.py").write_bytes(b"builder\r\nfixture\r\n")
+        (self.evals / "builder-cases.md").write_bytes(b"case\r\nfixture\r\n")
+        crlf_hash = report.suite_sha256("plugin-builder")
+        (self.evals / "builder_run.py").write_bytes(b"builder\nfixture\n")
+        (self.evals / "builder-cases.md").write_bytes(b"case\nfixture\n")
+        self.assertEqual(crlf_hash, report.suite_sha256("plugin-builder"))
+
     def result(self, outcome="Fail"):
         folder = self.evals / "results" / "run-1"
         folder.mkdir(parents=True)

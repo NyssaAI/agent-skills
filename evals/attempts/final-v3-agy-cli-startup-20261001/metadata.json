@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "run_id": "final-v3-agy-cli-startup-20261001",
+  "state": "unverified",
+  "key": [
+    "startup-and-discovery",
+    "Antigravity CLI",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-01T15:46:00.000000+00:00",
+  "completed_at": "2026-10-01T15:46:05.000000+00:00",
+  "candidate_version": "0.3.2",
+  "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895",
+  "suite_revision": "0.4.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "assembled_artifact_inventory_sha256": "b3f2a4fef95289228f58933345890ab74ae9f563c86949ee88cf609a7c65fca1",
+  "stage": "Assembled-package probe returned a response, but inherited parent-repository context",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "agy plugin list",
+    "agy --dangerously-skip-permissions --mode plan --print-timeout 60s --output-format json --print <context question>"
+  ],
+  "exit_status": "Unverified",
+  "diagnostic": "Antigravity CLI 1.2.13, with the assembled package copied to .temp/agy-final-v2 and command permissions enabled, described file-management and skills. Every cited source path pointed to the parent NyssaAI repository rather than the isolated copy, even with a nested .git boundary; this does not establish isolated package discovery or startup. H01-H03 were not completed.",
+  "next_check": "Run from a truly isolated Antigravity project whose parent context cannot supply this repository instructions, then inspect project plugin discovery and H01-H03 with a native trace.",
+  "evidence_omitted": "No trusted host export or complete H01-H03 trace exists. Disposable raw AGY output and temporary package copy remain under .temp; the durable diagnostic captures the result."
+}

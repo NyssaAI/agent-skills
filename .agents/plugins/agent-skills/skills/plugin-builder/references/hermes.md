@@ -12,6 +12,11 @@ and connection behavior instead of assuming a Claude declaration is portable.
 For project installation, follow [the Hermes project route](workspace-installation.md#hermes-project-route): keep the portable artifact under `.agents/packages/<name>/portable/`,
 generate the loadable copy from canonical source under `.hermes/plugins/`, enable the project-plugin
 gate, then doctor, list, enable, and exercise the capability.
+This catalog's `scripts/assemble.py write` generates a native Hermes package at
+`.hermes/plugins/agent-skills/`. Its small Python adapter registers the shared
+skills and loads `file-management/core.md` as a startup prompt section. The
+project's managed `AGENTS.md` block supplies that text when present, so the
+adapter avoids inserting the full core twice.
 Hermes' host-managed `PLUGIN_DATA` may hold runtime caches; canonical user
 preferences still live in the separate `.{plugin-name}/` home.
 

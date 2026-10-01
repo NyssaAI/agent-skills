@@ -299,9 +299,10 @@ Report three separate outcomes:
 | Evaluation complete for available environments | Every runnable required case executed and its outcome/evidence is retained; unavailable targets and exact next checks are recorded. This can include failing scores. |
 | Release ready | All required release checks pass and no material defect or required unverified target remains. |
 
-Commit and push the source, review receipts, `evals/results/`, `evals/attempts/`,
-and `evals/LATEST.md` together to a review branch in the designated GitHub
-repository, including honest failed and incomplete results. Do not hold evidence
+Commit and push the source, `evals/results/`, `evals/attempts/`,
+`evals/LATEST.md`, and any review receipts authorized for publication together
+to a review branch in the designated GitHub repository, including honest failed
+and incomplete results. Keep private receipts local. Do not hold evidence
 publication hostage to release readiness. Preserve unrelated user changes and
 state an exact blocker if publication cannot run. Compare published content
 with the recorded inventory; do not claim an unevaluated change was tested.

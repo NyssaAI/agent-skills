@@ -1,7 +1,9 @@
 # Fresh-host startup and discovery probes
 
-Run these against an isolated project install of the **assembled** candidate,
-not the source repository. Record host and version, OS/architecture, model if
+Run these against an isolated project install of the **assembled** candidate
+in a directory tree outside this source repository and its parent directories.
+Confirm that no ancestor supplies this repository's `AGENTS.md`, `CLAUDE.md`,
+or other agent instructions. Record host and version, OS/architecture, model if
 exposed, package path, artifact hash, startup text observed, skill and agent
 names, and the actual output/artifacts in a durable result or attempt receipt.
 Use a new session after installation and another after updating the package.
@@ -28,9 +30,9 @@ package installer; a repository clone alone is not activation. For Claude
 Code/Cowork, use their respective supported plugin flows; a root `CLAUDE.md`
 inside the plugin is not project startup context. For OpenClaw, install this
 package as a compatible bundle and verify detected skill roots; test startup
-guidance separately. For Hermes, first build and enable its native project
-adapter, then run the same probes. For Cursor, install via marketplace or
-InstallPlugin into the plugin cache and probe discovery plus H01-H03; mark
+guidance separately. For Hermes, enable the generated native project plugin
+with `HERMES_ENABLE_PROJECT_PLUGINS=true`, then run the same probes. For Cursor,
+install via marketplace or InstallPlugin into the plugin cache and probe discovery plus H01-H03; mark
 static package support separately from verified runtime. For Grok Bot, use the
 same Cursor package (no SessionStart hooks — foundation on-demand); if marketplace
 install is unavailable, document any UpdateState / workflows-copy fallback used.

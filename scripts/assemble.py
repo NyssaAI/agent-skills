@@ -1,4 +1,4 @@
-"""Assemble the project Antigravity plugin and shared startup foundation."""
+"""Assemble project plugins and the shared startup foundation."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / ".agents" / "plugins" / "agent-skills"
+HERMES_DEST = ROOT / ".hermes" / "plugins" / "agent-skills"
 BEGIN = "<!-- agent-skills:file-management:begin -->"
 END = "<!-- agent-skills:file-management:end -->"
 CORE = ROOT / "skills" / "file-management" / "core.md"
@@ -39,6 +40,23 @@ def anchored_agents() -> str:
     return original.rstrip() + "\n\n" + block + "\n"
 
 
+def skill_files() -> dict[str, bytes]:
+    output = {}
+    for source in sorted((ROOT / "skills").rglob("*")):
+        if not source.is_file() or "__pycache__" in source.parts:
+            continue
+        output[source.relative_to(ROOT).as_posix()] = source.read_bytes()
+    return output
+
+
+def source_hash(files: dict[str, bytes]) -> str:
+    digest = hashlib.sha256()
+    for name in sorted(files):
+        content = canonical_hash_content(files[name])
+        digest.update(name.encode() + b"\0" + content + b"\0")
+    return digest.hexdigest()
+
+
 def expected_files() -> dict[str, bytes]:
     identity = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
     manifest = {
@@ -54,39 +72,71 @@ def expected_files() -> dict[str, bytes]:
         "---\n\n"
     ).encode()
     output["rules/file-management.md"] = rule_header + CORE.read_bytes().rstrip() + b"\n"
-    for source in sorted((ROOT / "skills").rglob("*")):
-        if not source.is_file() or "__pycache__" in source.parts:
-            continue
-        relative = source.relative_to(ROOT).as_posix()
-        output[relative] = source.read_bytes()
+    output.update(skill_files())
     # These are native Antigravity agent registrations generated from the same
     # maintained definitions that the Claude manifest names.
     for name in ("adversary", "eval"):
         output[f"agents/{name}.md"] = (
             ROOT / "skills" / "plugin-builder" / "agents" / f"{name}.md"
         ).read_bytes()
-    source_hash = hashlib.sha256()
-    for name in sorted(output):
-        # Git may check out text files with CRLF on Windows and LF elsewhere.
-        # Normalize line endings so the generated provenance hash is portable.
-        content = canonical_hash_content(output[name])
-        source_hash.update(name.encode() + b"\0" + content + b"\0")
     output["assembly.json"] = (
         json.dumps({
             "format": "antigravity-plugin",
             "source": "scripts/assemble.py",
-            "source_sha256": source_hash.hexdigest(),
+            "source_sha256": source_hash(output),
             "version": identity["version"],
         }, indent=2) + "\n"
     ).encode()
     return output
 
 
-def current_files() -> dict[str, bytes]:
-    if not DEST.exists():
+def hermes_expected_files() -> dict[str, bytes]:
+    identity = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+    manifest = (
+        f"name: {json.dumps(identity['name'])}\n"
+        f"version: {json.dumps(identity['version'])}\n"
+        f"description: {json.dumps(identity['description'])}\n"
+    )
+    output = {
+        "plugin.yaml": manifest.encode("utf-8"),
+        "__init__.py": (ROOT / "adapters" / "hermes" / "plugin.py").read_bytes(),
+    }
+    output.update(skill_files())
+    output["assembly.json"] = (
+        json.dumps({
+            "format": "hermes-plugin",
+            "source": "scripts/assemble.py",
+            "source_sha256": source_hash(output),
+            "version": identity["version"],
+        }, indent=2) + "\n"
+    ).encode()
+    return output
+
+
+def current_files(destination: Path = DEST) -> dict[str, bytes]:
+    if not destination.exists():
         return {}
-    return {p.relative_to(DEST).as_posix(): p.read_bytes()
-            for p in DEST.rglob("*") if p.is_file()}
+    return {p.relative_to(destination).as_posix(): p.read_bytes()
+            for p in destination.rglob("*") if p.is_file()}
+
+
+def ensure_owned_destination(destination: Path, package_format: str) -> None:
+    if destination.is_symlink() or not destination.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError(f"Unsafe package destination: {destination}")
+    if destination.exists():
+        marker = destination / "assembly.json"
+        if not marker.is_file() or json.loads(marker.read_text(encoding="utf-8")).get("format") != package_format:
+            raise ValueError(f"Refusing to replace unowned destination: {destination}")
+
+
+def write_package(destination: Path, package: dict[str, bytes]) -> None:
+    if destination.exists():
+        shutil.rmtree(destination)
+    destination.mkdir(parents=True)
+    for name, content in package.items():
+        path = destination / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
 
 
 def main() -> int:
@@ -95,33 +145,32 @@ def main() -> int:
     args = parser.parse_args()
     target_agents = anchored_agents()
     package = expected_files()
+    hermes_package = hermes_expected_files()
     if args.mode == "check":
         errors = []
         if (ROOT / "AGENTS.md").read_text(encoding="utf-8") != target_agents:
             errors.append("AGENTS.md foundation differs from canonical core")
-        if current_files() != package:
-            missing = sorted(package.keys() - current_files().keys())
-            extra = sorted(current_files().keys() - package.keys())
-            changed = sorted(name for name in package.keys() & current_files().keys()
-                             if package[name] != current_files()[name])
-            errors.append(f"Antigravity artifact differs: missing={missing}, extra={extra}, changed={changed}")
+        for label, destination, expected in (
+            ("Antigravity", DEST, package), ("Hermes", HERMES_DEST, hermes_package)
+        ):
+            current = current_files(destination)
+            if current != expected:
+                missing = sorted(expected.keys() - current.keys())
+                extra = sorted(current.keys() - expected.keys())
+                changed = sorted(name for name in expected.keys() & current.keys()
+                                 if expected[name] != current[name])
+                errors.append(f"{label} artifact differs: missing={missing}, extra={extra}, changed={changed}")
         for error in errors:
             print(error, file=sys.stderr)
         if not errors:
-            print(f"Startup and {len(package)} Antigravity artifact files match canonical source")
+            print(f"Startup, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files match canonical source")
         return bool(errors)
-    if DEST.exists():
-        marker = DEST / "assembly.json"
-        if not marker.exists() or json.loads(marker.read_text(encoding="utf-8")).get("format") != "antigravity-plugin":
-            raise ValueError(f"Refusing to replace unowned destination: {DEST}")
-        shutil.rmtree(DEST)
-    DEST.mkdir(parents=True)
-    for name, content in package.items():
-        path = DEST / name
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(content)
+    ensure_owned_destination(DEST, "antigravity-plugin")
+    ensure_owned_destination(HERMES_DEST, "hermes-plugin")
+    write_package(DEST, package)
+    write_package(HERMES_DEST, hermes_package)
     (ROOT / "AGENTS.md").write_text(target_agents, encoding="utf-8")
-    print(f"Wrote startup foundation and {len(package)} Antigravity artifact files")
+    print(f"Wrote startup foundation, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files")
     return 0
 
 

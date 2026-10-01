@@ -1,6 +1,6 @@
 # Plugin evaluation CLI
 
-The current 0.2.0 scored suite exercises `para-vault` and `file-management` through
+The scored suite exercises `para-vault` and `file-management` through
 24 isolated user tasks. A run means one independent candidate executes **all
 24 cases**, producing real workspace artifacts and one JSON response per case.
 The additional required suites below have their own case scopes;
@@ -9,7 +9,7 @@ Link checks decode valid UTF-8 and replace malformed bytes while reporting the
 affected file in check evidence. A malformed byte in surrounding prose no
 longer hides an otherwise valid navigation link.
 
-Use `run.py` to prepare, execute, score, export, and verify runs. The [scoring rubric and coverage map](../docs/eval-suite.md) define what the scores mean.
+Use `run.py` to prepare, execute, score, export, and verify runs. The [scorer](scoring.py) and [coverage matrix](matrix.json) define the public scoring and required targets.
 
 ## Suite catalog and coverage
 

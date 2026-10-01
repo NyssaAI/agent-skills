@@ -146,6 +146,9 @@ of skills and supported MCP transports; use `plugin.yaml` plus Python
 registration only for behavior that requires Hermes' native plugin API. The
 `.hermes/` copy is an install artifact: regenerate it after source changes and
 never hand-edit it.
+This catalog uses native registration for its startup foundation. The generated
+`plugin.yaml` and `__init__.py` register the shared skills and load the lean
+foundation from the copied canonical `core.md`.
 
 Project plugin loading requires the host's explicit
 `HERMES_ENABLE_PROJECT_PLUGINS` gate. Run

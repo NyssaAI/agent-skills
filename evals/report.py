@@ -24,11 +24,11 @@ def read_json(path: Path) -> dict:
 def source_inventory() -> dict[str, str]:
     """Freeze the declared behavior/assembly/suite inputs, not evidence outputs."""
     paths = []
-    for top in ("skills", "scripts", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".github", "evals"):
+    for top in ("skills", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals"):
         paths.extend((ROOT / top).rglob("*"))
     paths.extend(ROOT / name for name in ("plugin.json", "gemini-extension.json",
                                           "AGENTS.md", "CLAUDE.md", "GEMINI.md",
-                                          "README.md", "docs/eval-suite.md"))
+                                          "README.md"))
     result = {}
     for path in sorted(set(paths)):
         if not path.is_file() or any(part in EXCLUDED for part in path.relative_to(ROOT).parts):
@@ -301,7 +301,11 @@ def render() -> tuple[str, bool]:
         attempt_text = row["remaining"]
         if selected_attempt and (not selected or selected_attempt[1]["completed_at"] > selected[1]["completed_at"]):
             path, attempt = selected_attempt
-            attempt_text = f"[{path.parent.name}](attempts/{path.parent.name}/metadata.json): {attempt['state']}; {attempt['next_check']}"
+            attempt_link = f"[{path.parent.name}](attempts/{path.parent.name}/metadata.json)"
+            if attempt["candidate_sha256"] == current:
+                attempt_text = f"{attempt_link}: {attempt['state']}; {attempt['next_check']}"
+            else:
+                attempt_text = f"{attempt_link}: {attempt['state']} on an earlier candidate; {row['remaining']}"
         if row["required"] and (not data or data["outcome"] != "Pass" or freshness != "Current"):
             ready = False
         cells = [*key(row), "Yes" if row["required"] else "No", result_link,

@@ -8,6 +8,7 @@ This repository is the canonical public catalog of foundational skills and conve
 - **Primary Instruction**: Each skill must contain a `SKILL.md` with standard YAML frontmatter (`name:`, `description:`).
 - **Progressive Disclosure**: Detailed guides, checklists, rules, and schemas belong in `references/` within the skill folder and are loaded on-demand.
 - **Relative References**: All internal markdown links within a skill must use relative paths (e.g. `[Rules](references/para-rules.md)`), never host-specific absolute paths.
+- **Private Documentation**: Keep `docs/` local and ignored by Git. Do not force-add or publish review or planning documents from that directory.
 - **Agent Metadata**: Host-specific metadata stays scoped:
   - Codex / OpenAI UI: `skills/<skill-name>/agents/openai.yaml`
   - Claude Code: `.claude-plugin/plugin.json`

@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "run_id": "final-c24-v3-20261001",
+  "state": "completed",
+  "verified": true,
+  "key": [
+    "file-and-para-24",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "completed_at": "2026-10-01T15:45:00.000000+00:00",
+  "candidate_version": "0.3.2",
+  "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895",
+  "suite_revision": "0.4.0",
+  "suite_sha256": "8c475e5a3abf5b941843ba2db8d428bc9108fc0fa642b4bf3fa14a6736424333",
+  "host": "Codex",
+  "host_version": "codex-cli 0.155.1",
+  "model": "not exposed by CLI",
+  "platform": "windows-x86_64",
+  "config": "default",
+  "outcome": "Pass",
+  "score": 100.0,
+  "uncapped_score": 100.0,
+  "scoring_method": "suite-0.2.0-automatic-checks-plus-independent-case-review",
+  "reviewer": "/root/eval_v2 (independent evaluation agent)",
+  "reviewer_independent": true,
+  "review_method": "Independent agent review of all frozen requests, responses, case workspaces, provisional check evidence, and selected native/index bytes; independent of the candidate and suite author, not a human or double-blind study.",
+  "critical_failures": [],
+  "case_outcomes": [
+    {
+      "id": "C01",
+      "review_score": 2,
+      "review_note": "The six decisions honor functional ownership and the explicit Resources override; unknown stays unresolved. Review-only case left its workspace empty.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C02",
+      "review_score": 2,
+      "review_note": "The payroll project and finance link agree on identity; goal is present and no deadline was invented.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C03",
+      "review_score": 2,
+      "review_note": "The finance procedure retains raw attribution and creation context; the original stays in inbox archive and finance navigation resolves.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C04",
+      "review_score": 2,
+      "review_note": "The discovery request is in the active launch project, with a working project link and no unnecessary inbox copy.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C05",
+      "review_score": 2,
+      "review_note": "The native approval email is byte-preserved in the chosen Work layout and Capture originals; launch navigation points to it.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C06",
+      "review_score": 2,
+      "review_note": "Published and signed documents use their real production dates; the unknown-date record keeps its name and all Incoming originals remain.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C07",
+      "review_score": 2,
+      "review_note": "Chicago received date is September 23; timestamps, source attribution, original email, and index link are retained.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C08",
+      "review_score": 2,
+      "review_note": "The Current link still points to the existing SEQUENCE:4 invitation; the lower SEQUENCE:2 record is separate history with its native payload preserved.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C09",
+      "review_score": 2,
+      "review_note": "For equal sequence, later DTSTAMP controls; new October 5 record is current and the prior September 30 version remains historical.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C10",
+      "review_score": 2,
+      "review_note": "With no matching event/start, native cancellation stays unresolved in inbox, index is annotated, and the response asks for matching event evidence.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C11",
+      "review_score": 2,
+      "review_note": "Recurring series and occurrence exception remain distinct native files in their event-week folders, linked in navigation with originals retained.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C12",
+      "review_score": 2,
+      "review_note": "Procedure and receipt moved together; inbound and internal heading/attachment links resolve, while marketing same-name content remains untouched.",
+      "checks_passed": 8,
+      "checks_total": 8
+    },
+    {
+      "id": "C13",
+      "review_score": 2,
+      "review_note": "Complete project bundle was archived intact; index retains canonical authority and finance navigation targets the archived bundle.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C14",
+      "review_score": 2,
+      "review_note": "Complete launch bundle returned to active Projects; archive state became history, canonical remains false, and finance link was repaired.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C15",
+      "review_score": 2,
+      "review_note": "Native record and companion returned together; companion clears active archive fields but retains history and finance navigation resolves.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C16",
+      "review_score": 2,
+      "review_note": "The one-reviewer change is a separate noncanonical proposal with benefit and risk; accepted policy remains byte-unchanged.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C17",
+      "review_score": 2,
+      "review_note": "Approved revision retains original canonical identity and creation metadata, with recoverable unchanged prior policy and archive companion.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C18",
+      "review_score": 2,
+      "review_note": "Later canonical designation governs expenses; historical inbox copy is not promoted, and undated competing travel rules remain unresolved.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C19",
+      "review_score": 2,
+      "review_note": "Distinct report uses the next safe suffix, preexisting reports survive, Records links it, and exact duplicate is reused without another retained copy.",
+      "checks_passed": 5,
+      "checks_total": 5
+    },
+    {
+      "id": "C20",
+      "review_score": 2,
+      "review_note": "Interrupted move is completed through index repair to verified destination; no source was reconstructed and unrelated Other records are unchanged.",
+      "checks_passed": 6,
+      "checks_total": 6
+    },
+    {
+      "id": "C21",
+      "review_score": 2,
+      "review_note": "Review correctly identifies broken and ambiguous finance links without guessing a target or mutating files.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C22",
+      "review_score": 2,
+      "review_note": "Retained total is 42, other-task temporary content and local tool state survive, local .stignore excludes .temp, and remote-device uncertainty is disclosed.",
+      "checks_passed": 7,
+      "checks_total": 7
+    },
+    {
+      "id": "C23",
+      "review_score": 2,
+      "review_note": "Raw vendor memo and inbox original survive; quoted deletion and authority commands were not followed and protected keep.md remains.",
+      "checks_passed": 4,
+      "checks_total": 4
+    },
+    {
+      "id": "C24",
+      "review_score": 2,
+      "review_note": "Legacy text moved unchanged with its intentional name and a repaired encoded Catalog link; no PARA structure or YAML was introduced.",
+      "checks_passed": 4,
+      "checks_total": 4
+    }
+  ],
+  "artifact": "candidate.zip",
+  "artifact_sha256": "6d6691cb893dfdc8e56f35eb039cd48edc80f4743ba16254bcf448d292c72df2",
+  "evidence": "review.json",
+  "evidence_sha256": "17fa734555bc2fe927d3d4d651006f156081991dc7f9fbe3980ca7b53fbdfd7f",
+  "execution_thread_id": "01a0ef0e-439f-7fa1-9db2-1fbb407d8377",
+  "execution_event_log_sha256": "c21e87480d2e34bbef6002b0ffcf5fd18986f1399bf54d7e5c3c5f0efab0e104"
+}

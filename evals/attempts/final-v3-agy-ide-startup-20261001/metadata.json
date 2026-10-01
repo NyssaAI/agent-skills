@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "run_id": "final-v3-agy-ide-startup-20261001",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Antigravity IDE",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-01T15:46:00.000000+00:00",
+  "completed_at": "2026-10-01T15:46:05.000000+00:00",
+  "candidate_version": "0.3.2",
+  "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895",
+  "suite_revision": "0.4.0",
+  "suite_sha256": "0fbc41a7959f3eae93493c70bf28b2349314d8e7aaea77947a64de228a5316f2",
+  "assembled_artifact_inventory_sha256": "b3f2a4fef95289228f58933345890ab74ae9f563c86949ee88cf609a7c65fca1",
+  "stage": "UI/session availability inventory; no case started",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    "Existing host availability inventory; no live UI session"
+  ],
+  "exit_status": "Not run",
+  "diagnostic": "No independent Antigravity IDE workspace session was available for installed-project H01-H03.",
+  "next_check": "Open an Antigravity IDE workspace with the assembled package and run H01-H03.",
+  "evidence_omitted": "No trusted host export or complete H01-H03 trace exists. Disposable raw AGY output and temporary package copy remain under .temp; the durable diagnostic captures the result."
+}

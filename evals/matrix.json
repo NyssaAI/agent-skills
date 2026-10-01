@@ -24,7 +24,7 @@
       "platform": "windows-x86_64",
       "config": "default",
       "required": true,
-      "remaining": "Install the package and probe fresh-session foundation, routing, and specialist selection."
+      "remaining": "Install the current package and probe H01-H03 with a native trace, including hook trust and startup delivery."
     },
     {
       "suite": "startup-and-discovery",
@@ -48,7 +48,7 @@
       "platform": "windows-x86_64",
       "config": "default",
       "required": true,
-      "remaining": "Inspect project plugin loading and invoke a bundled skill in a fresh CLI session."
+      "remaining": "Probe project plugin loading and H01-H03 outside the source repository tree, with a native CLI trace."
     },
     {
       "suite": "startup-and-discovery",
@@ -80,7 +80,7 @@
       "platform": "windows-x86_64",
       "config": "default",
       "required": true,
-      "remaining": "Install and enable a project plugin adapter, then probe startup and skill invocation."
+      "remaining": "Enable the generated native project plugin, then probe startup foundation and namespaced skill invocation in a fresh Hermes session."
     },
     {
       "suite": "startup-and-discovery",

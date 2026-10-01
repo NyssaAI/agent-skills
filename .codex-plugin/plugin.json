@@ -1,6 +1,6 @@
 {
   "name": "agent-skills",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "Foundational skills and conventions for Jeremy and NyssaAI's AI agents.",
   "author": {
     "name": "NyssaAI"

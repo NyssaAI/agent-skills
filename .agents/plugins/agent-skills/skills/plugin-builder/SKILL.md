@@ -216,8 +216,9 @@ the specific blocker and finish independent implementation and static checks.
     and affected requirements, then rerun affected evals on the changed candidate.
     An unavailable host does not prevent evaluating other hosts. A preflight
     alone does not complete evaluation when cases can run.
-11. Commit and push the source, review receipts, passing or failing results, and
-    blocked attempts to a review branch in the designated GitHub repository.
+11. Commit and push the source, passing or failing results, blocked attempts,
+    and any review receipts the project authorizes for publication to a review
+    branch in the designated GitHub repository. Keep private receipts local.
     Evidence publication does not require a passing release gate. Report update
     implementation, available-environment evaluation, and release readiness
     separately using the [completion rules](references/improvement-loop.md#completion-and-publication).

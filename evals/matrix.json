@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "suite_revision": "0.4.0",
+  "suite_revision": "0.5.0",
   "rows": [
     {
       "suite": "file-and-para-24",
@@ -9,14 +9,6 @@
       "config": "default",
       "required": true,
       "remaining": "Execute all 24 cases in a fresh Codex agent and export reviewed evidence."
-    },
-    {
-      "suite": "plugin-builder",
-      "harness": "Codex",
-      "platform": "windows-x86_64",
-      "config": "default",
-      "required": true,
-      "remaining": "Run builder, adversary, and eval cases in a fresh Codex agent with isolated plugin fixtures."
     },
     {
       "suite": "startup-and-discovery",
@@ -32,7 +24,7 @@
       "platform": "windows-x86_64",
       "config": "default",
       "required": true,
-      "remaining": "Renew Claude authentication; install and invoke skills and named agents in a fresh project."
+      "remaining": "Renew Claude authentication; install and invoke both skills in a fresh project."
     },
     {
       "suite": "startup-and-discovery",

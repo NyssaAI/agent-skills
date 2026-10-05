@@ -20,7 +20,6 @@ This repository is the canonical public catalog of foundational skills and conve
 
 - **para-vault** (`skills/para-vault/`): Apply PARA placement and vault conventions for layout, metadata, indexes, and archiving.
 - **file-management** (`skills/file-management/`): Manage files and folders generally, including time-bound naming, `.temp/` intermediate work, and safe operations within an existing folder scheme.
-- **plugin-builder** (`skills/plugin-builder/`): Build and organize plugins with shared skills and target-specific packaging for Antigravity, Codex, Claude Code, Claude Cowork, Cursor, Grok Bot, Hermes Agent, OpenClaw, and provisional Muse.
 
 <!-- agent-skills:file-management:begin -->
 # File-management foundation

@@ -73,12 +73,6 @@ def expected_files() -> dict[str, bytes]:
     ).encode()
     output["rules/file-management.md"] = rule_header + CORE.read_bytes().rstrip() + b"\n"
     output.update(skill_files())
-    # These are native Antigravity agent registrations generated from the same
-    # maintained definitions that the Claude manifest names.
-    for name in ("adversary", "eval"):
-        output[f"agents/{name}.md"] = (
-            ROOT / "skills" / "plugin-builder" / "agents" / f"{name}.md"
-        ).read_bytes()
     output["assembly.json"] = (
         json.dumps({
             "format": "antigravity-plugin",

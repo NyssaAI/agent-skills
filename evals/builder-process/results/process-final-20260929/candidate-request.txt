@@ -1,3 +1,0 @@
-Prepared candidate path: D:/repos/NyssaAI/skills/.temp/plugin-review/process-final-20260929/candidate/
-
-Use the frozen plugin-builder skill to handle each independent case in cases.json. Inspect the supplied workspace artifacts and treat supplied host facts as this fixture's facts. For each case write `<case>/response.json` with observed facts and uncertainty, diagnosis, next actions, acceptance checks, and implementation/evaluation/release status where relevant. Do not modify fixtures, install hosts, delegate, execute a plugin update, or access the network. Do not read grading material or prior results. Report limitations.

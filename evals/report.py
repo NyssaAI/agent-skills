@@ -8,7 +8,6 @@ import hashlib
 import json
 from pathlib import Path
 import sys
-import tempfile
 import zipfile
 
 
@@ -35,7 +34,17 @@ def source_inventory() -> dict[str, str]:
             continue
         if path.name == "LATEST.md" or path.is_symlink():
             continue
-        result[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+        content = path.read_bytes()
+        # Git may check text out as CRLF on Windows and LF on Linux. Hash the
+        # same canonical text while preserving binary inputs byte-for-byte.
+        try:
+            content.decode("utf-8")
+        except UnicodeDecodeError:
+            pass
+        else:
+            if b"\0" not in content:
+                content = content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        result[path.relative_to(ROOT).as_posix()] = hashlib.sha256(content).hexdigest()
     return result
 
 
@@ -87,7 +96,6 @@ def valid_completed(path: Path, data: dict) -> None:
         raise ValueError(f"Startup Pass requires a trusted host attestation verifier: {path}")
     expected_cases = {
         "file-and-para-24": [f"C{i:02}" for i in range(1, 25)],
-        "plugin-builder": ["B01", "B02", "B03", "B04"],
         "startup-and-discovery": ["H01", "H02", "H03"],
     }.get(suite)
     if expected_cases is None or sorted(item.get("id") for item in data["case_outcomes"]) != expected_cases:
@@ -170,71 +178,39 @@ def validate_behavioral_evidence(path: Path, data: dict, artifact: Path, names: 
             evidence.get("case_outcomes") != data["case_outcomes"]):
         raise ValueError(f"Independent review receipt disagrees with result: {path}")
     with zipfile.ZipFile(artifact) as archive:
-        if data["key"][0] == "plugin-builder":
-            required = {"review/initial.json", "review/checker.json", "review/evidence.json",
-                        "review/host-trace.json", "candidate/PACKET.md"}
-            required.update(f"candidate/{case}/{file}" for case in ("B01", "B02", "B03", "B04")
-                            for file in ("request.md", "response.json"))
-            required.update({"candidate/B04/workspace/docs/2026.09.29-plugin-review.md",
-                             "candidate/B04/workspace/docs/2026.09.29-plugin-review-adversarial.md",
-                             "candidate/B04/workspace/evals/result.json",
-                             "candidate/B04/workspace/.temp/probe.txt"})
-            if not required.issubset(names):
-                raise ValueError(f"Builder result lacks required case artifacts: {path}")
-            if (archive.read("review/evidence.json") != (path.parent / data["evidence"]).read_bytes()
-                    or archive.read("review/host-trace.json") != trace_path.read_bytes()):
-                raise ValueError(f"Builder review files disagree with artifact: {path}")
-            import builder_run
-            scratch_root = ROOT / ".temp"
-            scratch_root.mkdir(exist_ok=True)
-            with tempfile.TemporaryDirectory(prefix="report-", dir=scratch_root) as scratch:
-                run = Path(scratch)
-                for member in names:
-                    if not member.startswith("candidate/") or member.endswith("/"):
-                        continue
-                    target = run / member
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    target.write_bytes(archive.read(member))
-                control = run / "control"
-                control.mkdir()
-                (control / "initial.json").write_bytes(archive.read("review/initial.json"))
-                checked = builder_run.inspect(run)
-            if not checked["checks_passed"] or read_json_from_zip(archive, "review/checker.json") != checked:
-                raise ValueError(f"Builder artifact replay failed: {path}: {checked['findings']}")
-        else:
-            required = {f"candidate/{case}/request.md" for case in ("H01", "H02", "H03")}
-            required.update(f"candidate/{case}/response.json" for case in ("H01", "H02", "H03"))
-            required.update({"review/host-session.jsonl", "review/independent-review.json"})
-            if not required.issubset(names):
-                raise ValueError(f"Host probe lacks request/response artifacts: {path}")
-            raw_log = archive.read("review/host-session.jsonl")
-            events = [json.loads(line) for line in raw_log.splitlines() if line.strip()]
-            if (not events or any(not isinstance(event, dict) or
-                                  event.get("host") != data["host"] or
-                                  not event.get("session_id") or not event.get("event_id")
-                                  for event in events)):
-                raise ValueError(f"Host probe lacks structured session events: {path}")
-            event_ids = {event["event_id"] for event in events}
-            if len(event_ids) != len(events):
-                raise ValueError(f"Host probe has duplicate session events: {path}")
-            for case in ("H01", "H02", "H03"):
-                response = read_json_from_zip(archive, f"candidate/{case}/response.json")
-                observations = response.get("observations", {})
-                if (response.get("case_id") != case or
-                        not isinstance(observations, dict) or
-                        not response.get("session_event_ids") or
-                        not set(response["session_event_ids"]).issubset(event_ids)):
-                    raise ValueError(f"Host probe {case} lacks observed session evidence: {path}")
-            review = read_json_from_zip(archive, "review/independent-review.json")
-            if (review.get("reviewer") != data["reviewer"] or
-                    review.get("case_outcomes") != data["case_outcomes"] or
-                    review.get("host_session_sha256") != hashlib.sha256(raw_log).hexdigest() or
-                    not review.get("reviewer_observed_session") or
-                    review.get("reviewer_agent_id") == review.get("candidate_agent_id")):
-                raise ValueError(f"Host probe lacks attributable independent review: {path}")
-            if (not data.get("assembled_artifact_inventory_sha256") or
-                    trace.get("assembled_artifact_inventory_sha256") != data["assembled_artifact_inventory_sha256"]):
-                raise ValueError(f"Host probe lacks installed package identity: {path}")
+        required = {f"candidate/{case}/request.md" for case in ("H01", "H02", "H03")}
+        required.update(f"candidate/{case}/response.json" for case in ("H01", "H02", "H03"))
+        required.update({"review/host-session.jsonl", "review/independent-review.json"})
+        if not required.issubset(names):
+            raise ValueError(f"Host probe lacks request/response artifacts: {path}")
+        raw_log = archive.read("review/host-session.jsonl")
+        events = [json.loads(line) for line in raw_log.splitlines() if line.strip()]
+        if (not events or any(not isinstance(event, dict) or
+                              event.get("host") != data["host"] or
+                              not event.get("session_id") or not event.get("event_id")
+                              for event in events)):
+            raise ValueError(f"Host probe lacks structured session events: {path}")
+        event_ids = {event["event_id"] for event in events}
+        if len(event_ids) != len(events):
+            raise ValueError(f"Host probe has duplicate session events: {path}")
+        for case in ("H01", "H02", "H03"):
+            response = read_json_from_zip(archive, f"candidate/{case}/response.json")
+            observations = response.get("observations", {})
+            if (response.get("case_id") != case or
+                    not isinstance(observations, dict) or
+                    not response.get("session_event_ids") or
+                    not set(response["session_event_ids"]).issubset(event_ids)):
+                raise ValueError(f"Host probe {case} lacks observed session evidence: {path}")
+        review = read_json_from_zip(archive, "review/independent-review.json")
+        if (review.get("reviewer") != data["reviewer"] or
+                review.get("case_outcomes") != data["case_outcomes"] or
+                review.get("host_session_sha256") != hashlib.sha256(raw_log).hexdigest() or
+                not review.get("reviewer_observed_session") or
+                review.get("reviewer_agent_id") == review.get("candidate_agent_id")):
+            raise ValueError(f"Host probe lacks attributable independent review: {path}")
+        if (not data.get("assembled_artifact_inventory_sha256") or
+                trace.get("assembled_artifact_inventory_sha256") != data["assembled_artifact_inventory_sha256"]):
+            raise ValueError(f"Host probe lacks installed package identity: {path}")
 
 
 def read_json_from_zip(archive: zipfile.ZipFile, member: str) -> dict:
@@ -243,7 +219,6 @@ def read_json_from_zip(archive: zipfile.ZipFile, member: str) -> dict:
 
 def suite_sha256(suite: str) -> str:
     files = {
-        "plugin-builder": ("builder_run.py", "builder-cases.md"),
         "startup-and-discovery": ("host-probes.md",),
     }.get(suite)
     if files is None:
@@ -282,7 +257,6 @@ def render() -> tuple[str, bool]:
              "Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.",
              f"Candidate SHA-256: `{current}`. Suite revision: `{matrix['suite_revision']}`.", "",
              "A missing or failing required row blocks release. A consistent report does not imply release readiness.", "",
-             "Supplemental builder process decisions: [latest scoped scores](builder-process/LATEST.md) (not native-host release certification).", "",
              "| Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |",
              "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     ready = True

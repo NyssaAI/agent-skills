@@ -9,8 +9,8 @@ CORE = SKILLS / "file-management" / "core.md"
 BEGIN = "<!-- agent-skills:file-management:begin -->"
 END = "<!-- agent-skills:file-management:end -->"
 SKILL_HINT = (
-    "Hermes plugin skills: load agent-skills:file-management, "
-    "agent-skills:para-vault, or agent-skills:plugin-builder with skill_view when relevant."
+    "Hermes plugin skills: load agent-skills:file-management or "
+    "agent-skills:para-vault with skill_view when relevant."
 )
 
 

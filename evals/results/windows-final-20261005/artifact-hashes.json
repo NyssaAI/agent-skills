@@ -1,0 +1,15 @@
+{
+  "after-files.json": "97c4f175c00eea0f27e61b6ea9a9b856c54076f82e24fc9cf28ef30ab1a3f3b4",
+  "calibration.json": "f3417e3a702917bd79a43277933fd2ffc253221ba519c8942a1c59cdd383e726",
+  "candidate-inventory.json": "38b0972add503104538750460d1cfef6f346d6193aafe798e8b2c81fb7c559bf",
+  "candidate.zip": "85d44afe90f75c43d3e277c2a2ad186413416c747e3e89298cf1b53be81f8891",
+  "execution-notes.md": "d8d00c853df8ff9b16bc12ae5648cc5eeb33e6fa95e4ddd765dca2c19d3b4a5b",
+  "grader-files.json": "e92d64d644025aa387152a73e12633f7a8bec93f7926db44c06d5f29996fd37a",
+  "grader.zip": "78d476a9eb32dd12d64dfac03e7d01ee4286d90e6a518323ceed61c79f01dd20",
+  "manifest.json": "343fcc2d006ff7790fda133f01ad42644918f6f459085875bfb87ba3922516e3",
+  "metadata.json": "467123e2e8209a899570ab47a6d9f32d9b02292edbc88edd4a44e0cb8e71e1b8",
+  "review.json": "52f5c861966e621545e74038b428ea8100ec1a7e881c63dabe350641ccf31173",
+  "score.json": "b9cf918747f5b0a0d74d7d57dcb977b6cb5fbfd9c55c651c652c0cca7c59b60d",
+  "suite.json": "9d0cc4fe1382b49843a9bfacfad1ef0e4cf2b6479450f70e495ddf30583c1de3",
+  "verification-checks.json": "fdb2a0e6d8d9d573b8d883bafda1d072999e1e5d711b2bdeff109c6d00715a73"
+}

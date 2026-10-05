@@ -1,0 +1,201 @@
+{
+  "key": [
+    "file-and-para-24",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "state": "completed",
+  "verified": true,
+  "completed_at": "2026-10-05T20:29:03Z",
+  "outcome": "Pass",
+  "score": 100.0,
+  "candidate_sha256": "438dfd8fae84b8e7e166095d5ecb54d883c24205f5afcb33d86067f3ba7564ba",
+  "suite_revision": "0.6.0",
+  "suite_sha256": "9d0cc4fe1382b49843a9bfacfad1ef0e4cf2b6479450f70e495ddf30583c1de3",
+  "host": "Codex",
+  "host_version": "Codex desktop (version not exposed)",
+  "platform": "windows-x86_64",
+  "config": "default",
+  "model": "not exposed",
+  "scoring_method": "frozen-suite-automatic-assertions-and-independent-agent-review",
+  "reviewer": "Independent Codex reviewing agent /root/para_grader (not a human reviewer)",
+  "review_method": "Independent inspection of every frozen request, response and final workspace artifact, compared with frozen fixtures and automatic assertions. Review scale: 2 fulfilled with clear evidence, 1 fulfilled with a minor artifact-quality defect, 0 materially inadequate. Malformed UTF-8 in generated navigation prose earns 1, while valid links retain automated credit. Coordinator host receipt accepted within documented instruction-isolation boundary; no native discovery or transcript attestation claimed.",
+  "reviewer_independent": true,
+  "critical_failures": [],
+  "case_outcomes": [
+    {
+      "id": "C01",
+      "checks_passed": 7,
+      "checks_total": 7,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C02",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C03",
+      "checks_passed": 6,
+      "checks_total": 6,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C04",
+      "checks_passed": 4,
+      "checks_total": 4,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C05",
+      "checks_passed": 4,
+      "checks_total": 4,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C06",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C07",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C08",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C09",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C10",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C11",
+      "checks_passed": 6,
+      "checks_total": 6,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C12",
+      "checks_passed": 8,
+      "checks_total": 8,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C13",
+      "checks_passed": 7,
+      "checks_total": 7,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C14",
+      "checks_passed": 6,
+      "checks_total": 6,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C15",
+      "checks_passed": 6,
+      "checks_total": 6,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C16",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C17",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C18",
+      "checks_passed": 7,
+      "checks_total": 7,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C19",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C20",
+      "checks_passed": 6,
+      "checks_total": 6,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C21",
+      "checks_passed": 4,
+      "checks_total": 4,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C22",
+      "checks_passed": 7,
+      "checks_total": 7,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C23",
+      "checks_passed": 4,
+      "checks_total": 4,
+      "review_score": 2,
+      "outcome": "Pass"
+    },
+    {
+      "id": "C24",
+      "checks_passed": 4,
+      "checks_total": 4,
+      "review_score": 2,
+      "outcome": "Pass"
+    }
+  ],
+  "artifact": "candidate.zip",
+  "artifact_sha256": "85d44afe90f75c43d3e277c2a2ad186413416c747e3e89298cf1b53be81f8891",
+  "evidence": "score.json",
+  "evidence_sha256": "b9cf918747f5b0a0d74d7d57dcb977b6cb5fbfd9c55c651c652c0cca7c59b60d",
+  "execution_scope": "Explicit frozen skill invocation by fresh para_candidate subagent; instruction isolation only. Native startup/discovery unverified. Exact model and desktop version unavailable."
+}

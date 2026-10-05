@@ -3,6 +3,10 @@
 The scored suite exercises `para-vault` and `file-management` through
 24 isolated user tasks. A run means one independent candidate executes **all
 24 cases**, producing real workspace artifacts and one JSON response per case.
+New-note checks require `document-maturity`. C17 exercises explicitly authorized
+legacy-field migration while preserving operational state and accepted history;
+C18 checks legacy reading, conflicting fields, and rejection of operational
+`status` values as maturity without mutating the source notes.
 The additional required suites below have their own case scopes;
 the [latest report](LATEST.md) identifies completed runs and remaining gaps.
 Link checks decode valid UTF-8 and replace malformed bytes while reporting the

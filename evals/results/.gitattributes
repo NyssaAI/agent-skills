@@ -1,0 +1,2 @@
+# Preserve exported receipt bytes so raw evidence hashes survive checkout.
+** -text whitespace=cr-at-eol

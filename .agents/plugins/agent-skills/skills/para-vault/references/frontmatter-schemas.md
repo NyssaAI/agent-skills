@@ -1,6 +1,6 @@
 # Frontmatter Schemas
 
-All maintained Markdown notes require `type`, `created`, and `status`, including supporting notes and registers inside project working folders. Frontmatter dates use ISO `YYYY-MM-DD`; filename date prefixes, where applicable, use `YYYY.MM.DD`. Undated filenames still retain `created` in frontmatter. Tags are optional YAML lists without `#`; omit the field or use `tags: []` when none are useful. Preserve native records such as `.ics` invitations in their native format without inserting YAML.
+All new maintained Markdown notes require `type`, `created`, and `document-maturity`, including supporting notes and registers inside project working folders. Existing notes follow the legacy compatibility rule below. Frontmatter dates use ISO `YYYY-MM-DD`; filename date prefixes, where applicable, use `YYYY.MM.DD`. Undated filenames still retain `created` in frontmatter. Tags are optional YAML lists without `#`; omit the field or use `tags: []` when none are useful. Preserve native records such as `.ics` invitations in their native format without inserting YAML.
 
 Disposable tool output in the resolved temporary location and unchanged preserved originals are exempt, including imported Markdown retained as original evidence inside a working collection. Do not retrofit metadata into preserved evidence. File extension or subdirectory placement alone does not establish this exemption.
 
@@ -8,14 +8,23 @@ Disposable tool output in the resolved temporary location and unchanged preserve
 
 `type` identifies document form, independently of maturity, authority, location, and tags. For new notes use `note` (including email captures, daily notes, rules, and procedures), `moc` (area or subtopic guide), or `project` (project index). Preserve existing types; use additional types only when an accepted vault schema defines them. A procedure normally uses `type: note` and may use `tags: [procedure]`.
 
-| Status | Meaning |
+| Document maturity | Meaning |
 |---|---|
 | `raw` | Captured and unchecked; may already be correctly filed |
 | `draft` | Being written; incomplete or provisional |
 | `reviewed` | Checked for clarity, completeness, and supporting evidence |
 | `established` | Accepted as reliable; protected from casual revision |
 
-Use exactly one `status`. Choose it from actual review and acceptance, not the filename, destination, or document type. `developing` and `refining` are not supported statuses.
+Use exactly one `document-maturity`. Choose it from actual review and acceptance, not the filename, destination, or document type. `developing` and `refining` are not supported maturity values. Operational fields such as `project-state`, `milestone-state`, `task-state`, and `blocker-state` describe work, not document maturity; preserve them independently. Completing work does not establish or change document maturity.
+
+### Legacy metadata compatibility
+
+- When `document-maturity` is absent, read legacy `status` as maturity only if its value is exactly `raw`, `draft`, `reviewed`, or `established`. Other `status` values do not establish maturity and must not be interpreted or renamed as it.
+- When both fields contain the same accepted maturity value, use that maturity without changing either field. When they disagree, or `document-maturity` is invalid, report the ambiguity and resolve it before work that depends on maturity. Do not select a winner silently or change unrelated operational metadata.
+- New maintained notes use `document-maturity`; do not add a legacy `status` alias. Unchanged originals and historical snapshots retain their original metadata.
+- Reading, filing, editing, installing, or updating this skill does not authorize migration of existing notes. Rename a legacy field only with explicit user authorization for the affected notes. Preserve its accepted value, original creation date, authority, body, operational fields, and recoverable history. If both fields already agree, authorized migration may remove only the redundant legacy field; conflicting or unrecognized values need explicit resolution first. Never run a vault-wide migration merely because this skill was updated.
+
+### Authority and tags
 
 `canonical` is an optional boolean, defaulting to false when omitted. Set `canonical: true` only with user authorization designating the document as the source of truth. This is independent of maturity; do not infer authority from a note being established.
 
@@ -37,7 +46,7 @@ Tags describe useful classifications across folders:
 | `reference` | Factual material for later consultation |
 | `analysis` | Interpretation, comparison, or evaluation |
 
-Avoid tags that duplicate the folder, `type`, `status`, or canonical designation. Do not use maturity or authority as tags.
+Avoid tags that duplicate the folder, `type`, `document-maturity`, operational state, or canonical designation. Do not use maturity or authority as tags.
 
 ## Date meanings and configuration
 
@@ -69,7 +78,7 @@ For calendar version precedence, recurring-record preservation, and recovery of 
 ---
 type: note
 created: YYYY-MM-DD
-status: established
+document-maturity: established
 tags: []
 ---
 ```
@@ -80,7 +89,7 @@ tags: []
 ---
 type: note
 created: YYYY-MM-DD
-status: draft
+document-maturity: draft
 tags: [analysis]
 ---
 ```
@@ -93,7 +102,7 @@ Use `type: moc` for an area guide or subtopic guide. See [navigation](navigation
 ---
 type: moc
 created: YYYY-MM-DD
-status: draft
+document-maturity: draft
 tags: []
 ---
 ```
@@ -106,7 +115,7 @@ Name the index `YYYY.MM.DD-project-slug-index.md` at the root of its matching `Y
 ---
 type: project
 created: YYYY-MM-DD
-status: draft
+document-maturity: draft
 tags: []
 goal: "concrete outcome"
 ---
@@ -124,7 +133,7 @@ While a note is in the resolved inbox location, it may include `filing-hint`, `c
 ---
 type: note
 created: YYYY-MM-DD
-status: established
+document-maturity: established
 canonical: true
 tags: [policy]
 ---

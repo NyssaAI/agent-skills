@@ -2,7 +2,7 @@
 name: para-vault
 description: "Apply PARA vault conventions. Use to choose among Projects, Areas, Resources, and Archives, or manage vault layout, inboxes, metadata, indexes, source records, and archiving."
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # PARA Vault
@@ -29,6 +29,8 @@ Reevaluate placement when the content's role changes, including when archived ma
 For vault operations, resolve the accepted inbox, preserved-originals, archive, and rules locations before using them. In this catalog's default layout these are `0-inbox/`, `0-inbox/archive/`, `4-archives/`, and `3-resources/rules/`. Preserve other layouts; do not invent a top-level folder when a necessary location is unknown. Use [file-management](../file-management/SKILL.md#intermediate-work) for the working root's `.temp/` directory.
 
 For decisions that depend on vault conventions, check a supplied rules path or configuration, then links in existing indexes, then the existing rules location. Use accepted rules found there; a filename alone does not establish authority. If no applicable rule exists, use the defaults in these references while preserving the existing layout. Resolve competing canonical rules through the authority rule in the schemas; ask only when the conflict affects the task.
+
+Document maturity uses `document-maturity`, independently of operational fields such as `task-state`. Before interpreting legacy `status` or changing note metadata, follow the [compatibility and migration rule](references/frontmatter-schemas.md#legacy-metadata-compatibility); a skill update does not authorize changing existing vault notes.
 
 Load the relevant guide on demand:
 

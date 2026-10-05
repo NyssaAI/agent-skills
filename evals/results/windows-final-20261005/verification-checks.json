@@ -1,0 +1,44 @@
+{
+  "kind": "independent reviewer checks; calibration is not another candidate run",
+  "checked_at": "2026-10-05T20:33:08Z",
+  "validation": {
+    "exit": 0,
+    "checks": 60
+  },
+  "unit_tests": {
+    "exit": 0,
+    "passed": 33
+  },
+  "assembly": {
+    "command": "python scripts/assemble.py check",
+    "exit": 0,
+    "antigravity_files": 16,
+    "hermes_files": 16
+  },
+  "scorer_calibration": {
+    "exit": 0,
+    "detected": 12,
+    "total": 12
+  },
+  "valid_export_replay": {
+    "exit": 0,
+    "score_reproduced": 100.0
+  },
+  "invalid_export_probe": {
+    "exit": 1,
+    "expected_rejection": true,
+    "mutation": "Append text to execution-notes.md in disposable export copy without changing its hash",
+    "diagnostic": "Export artifact hashes do not match"
+  },
+  "report_generate": {
+    "exit": 0
+  },
+  "report_check": {
+    "exit": 0
+  },
+  "release_gate": {
+    "exit": 1,
+    "reason": "Required native startup/discovery rows lack current passing evidence"
+  },
+  "display_diagnostic": "Initial console output rendered valid em dashes as replacement glyphs. Direct byte inspection found UTF-8 e2 80 94 and all case artifacts decoded strictly; no candidate encoding defect."
+}

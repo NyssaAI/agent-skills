@@ -27,7 +27,7 @@ import zipfile
 
 from cases import build_cases
 
-SUITE_VERSION = "0.2.0"
+SUITE_VERSION = "0.3.0"
 
 
 def write_json(path, value):

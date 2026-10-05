@@ -1,0 +1,92 @@
+{
+  "kind": "deterministic scorer calibration, not an additional model run",
+  "baseline_run": "windows-final-20261005",
+  "mutations": [
+    {
+      "mutation": "protected-original",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "3-resources/rules/approval-policy.md: missing or different from initial 3-resources/rules/approval-policy.md"
+    },
+    {
+      "mutation": "lost-inbox-original",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "Byte-identical copies: []"
+    },
+    {
+      "mutation": "native-rewrite",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "2-areas/finance/record.txt: missing or different from initial 4-archives/record.txt"
+    },
+    {
+      "mutation": "tool-state-damage",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": ".obsidian/cache.json: missing or different from initial .obsidian/cache.json"
+    },
+    {
+      "mutation": "calendar-regression",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "Matching targets: []; link errors: []; malformed text replaced in: []"
+    },
+    {
+      "mutation": "review-only-write",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "Changed file paths: ['2-areas/finance/00-finance-index.md']; changed directories: []"
+    },
+    {
+      "mutation": "lost-context",
+      "detected": true,
+      "critical": false,
+      "score": 99.22,
+      "evidence": "Required content absent from body: ['A-17']"
+    },
+    {
+      "mutation": "invented-deadline",
+      "detected": true,
+      "critical": false,
+      "score": 99.4,
+      "evidence": "Unexpected deadline"
+    },
+    {
+      "mutation": "stale-archive-metadata",
+      "detected": true,
+      "critical": false,
+      "score": 99.4,
+      "evidence": "Unexpected archived"
+    },
+    {
+      "mutation": "broken-heading-link",
+      "detected": true,
+      "critical": false,
+      "score": 99.35,
+      "evidence": "3 source files; 3 links resolved; errors: ['2-areas/finance/00-finance-index.md -> ../../1-projects/2026.09.10-site-launch/discovery/procedure.md#nonexistent: missing heading or block']; malformed text replaced in: []"
+    },
+    {
+      "mutation": "missing-response",
+      "detected": true,
+      "critical": false,
+      "score": 95.33,
+      "evidence": "Incomplete response coverage blocks release"
+    },
+    {
+      "mutation": "packet-tampering",
+      "detected": true,
+      "critical": true,
+      "score": 59,
+      "evidence": "Frozen packet hash mismatch"
+    }
+  ],
+  "detected": 12,
+  "total": 12
+}

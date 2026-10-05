@@ -79,6 +79,23 @@ class OutcomeScoringTests(unittest.TestCase):
         assertion = check("Date", "metadata", "frontmatter", path="note.md", fields={"created": "2026-09-29"}, absent=["canonical"])
         self.assertTrue(self.evaluate(assertion))
 
+    def test_maturity_migration_checks_preserve_task_state_and_reject_legacy_alias(self):
+        assertion = check("Migrated metadata", "metadata", "frontmatter", path="note.md",
+                          fields={"document-maturity": "reviewed", "task-state": "completed"},
+                          absent=["status"])
+        correct = note("Body", maturity="reviewed", extra="task-state: completed\n")
+        self.write("note.md", correct)
+        self.assertTrue(self.evaluate(assertion))
+        for corrupt in (
+            correct.replace("document-maturity:", "status:"),
+            correct.replace("document-maturity: reviewed", "document-maturity: completed"),
+            correct.replace("task-state: completed", "task-state: reviewed"),
+            correct.replace("task-state: completed", "task-state: completed\nstatus: reviewed"),
+        ):
+            with self.subTest(metadata=corrupt):
+                self.write("note.md", corrupt)
+                self.assertFalse(self.evaluate(assertion))
+
     def test_body_context_does_not_count_stripped_frontmatter(self):
         self.write("note.md", note("Body", extra="context: audit-A17\n"))
         assertion = check("Context", "task", "body", path="note.md", contains=["audit-A17"])

@@ -1,12 +1,20 @@
 # NyssaAI Agent Skills
 
-Version: **0.4.0** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.5.0** (candidate; see [latest evaluation](evals/LATEST.md)).
 
 Two skills share one maintained source tree: [file-management](skills/file-management/SKILL.md)
 and [para-vault](skills/para-vault/SKILL.md). File-management has a lean
 [startup foundation](skills/file-management/core.md); PARA guidance is selected
 only for vault work. Plugin-builder is maintained separately in the private
 `NyssaAI/plugin-builder` repository.
+
+## Document maturity compatibility
+
+New PARA notes use `document-maturity` instead of `status`. Work-state fields
+such as `task-state` remain independent. Existing accepted legacy maturity values
+are readable without changing notes; migrating existing notes requires explicit
+user authorization. Conflicting fields are reported rather than overwritten.
+See the [migration rule](skills/para-vault/references/frontmatter-schemas.md#legacy-metadata-compatibility).
 
 ## Package and activation
 

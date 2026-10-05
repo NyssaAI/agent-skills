@@ -1,13 +1,13 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `09d0ae30490624946e08e1df5772109aec2f140af0064827ada285c2d428c29e`. Suite revision: `0.5.0`.
+Candidate SHA-256: `438dfd8fae84b8e7e166095d5ecb54d883c24205f5afcb33d86067f3ba7564ba`. Suite revision: `0.6.0`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 
 | Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| file-and-para-24 | Codex | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
+| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [windows-final-20261005](results/windows-final-20261005/metadata.json) | Pass / 100.0/100 | Current | Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
 | startup-and-discovery | Codex | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-codex-startup-20261001](attempts/final-v3-codex-startup-20261001/metadata.json): unverified on an earlier candidate; Install the current package and probe H01-H03 with a native trace, including hook trust and startup delivery. |
 | startup-and-discovery | Claude Code | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-claude-code-startup-20261001](attempts/final-v3-claude-code-startup-20261001/metadata.json): incomplete on an earlier candidate; Renew Claude authentication; install and invoke both skills in a fresh project. |
 | startup-and-discovery | Claude Cowork | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-claude-cowork-startup-20261001](attempts/final-v3-claude-cowork-startup-20261001/metadata.json): incomplete on an earlier candidate; Upload the package and probe a fresh Cowork session. |

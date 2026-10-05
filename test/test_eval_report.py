@@ -22,7 +22,7 @@ class ReportTests(unittest.TestCase):
         self.evals = self.root / "evals"
         self.evals.mkdir()
         (self.root / "plugin.json").write_text('{"name":"fixture"}', encoding="utf-8")
-        self.row = {"suite": "plugin-builder", "harness": "Codex", "platform": "windows-x86_64",
+        self.row = {"suite": "startup-and-discovery", "harness": "Codex", "platform": "windows-x86_64",
                     "config": "default", "required": True, "remaining": "Run the fixture."}
         (self.evals / "matrix.json").write_text(json.dumps({"schema": 1, "suite_revision": "1",
                                                         "rows": [self.row]}), encoding="utf-8")
@@ -33,16 +33,26 @@ class ReportTests(unittest.TestCase):
         self.addCleanup(self.root_patch.stop)
         self.addCleanup(self.eval_patch.stop)
 
-        (self.evals / "builder_run.py").write_text("builder fixture", encoding="utf-8")
-        (self.evals / "builder-cases.md").write_text("case fixture", encoding="utf-8")
+        (self.evals / "host-probes.md").write_text("host fixture", encoding="utf-8")
 
     def test_suite_hash_is_stable_across_line_endings(self):
-        (self.evals / "builder_run.py").write_bytes(b"builder\r\nfixture\r\n")
-        (self.evals / "builder-cases.md").write_bytes(b"case\r\nfixture\r\n")
-        crlf_hash = report.suite_sha256("plugin-builder")
-        (self.evals / "builder_run.py").write_bytes(b"builder\nfixture\n")
-        (self.evals / "builder-cases.md").write_bytes(b"case\nfixture\n")
-        self.assertEqual(crlf_hash, report.suite_sha256("plugin-builder"))
+        (self.evals / "host-probes.md").write_bytes(b"host\r\nfixture\r\n")
+        crlf_hash = report.suite_sha256("startup-and-discovery")
+        (self.evals / "host-probes.md").write_bytes(b"host\nfixture\n")
+        self.assertEqual(crlf_hash, report.suite_sha256("startup-and-discovery"))
+
+    def test_candidate_hash_normalizes_text_but_preserves_binary_bytes(self):
+        source = self.evals / "host-probes.md"
+        source.write_bytes(b"host\r\nfixture\r\n")
+        crlf_hash = report.candidate_sha256()
+        source.write_bytes(b"host\nfixture\n")
+        self.assertEqual(crlf_hash, report.candidate_sha256())
+
+        binary = self.evals / "fixture.bin"
+        binary.write_bytes(b"\0host\r\nfixture")
+        binary_hash = report.candidate_sha256()
+        binary.write_bytes(b"\0host\nfixture")
+        self.assertNotEqual(binary_hash, report.candidate_sha256())
 
     def result(self, outcome="Fail"):
         folder = self.evals / "results" / "run-1"
@@ -51,18 +61,16 @@ class ReportTests(unittest.TestCase):
         evidence.write_text('{"case":"observed"}', encoding="utf-8")
         artifact = folder / "artifact.zip"
         with zipfile.ZipFile(artifact, "w") as archive:
-            archive.writestr("B01.txt", "observed one")
-            archive.writestr("B02.txt", "observed two")
-            archive.writestr("B03.txt", "observed three")
-            archive.writestr("B04.txt", "observed four")
+            archive.writestr("H01.txt", "observed one")
+            archive.writestr("H02.txt", "observed two")
+            archive.writestr("H03.txt", "observed three")
         (folder / "host-trace.json").write_text('{"invocations":["Codex fresh session"]}', encoding="utf-8")
-        cases = [{"id": "B01", "score": 2, "review_note": "artifact observed",
-                  "artifact_path": "B01.txt", "artifact_sha256": hashlib.sha256(b"observed one").hexdigest()},
-                 {"id": "B02", "score": 2 if outcome == "Pass" else 0,
-                  "review_note": "artifact observed", "artifact_path": "B02.txt",
+        cases = [{"id": "H01", "score": 2, "review_note": "artifact observed",
+                  "artifact_path": "H01.txt", "artifact_sha256": hashlib.sha256(b"observed one").hexdigest()},
+                 {"id": "H02", "score": 2 if outcome == "Pass" else 0,
+                  "review_note": "artifact observed", "artifact_path": "H02.txt",
                   "artifact_sha256": hashlib.sha256(b"observed two").hexdigest()}]
-        for case_id, body, score in (("B03", b"observed three", 2),
-                                    ("B04", b"observed four", 2 if outcome == "Pass" else 0)):
+        for case_id, body, score in (("H03", b"observed three", 2 if outcome == "Pass" else 1),):
             cases.append({"id": case_id, "score": score, "review_note": "artifact observed",
                           "artifact_path": case_id + ".txt",
                           "artifact_sha256": hashlib.sha256(body).hexdigest()})
@@ -70,7 +78,7 @@ class ReportTests(unittest.TestCase):
                 "completed_at": "2026-09-29T10:00:00Z", "outcome": outcome,
                 "score": 100 if outcome == "Pass" else 50,
                 "candidate_sha256": report.candidate_sha256(), "suite_revision": "1",
-                "suite_sha256": report.suite_sha256("plugin-builder"),
+                "suite_sha256": report.suite_sha256("startup-and-discovery"),
                 "host": "Codex", "host_version": "test", "platform": "windows-x86_64",
                 "config": "default", "model": "test", "scoring_method": "independent-case-review-v1",
                 "reviewer": "independent fixture reviewer", "review_method": "artifact inspection",
@@ -96,7 +104,7 @@ class ReportTests(unittest.TestCase):
         self.assertIn("Current", text)
 
     def test_tampered_evidence_is_rejected(self):
-        evidence = self.result("Pass")
+        evidence = self.result()
         evidence.write_text("tampered", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             report.render()
@@ -139,15 +147,9 @@ class ReportTests(unittest.TestCase):
         self.assertIn("renew authentication", text)
 
     def test_full_shape_self_certified_result_is_rejected(self):
-        self.result("Pass")
+        self.result()
         with self.assertRaisesRegex(ValueError, "structured host invocation evidence"):
             report.render()
-
-    def test_retained_builder_run_replays(self):
-        repository = Path(__file__).resolve().parents[1]
-        with patch.object(report, "ROOT", repository), patch.object(report, "EVALS", repository / "evals"):
-            path = repository / "evals/results/workflow-final-20260929/metadata.json"
-            report.valid_completed(path, report.read_json(path))
 
     def test_generic_startup_claim_cannot_pass_release(self):
         self.row["suite"] = "startup-and-discovery"

@@ -1,9 +1,8 @@
 {
   "name": "agent-skills",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "skills": [
     "./skills/para-vault",
-    "./skills/file-management",
-    "./skills/plugin-builder"
+    "./skills/file-management"
   ]
 }

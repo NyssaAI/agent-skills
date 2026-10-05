@@ -16,9 +16,7 @@ Use `run.py` to prepare, execute, score, export, and verify runs. The [scorer](s
 | Suite | Cases and purpose | Entry and observable success | Reproduction |
 | --- | --- | --- | --- |
 | `file-and-para-24` | C01–C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct `para-vault` or `file-management` invocation; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
-| `plugin-builder` | B01 finding detection; B02 one repair/version reservation; B03 evidence handoff; B04 bounded review/repair/eval integration | Invoke `plugin-builder` on isolated [builder cases](builder-cases.md); inspect preserved artifacts, runnable-path decisions, repair, evidence handoff, and actual independent agent activity | `python evals/builder_run.py prepare <run-id>`, execute `candidate/PACKET.md` in a fresh agent, then `check <run-id>` and independent review |
-| `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, named-agent invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
-| `plugin-builder-process` (supplemental) | P01-P07: recovery decisions, per-harness repair/verification, shared-core invalidation, and incomplete target coverage | Fresh agent decisions and one executable synthetic integration; separate independent review | Follow [process cases](builder-process/README.md); [latest scoped scores](builder-process/LATEST.md) are separate from whole-plugin release readiness |
+| `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, skill invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
 
 The machine-readable [coverage matrix](matrix.json) defines each required
 suite, harness, OS/architecture, and configuration row. Muse is provisional and
@@ -35,7 +33,7 @@ hashes, host/version/platform/configuration/model, case outcomes, scoring
 method, independent reviewer/method, and critical failures. It links a hashed
 evidence file and inspectable artifact ZIP. For C01–C24, `report.py check`
 replays the suite's export verifier and compares the recomputed score. For
-B01–B04 and H01–H03, it checks every case's reviewed artifact bytes in the ZIP,
+H01–H03, it checks every case's reviewed artifact bytes in the ZIP,
 recomputes the score, and requires a host invocation trace. The latter is
 reviewable evidence, not cryptographic proof of a host session; independent
 review must verify its provenance before setting `verified: true`. A bare
@@ -60,7 +58,18 @@ separate release gate and fails on any required missing, stale, or failing row.
 inventory (skills, scripts, host manifests and generated artifact, startup
 anchors, eval source and rubric). Evidence outputs, review receipts, and
 `.temp/` are excluded. These commands must run after the final adversarial
-review; the permanent `eval` agent owns the final scored run.
+review; an independent reviewer owns the final scored run.
+
+## Historical evidence after extraction
+
+Builder suites and their receipts moved to the private `NyssaAI/plugin-builder`
+repository. Older startup attempt receipts still refer to that repository's
+`evals/results/final-builder-20260929/frozen-evaluation.json`; those historical
+receipts remain unchanged. The three former file-and-PARA exports embedded the
+builder skill, so their complete, unmodified result directories are preserved in
+that private repository under `history/agent-skills-evals/`. They are historical
+evidence, not evidence for the current two-skill package. Earlier public Git
+history also retains the extracted content.
 
 ## Set up
 

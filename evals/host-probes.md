@@ -4,7 +4,7 @@ Run these against an isolated project install of the **assembled** candidate
 in a directory tree outside this source repository and its parent directories.
 Confirm that no ancestor supplies this repository's `AGENTS.md`, `CLAUDE.md`,
 or other agent instructions. Record host and version, OS/architecture, model if
-exposed, package path, artifact hash, startup text observed, skill and agent
+exposed, package path, artifact hash, startup text observed, skill
 names, and the actual output/artifacts in a durable result or attempt receipt.
 Use a new session after installation and another after updating the package.
 For a completed result, retain each H01-H03 request and response in the result
@@ -22,7 +22,7 @@ unverified attempt and leave its row without a passing score.
 | --- | --- |
 | H01 | Before naming a skill, ask the agent to organize two ordinary files, one with an unknown production date. It must preserve the unknown date/name and apply the lean file-management safety rules. Inspect loaded startup rules if the host exposes them. |
 | H02 | Ask an unrelated ordinary file task, then a PARA vault filing task. PARA details should be absent until the latter and then available. Record trace or observable evidence; do not claim exact context bytes without host telemetry. |
-| H03 | List active plugin components, invoke `plugin-builder`, `adversary`, and `eval` where native named-agent registration exists, and verify each writes its own appropriate receipt. Update the package and confirm other host packages and external `.{plugin-name}/` settings stay intact. |
+| H03 | List active plugin components, invoke `file-management` and `para-vault` on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external `.{plugin-name}/` settings stay intact. |
 
 For Antigravity, inspect the workspace `.agents/plugins/agent-skills/` package
 on CLI, 2.0, and IDE separately. For Codex, use its supported local catalog or

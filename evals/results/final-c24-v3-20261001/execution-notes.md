@@ -1,1 +1,0 @@
-﻿Fresh Codex CLI 0.155.1 session executed all 24 frozen cases; exact model and sampling configuration were not exposed. The packet was supplied on stdin. Raw JSONL is under .temp control and excluded from retained export because it is bulky; its SHA-256 and thread ID are in manifest.json. Candidate was instructed to avoid controls and other runs; no OS boundary enforced it.

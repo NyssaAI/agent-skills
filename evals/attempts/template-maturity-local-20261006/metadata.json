@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "run_id": "template-maturity-local-20261006",
+  "state": "incomplete",
+  "key": [
+    "file-and-para-24",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-07T00:23:28.309172+00:00",
+  "completed_at": "2026-10-07T00:25:03.460636+00:00",
+  "candidate_version": "0.6.0",
+  "candidate_sha256": "df11eabad9efd541ffae31de8628850318ecf52df1f617c277ae1565f99a26ad",
+  "suite_revision": "0.6.0",
+  "assembled_artifact_inventory_sha256": "f82556a2ab724622d054cb8cc2a343b11d4cf213096405f65f9869a8efe578d3",
+  "stage": "Locally runnable component checks completed; packaging validation failed; no fresh behavioral cases executed",
+  "last_completed_case": null,
+  "command_or_host_action_attempted": [
+    ".temp/eval-venv/Scripts/python.exe scripts/assemble.py check",
+    ".temp/eval-venv/Scripts/python.exe evals/run.py validate",
+    ".temp/eval-venv/Scripts/python.exe -m unittest discover -s test -q",
+    ".temp/eval-venv/Scripts/python.exe evals/report.py generate",
+    ".temp/eval-venv/Scripts/python.exe evals/report.py check",
+    ".temp/eval-venv/Scripts/python.exe evals/report.py release"
+  ],
+  "checks": [
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe scripts/assemble.py check",
+      "exit_status": 0,
+      "diagnostic": "Startup, 16 Antigravity files, and 16 Hermes files match canonical source"
+    },
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe evals/run.py validate",
+      "exit_status": 1,
+      "checks": 60,
+      "skills": 2,
+      "diagnostic": ".agents/plugins.json version differs from root plugin.json"
+    },
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe -m unittest discover -s test -q",
+      "exit_status": 0,
+      "tests": 33,
+      "diagnostic": "33 tests passed"
+    },
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe evals/report.py generate",
+      "exit_status": 0,
+      "diagnostic": "Historical export verified and score reproduced exactly; LATEST regenerated for failed frozen candidate"
+    },
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe evals/report.py check",
+      "exit_status": 0,
+      "diagnostic": "Export verified and score reproduced exactly. Report consistent; release incomplete"
+    },
+    {
+      "command": ".temp/eval-venv/Scripts/python.exe evals/report.py release",
+      "exit_status": 1,
+      "diagnostic": "Release acceptance failed: required rows lack current passing evidence"
+    }
+  ],
+  "exit_status": 1,
+  "diagnostic": "The reviewed frozen candidate failed local packaging validation: .agents/plugins.json declared 0.5.0 while root plugin.json declared 0.6.0. The builder subsequently repaired that registry after evaluation; this attempt remains evidence for the original candidate only. Assembly and 33 unit tests passed. The report was consistent and correctly marked the earlier 24-case score stale. No current-candidate model score was awarded.",
+  "next_check": "Adversarially review the registry version repair, then freshly evaluate the repaired candidate. Native behavior still requires all 24 cases in an isolated fresh Codex agent and independent artifact review before a current score.",
+  "source_changed_after_checks_sha256": "978bb628ac7dc4037c6c67827282bb2195535b9c52fb0de8c7423b5122d8cead",
+  "inventory": "inventory.json",
+  "evidence_omitted": "No native host invocation or case artifacts were produced during this local component evaluation. Commands and complete concise diagnostics are retained here; no bulky raw output is needed. Earlier historical results and native-host attempts are unchanged."
+}

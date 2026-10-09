@@ -1,0 +1,10 @@
+{
+  "description": "accessible native source, link-only navigation",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

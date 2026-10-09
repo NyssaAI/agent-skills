@@ -4,7 +4,7 @@ Use these operational defaults when maintaining a vault that follows this catalo
 
 ## Capture and workspace locations
 
-Use `0-inbox/` for captures awaiting classification and `0-inbox/archive/` for unchanged originals of processed captures. Newly supplied content with a known destination needs no inbox stage. Existing inbox captures still require [inbox filing](../SKILL.md#file-the-content), including unchanged-original preservation. Preserve unresolved captures until the destination or required source information is known.
+Use `0-inbox/` for captures awaiting classification. Newly supplied content with a known destination needs no inbox stage. Process existing captures through [inbox filing](../SKILL.md#file-the-content), moving unchanged content to one working home without an automatic archive duplicate. Preserve unresolved captures in the inbox until their destination or required source information is known. Preserve recoverable history before substantive rewriting; necessary snapshots use the accepted archive location, not an Inbox subfolder. Existing historical copies remain unchanged unless their migration or deletion is explicitly requested.
 
 Use [file-management's intermediate-work convention](../../manage-file-operations/references/intermediate-work.md) for `.temp/`. Preserve existing root entries and external tool directories. Do not add loose root notes or additional top-level directories without explicit authorization. Follow the [workspace guidance](vault-conventions.md#temporary-work) for vault-specific preservation and ignore rules.
 
@@ -37,7 +37,9 @@ Outside projects, attachments stay beside their owners, including within Area wo
 
 ## Source-record destinations
 
-When the vault uses an email or calendar Area, route the corresponding source records to that Area's date folders and link them from relevant projects. Otherwise use the user-selected or accepted destination; do not create either Area just to file a record. Derived analysis may belong directly to the project it advances.
+The email or calendar service is authoritative for live source state when available. Prefer a source link and reliable identifier when the task needs no local evidence or offline access; do not download a payload solely to create a vault copy. Retain one native record or provenance-bearing capture when the user requests local retention, the work needs historical evidence or offline access, or the supplied record is the only available source. Label retained records as snapshots rather than synchronized masters, with source attribution and an observed/as-of time when known; do not invent unavailable source links or freshness.
+
+When retaining a record and the vault uses an email or calendar Area, route it to that Area's date folders and link it from relevant projects. Otherwise use the user-selected or accepted destination; do not create either Area just to file a record. Derived analysis may belong directly to the project it advances. Reuse an identical retained record instead of adding another copy; Inbox processing does not require a second evidence copy.
 
 
 Use the [date meanings and timezone rules](../../revise-vault-documents/references/frontmatter-schemas.md#date-meanings-and-configuration) for filename and folder dates, including email timestamp fallbacks and calendar week endings. Use [record-update handling](../../import-vault-source-records/references/source-records.md#source-record-identity-and-updates) for version precedence, reschedules, cancellations, and unresolved records.
@@ -47,7 +49,7 @@ Use the [date meanings and timezone rules](../../revise-vault-documents/referenc
 
 Completed, abandoned, or superseded projects go intact to `4-archives/<existing-project-folder>/`. Preserve the complete internal structure; do not flatten, ZIP, or scatter the bundle to satisfy depth preferences.
 
-Individual archived items go directly into `4-archives/`. Do not add category or year folders. Preserved originals of processed inbox captures belong in `0-inbox/archive/`.
+Individual archived items and necessary historical snapshots go directly into `4-archives/`. Do not add category or year folders or create an archive under the inbox. An unchanged filed capture needs no additional archived original. Preserve existing historical copies in their existing locations unless a separate migration or cleanup is authorized.
 
 
 Use [archive workflows](../../manage-vault-lifecycle/references/lifecycle.md#archive-workflow) for eligibility, collisions, preservation, metadata, and link repairs.

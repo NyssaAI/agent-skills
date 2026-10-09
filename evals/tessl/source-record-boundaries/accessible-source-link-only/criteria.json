@@ -1,0 +1,16 @@
+{
+  "context": "Judge final artifacts against supplied fixtures. No source fetching is needed or authorized.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "source-navigation",
+      "max_score": 5,
+      "description": "The existing email index links Budget approval to exactly https://mail.example.test/messages/budget-approval-29 and preserves existing metadata and content."
+    },
+    {
+      "name": "single-master-boundary",
+      "max_score": 5,
+      "description": "No native payload, inbox capture, inbox archive duplicate, or local evidence snapshot is manufactured. The response accurately reports link-only navigation and treats the reachable email source as master for live state without requesting downloads or credentials."
+    }
+  ]
+}

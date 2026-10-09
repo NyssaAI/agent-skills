@@ -1,0 +1,79 @@
+{
+  "checks": {
+    "H01_unknown_name_and_bytes": true,
+    "H01_known_name_and_bytes": true,
+    "H01_inbox_empty": true,
+    "h02_ordinary_copy": true,
+    "h02_original_capture": true,
+    "h02_capture_filed": true,
+    "h02_index_targets": true,
+    "h03_ordinary_copy": true,
+    "h03_original_capture": true,
+    "h03_capture_filed": true,
+    "h03_index_targets": true,
+    "H03_native_invitation": true,
+    "H03_protected_procedure": true,
+    "H03_reactivated": true,
+    "H03_draft_proposal": true,
+    "fallback_collision_preserved": true,
+    "fallback_new_draft": true,
+    "template_preserved": true,
+    "template_output_draft": true
+  },
+  "sessions": {
+    "h01": {
+      "session_id": "01a12170-2650-7221-95c7-cc47005be037",
+      "raw_log_sha256": "4a04aac4e52f8025162eda10bfe9cd84323b22d0ab4c2df937feab441063c30e",
+      "responses": [
+        "No file-management foundation text was supplied at startup. The session supplied an AGENTS.md instruction pointing to `../.tessl/RULES.md`, plus a catalog of available skills; their contents have not yet been read. I’ll read the local conventions and the file-operations skill, then organize and verify the two files within this synthetic folder.",
+        "Moved both files into `filed`, preserving filenames and contents:\n\n- `filed/2026.10.08-receipt.txt`\n- `filed/undated-notes.txt`\n\nUsed `agent-skills:manage-file-operations`, including its foundation and naming guidance. No foundation text was supplied at startup; it was read during this task.\n\nVerified both files against their original SHA-256 hashes. Both matched, and inbox is empty. No links or indexes required updates.\n\nLimitations: the production date of `undated-notes.txt` remains unknown; no date was invented. The referenced `../.tessl/RULES.md` was unavailable. No delegation or external services were used."
+      ]
+    },
+    "h02": {
+      "session_id": "01a12171-1bd8-70e3-8e49-0720031bcd9b",
+      "raw_log_sha256": "de67a4ba1dbbbafae42a216f9813edcf91c615d4404ba371aaf0e8e70d52459f",
+      "responses": [
+        "I’ll first copy `ordinary.txt` exactly, then read the vault context and applicable PARA guidance before filing the capture and updating the meetings index. I’ll keep all work in this folder and report the read sequence and verification.",
+        "The ordinary copy is byte-identical. Before copying, PARA skill descriptions were available in the session, but I had read no PARA guidance. The referenced `../.tessl/RULES.md` was absent.\n\nThe vault context identifies this folder as a PARA vault. I’m now applying `agent-skills:file-para-content` for the inbox filing.",
+        "The capture already has valid metadata and no inbox-only fields, so it can retain its exact content and `raw` maturity. I’ll file it as `2-areas/meetings/capture.md`, preserve an exact original in `0-inbox/archive/`, and add an annotated link to the existing meetings index. No existing references to the capture were found.",
+        "Created `ordinary-copy.txt` as an exact copy of `ordinary.txt`. Before that task, PARA skill descriptions were available, but no PARA skill or reference had been read. The attempted read of `../.tessl/RULES.md` found no file.\n\nRead sequence after copying:\n\n1. `vault-context.md`\n2. `file-para-content/SKILL.md`\n3. References: vault conventions, folder conventions, revisions, frontmatter schemas, naming, navigation\n4. `manage-file-operations/SKILL.md`\n5. Capture, existing meetings index, and meeting note\n6. File-management foundation, safe operations, intermediate-work guidance; reread frontmatter schemas because earlier output was truncated\n\nFiled the capture at `2-areas/meetings/capture.md`, preserving exact content and metadata. Saved an unchanged original at `0-inbox/archive/capture.md` and updated `00-meetings-index.md`. An index recovery copy remains under `.temp/h02-filing/`.\n\nVerification passed: copy bytes matched; filed capture and preserved original matched the source SHA-256; the index link resolves; no stale capture references remained; the unrelated meeting note was unchanged. Removed the working inbox source after verification.\n\nNo delegation or external services were used."
+      ]
+    },
+    "h03": {
+      "session_id": "01a12172-0e1f-7f83-9b8d-80a1781f46f3",
+      "raw_log_sha256": "d0de1f4f0bc073cf7e1119bde9bf0149a0a393aa3bea6d7b18e679188118d961",
+      "responses": [
+        "I’ll read the vault context and installed skill instructions, run the requested workflows inside this vault, and verify the resulting files and links.",
+        "All six requested skills are exposed from agent-skills 0.6.1. The meetings index has no entries, so I’ll add links to the existing note, filed capture, and imported invitation. I’ll preserve the inbox capture unchanged and leave the operations procedure unchanged while creating its revision proposal.",
+        "Completed inside the synthetic vault. Installed **agent-skills version: 0.6.1**; all six active skills were read and used.\n\n| Workflow | Artifacts and result |\n|---|---|\n| `manage-file-operations` | Created `ordinary-copy.txt`; byte-identical to `ordinary.txt`, which remains intact. |\n| `file-para-content` | Filed `2-areas/meetings/capture.md`; preserved unchanged evidence at `0-inbox/archive/capture.md`. |\n| `import-vault-source-records` | Created `2-areas/meetings/2026.10.12-synthetic-team-meeting.ics`; native bytes preserved and supplied source retained. |\n| `maintain-vault-navigation` | Repaired `2-areas/meetings/00-meetings-index.md` with annotated links to the existing note, capture, and invitation. |\n| `manage-vault-lifecycle` | Archived the capture at `4-archives/capture.md`, then reactivated it into meetings. Archive provenance remains in dated body history; maturity remains `raw`. |\n| `revise-vault-documents` | Created `2-areas/operations/procedure-proposed-revision.md`, proposing backups twice weekly. Proposal is draft and noncanonical; accepted procedure remains unchanged. |\n\nVerification passed: all four maintained Markdown links resolve; copies and preserved evidence match source bytes; the existing meeting note, template, and operations procedure remain byte-identical. Results are recorded in `.temp/h03/verification.json`.\n\nStartup foundation: the plugin contains a SessionStart hook and shared file-management/PARA foundation. Automatic startup injection was **not observed**; I explicitly read the foundation before acting. No plugin-specific commands, MCP dependencies, or background automation were declared.\n\nLimitations: `../.tessl/RULES.md` was missing. Temporary-output Git/sync exclusions were not verified. The proposal remains pending approval as requested. No plugins, external settings, services, or delegates were used or changed."
+      ]
+    },
+    "fallback": {
+      "session_id": "01a12173-d28b-7aa2-9a2f-0743a914f8c7",
+      "raw_log_sha256": "c171e4adfe61f7a1470a86d738c660ea30314b6c338d9010aa1955253bd1ab5c",
+      "responses": [
+        "I’ll read the vault context and applicable filing instructions, then create the draft meeting note while preserving any existing content.",
+        "I’m using the file-para-content skill. The requested filename already contains an unrelated note, so I’ll preserve it exactly and create `meeting-notes-2.md`, with a link in the meetings index. The referenced `../.tessl/RULES.md` is missing.",
+        "Created `2-areas/meetings/meeting-notes-2.md` as a draft and linked it from the meetings index.\n\nCollision handling: `meeting-notes.md` already held unrelated content, so I used the first unused suffix, `-2`. All existing files except the intentionally appended index remain byte-identical.\n\nRead:\n- Local: `vault-context.md`, `meeting-template.md`, existing meeting note and index.\n- Skills: `file-para-content`, `manage-file-operations`.\n- Foundation/references: `core.md`, vault conventions, folder conventions, frontmatter schemas, naming, navigation, safe operations, and document maturity.\n\n`../.tessl/RULES.md` was missing. No delegation or external services were used."
+      ]
+    },
+    "template": {
+      "session_id": "01a12174-953e-7c73-a500-1580816892f5",
+      "raw_log_sha256": "a274a0b1d6ec2ea2fd902475172d48785d87a6a9abb3f058d5ae5ad7aef10bec",
+      "responses": [
+        "I’ll read the vault context and the file-para-content skill, then create the draft in the existing meetings folder while preserving the template.",
+        "The template’s `established` maturity applies to the template itself. The new note will be `draft`, with today’s creation date and the Agenda and Decisions headings. I’ll omit the template-only notice and add a link in the meetings index. The referenced `../.tessl/RULES.md` is absent.",
+        "Created [new-meeting.md](2-areas/meetings/new-meeting.md) and linked it from the meetings index. Verified the template remained unchanged.\n\nMaturity is `draft` because you requested a draft and its content remains incomplete. The template’s `established` maturity does not transfer; its template-only notice was omitted.\n\nRead `vault-context.md`, the template, the meetings index, and these installed resources:\n\n- `file-para-content/SKILL.md`\n- `vault-conventions.md`\n- `folder-conventions.md`\n- `frontmatter-schemas.md`\n- `naming.md`\n- `navigation.md`\n- `manage-file-operations/core.md`\n- `document-maturity.md`\n\nThe referenced `../.tessl/RULES.md` was missing. No delegation or external services were used."
+      ]
+    }
+  },
+  "reviewer": "Lead Codex agent",
+  "review_method": "Lead inspected actual native events and independently checked selected artifact bytes/links. This is not an independent reviewer or trusted host-export verification.",
+  "remaining": [
+    "SessionStart foundation was reported absent in fresh H01; hook trust and delivery not verified.",
+    "Separate anchor placement variants not run.",
+    "Package update isolation not run.",
+    "No independent scored review or trusted host-export verifier.",
+    "YOLO runtime differs from earlier workspace-write attempts."
+  ]
+}

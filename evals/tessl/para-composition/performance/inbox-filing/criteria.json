@@ -8,9 +8,9 @@
       "description": "The finance escalation procedure retains the substantive capture context, including audit A-17, Mira, vendor exceptions, and source attribution. The working note is filed in the finance Area and is no longer a pending inbox item."
     },
     {
-      "name": "original-evidence",
+      "name": "provenance-and-single-home",
       "max_score": 3,
-      "description": "An unchanged original capture remains under 0-inbox/archive; compare its complete contents against the supplied capture, including original frontmatter."
+      "description": "No automatic inbox archive duplicate is created. Routine routing metadata cleanup preserves the complete substantive context and source attribution in the filed note, including the interview with Mira on 2026-09-19. No permanent snapshot is required when accepted meaning remains unchanged; judge final preserved provenance rather than inferring an unobserved rollback process."
     },
     {
       "name": "metadata",

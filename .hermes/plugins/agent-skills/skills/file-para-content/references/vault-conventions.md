@@ -6,7 +6,7 @@ If the [file-management foundation](../../manage-file-operations/core.md) is not
 
 ## Locations and governing rules
 
-For vault operations, resolve the accepted inbox, preserved-originals, archive, and rules locations before using them. In this catalog's default layout these are `0-inbox/`, `0-inbox/archive/`, `4-archives/`, and `3-resources/rules/`. Preserve other layouts; do not invent a top-level folder when a necessary location is unknown. Use [file-management](../../manage-file-operations/references/intermediate-work.md) for the working root's `.temp/` directory.
+For vault operations, resolve the accepted inbox, archive, and rules locations before using them. In this catalog's default layout these are `0-inbox/`, `4-archives/`, and `3-resources/rules/`. Do not create an archive inside the inbox for processed captures. Preserve existing layouts and historical copies; an updated convention does not authorize moving or deleting them. Do not invent a top-level folder when a necessary location is unknown. Use [file-management](../../manage-file-operations/references/intermediate-work.md) for the working root's `.temp/` directory.
 
 For decisions that depend on vault conventions, check a supplied rules path or configuration, then links in existing indexes, then the existing rules location. Use accepted rules found there; a filename alone does not establish authority. If no applicable rule exists, use the defaults in these references while preserving the existing layout. Resolve competing canonical rules through the [authority rule](../../revise-vault-documents/references/frontmatter-schemas.md#authority-and-tags); ask only when the conflict affects the task. These conventions do not authorize reorganizing unrelated content.
 

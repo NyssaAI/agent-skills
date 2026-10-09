@@ -1,6 +1,6 @@
 # NyssaAI Agent Skills
 
-Version: **0.6.1** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.6.2** (candidate; see [latest evaluation](evals/LATEST.md)).
 Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
 
 Six workflow skills share one maintained source tree and a brief
@@ -35,6 +35,16 @@ The startup foundation remains shared. Existing [file and folder naming](skills/
 and [document maturity](skills/manage-file-operations/references/document-maturity.md)
 guidance loads from the relevant workflow references when naming, temporary work,
 or template/output maturity decisions require it; these are not new skills.
+
+## Inbox filing and source retention
+
+Inbox filing keeps one working copy at its resolved PARA home; it no longer
+creates an automatic archive under Inbox. Substantive rewrites preserve
+recoverable history, using the existing archive when a snapshot is needed.
+Existing historical copies are preserved until an explicit cleanup is requested.
+Email and calendar services govern live source state. Prefer source references;
+retain a local snapshot only for requested retention, evidence, offline access,
+or an otherwise unavailable source. See the [source retention rule](skills/file-para-content/references/folder-conventions.md#source-record-destinations).
 
 ## Document maturity compatibility
 

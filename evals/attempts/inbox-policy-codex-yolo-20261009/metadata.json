@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "run_id": "inbox-policy-codex-yolo-20261009",
+  "state": "incomplete",
+  "key": [
+    "file-and-para-24",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-09T16:26:11.206701+00:00",
+  "completed_at": "2026-10-09T16:34:02.876081+00:00",
+  "candidate_version": "0.6.1 working-tree policy change",
+  "candidate_sha256": "c24b2e29ab6464785f30afde99bec21c7cde7b0b9e2b272d049765254ced8d32",
+  "suite_revision": "0.6.1-filing-history",
+  "stage": "Five targeted requests executed with artifact checks; fresh C23 retry passed",
+  "diagnostic": "New single-home filing, retained source snapshots, duplicate invitation reuse, and source-link-only navigation passed targeted artifact checks. Initial C23 naming miss was corrected and retested on fresh fixtures. This is incomplete full-suite evidence, not a release acceptance score.",
+  "next_check": "Execute the complete 24-case suite on the final candidate in a fresh agent, export actual artifacts, and obtain independent scored review. Complete separate native startup/discovery evidence.",
+  "runtime_configuration": "codex-cli 0.161.0 --no-daemon exec --yolo --json --ephemeral; explicit frozen skill instructions",
+  "evidence": "evidence.json",
+  "artifact": "targeted-evidence.zip",
+  "artifact_sha256": "3b66f28158924243f32170b0c7683dfcc4c6f04548331867817d74923bc5e322",
+  "last_completed_case": "C03 C07 C23 plus duplicate-inbox-capture and accessible-source-link-only",
+  "command_or_host_action_attempted": [
+    "Fresh native YOLO probe of five synthetic tasks",
+    "Separate fresh C23 retry after naming clarification"
+  ],
+  "exit_status": "Both native CLI exits 0; targeted artifact assertions pass"
+}

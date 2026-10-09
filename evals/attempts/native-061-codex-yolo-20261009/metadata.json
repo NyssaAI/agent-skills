@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "run_id": "native-061-codex-yolo-20261009",
+  "state": "unverified",
+  "key": [
+    "startup-and-discovery",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-09T16:12:40.235825+00:00",
+  "completed_at": "2026-10-09T16:19:50.741761+00:00",
+  "candidate_version": "0.6.1",
+  "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816",
+  "suite_revision": "0.6.0",
+  "suite_sha256": "1d7490f1b0de5a21e3017d94c830da4f5b3952845f0325c941ee2b06a5f0138b",
+  "host_version": "codex-cli 0.161.0",
+  "runtime_configuration": {
+    "flags": [
+      "--no-daemon",
+      "exec",
+      "--yolo",
+      "--json",
+      "--ephemeral",
+      "--skip-git-repo-check"
+    ],
+    "note": "YOLO run is supplemental evidence, not certification of every default security configuration."
+  },
+  "stage": "H01-H03 workflow tasks and direct-creation/template variants completed; selected artifacts checked",
+  "last_completed_case": "H03 workflow portion; update isolation unrun",
+  "diagnostic": "YOLO sessions completed without Windows sandbox failures. All selected artifact checks passed. All six installed 0.6.1 workflows were read and exercised. H01 reported no automatic foundation at startup, then read core.md on demand. Collision and template-maturity variants succeeded. Full startup acceptance remains unverified for the explicit gaps in evidence.json.",
+  "next_check": "Verify trusted SessionStart delivery and separate anchor variants, test package update isolation, and obtain independent review plus trusted native export verification.",
+  "command_or_host_action_attempted": [
+    "Five fresh codex --no-daemon exec --yolo sessions on synthetic fixtures"
+  ],
+  "exit_status": "Five CLI exits 0; no certified suite score",
+  "evidence": "evidence.json",
+  "artifact": "probe-evidence.zip",
+  "artifact_sha256": "d1957331f170b66f7e583bd8d89a50519e640b81059f5e0e62fdb25da479ef55"
+}

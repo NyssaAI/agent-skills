@@ -5,12 +5,12 @@
     {
       "name": "payload-and-evidence-preservation",
       "max_score": 4,
-      "description": "The existing current and older calendar payloads are byte-identical to their fixtures. An unchanged original of the processed inbox capture exists under 0-inbox/archive/. No YAML is inserted into native records; 0-inbox/planning.ics no longer remains an unprocessed working capture."
+      "description": "The existing current and older calendar payloads are byte-identical to their fixtures. The processed inbox item is removed only after verifying the existing filed payload is identical. No automatic inbox archive duplicate is created. Any preexisting historical inbox archive record remains byte-identical at its existing path. No YAML is inserted into native records; 0-inbox/planning.ics no longer remains an unprocessed working capture."
     },
     {
       "name": "filing-and-deduplication-boundary",
       "max_score": 4,
-      "description": "The existing current record is reused, with no extra working invitation or duplicate current link. Exactly one unchanged inbox original is retained. Reuse an identical already-preserved original when present; do not suffix or rename verified identical existing records. The Current target and older historical navigation remain correct."
+      "description": "The existing current record is reused, with no extra working invitation or duplicate current link. No new inbox archive copy is created; preserve any already-existing historical copy untouched. Reuse the identical filed record; do not suffix or rename verified identical existing records. The Current target and older historical navigation remain correct."
     },
     {
       "name": "navigation-and-completion",

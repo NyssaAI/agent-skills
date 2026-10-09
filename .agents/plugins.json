@@ -1,6 +1,6 @@
 {
   "name": "agent-skills",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "skills": [
     "./skills/manage-file-operations",
     "./skills/file-para-content",

@@ -1,0 +1,10 @@
+{
+  "description": "explicit calendar calendar routing",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

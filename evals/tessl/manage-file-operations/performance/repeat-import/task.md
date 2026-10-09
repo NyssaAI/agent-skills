@@ -1,0 +1,1 @@
+Import the current workspace/Incoming supplier records into workspace/Records. After finishing, repeat the same import once to check that it is safe to rerun. Keep the incoming export available for later reconciliation.

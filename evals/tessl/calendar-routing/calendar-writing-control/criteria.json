@@ -1,0 +1,11 @@
+{
+  "context": "This scenario is an activation control, run without rubric scoring.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "writing",
+      "description": "The reply supplies three friendly invitation sentences.",
+      "max_score": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "context": "Judge final workspace artifacts and the execution record. Award each criterion only for demonstrated outcomes, not promises. The task is a synthetic file-operation test. Paths below are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "source-retained",
+      "description": "Library/handout.md and Library/assets/card.txt retain their exact original contents.",
+      "max_score": 3
+    },
+    {
+      "name": "usable-copy",
+      "description": "Teams/Onboarding/handout.md retains HANDOUT-23 and its body; its reference-card link resolves to the original card or a faithfully copied card. Necessary relative-link adjustment is allowed.",
+      "max_score": 4
+    },
+    {
+      "name": "reference-ownership",
+      "description": "Catalog.md continues to point at Library/handout.md; Teams/Onboarding/index.md links to the new team copy.",
+      "max_score": 3
+    }
+  ]
+}

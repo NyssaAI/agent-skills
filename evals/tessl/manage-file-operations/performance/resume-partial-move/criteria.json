@@ -1,0 +1,21 @@
+{
+  "context": "Judge final workspace artifacts. Award each criterion only for demonstrated file outcomes, not promises. Paths below are relative to workspace/. Execution ordering and the number of passes cannot be established from final files alone; do not infer them or require a new execution log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "resume-identity",
+      "description": "Reuse Archive/Launch as the same operation; retain exactly one final plan.md and budget.csv with their original contents. Do not make Archive/Launch-2 or recreate budget.csv at the source.",
+      "max_score": 4
+    },
+    {
+      "name": "complete-relocation",
+      "description": "Drafts/Launch is removed as a working source; Drafts/Other/note.md remains unchanged. Content preservation is scored separately.",
+      "max_score": 3
+    },
+    {
+      "name": "finish-navigation",
+      "description": "Catalog.md and Archive/index.md resolve to Archive/Launch/plan.md; Drafts/index.md has no stale Launch entry and retains access to Other.",
+      "max_score": 3
+    }
+  ]
+}

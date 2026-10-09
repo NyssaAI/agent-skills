@@ -1,0 +1,26 @@
+{
+  "context": "Judge final artifacts only, including response.json. Do not infer an unobserved process or award credit for promises. Compare preservation against supplied fixtures. Paths are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "working-content",
+      "max_score": 3,
+      "description": "The finance escalation procedure retains the substantive capture context, including audit A-17, Mira, vendor exceptions, and source attribution. The working note is filed in the finance Area and is no longer a pending inbox item."
+    },
+    {
+      "name": "original-evidence",
+      "max_score": 3,
+      "description": "An unchanged original capture remains under 0-inbox/archive; compare its complete contents against the supplied capture, including original frontmatter."
+    },
+    {
+      "name": "metadata",
+      "max_score": 2,
+      "description": "The working note retains its original created date and raw maturity, uses type note and document-maturity, and has substantive information in the body and no inbox-only filing-hint/context/source fields. It is not promoted to canonical."
+    },
+    {
+      "name": "navigation",
+      "max_score": 2,
+      "description": "The existing finance index has a usable link to the filed working note, without duplicate working copies or broken links introduced by filing."
+    }
+  ]
+}

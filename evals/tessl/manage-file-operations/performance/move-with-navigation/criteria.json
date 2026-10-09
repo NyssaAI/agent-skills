@@ -1,0 +1,21 @@
+{
+  "context": "Judge final workspace artifacts and the execution record. Award each criterion only for demonstrated outcomes, not promises. The task is a synthetic file-operation test. Paths below are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "content",
+      "description": "Reference/Clients/Guide contains brief.md with GUIDE-17 and the unchanged diagram at assets/diagram.txt; original Drafts/Guide is no longer an active working copy. Intended link edits in brief.md are allowed.",
+      "max_score": 4
+    },
+    {
+      "name": "incoming-navigation",
+      "description": "Catalog.md resolves to the relocated brief; Drafts/index.md has no dangling old guide link and Reference/Clients/index.md provides access to the relocated brief while retaining its existing-note entry.",
+      "max_score": 3
+    },
+    {
+      "name": "outgoing-navigation",
+      "description": "Both checklist and diagram links inside relocated brief.md resolve to their original targets. Checklist should resolve to Shared/checklist.md despite the changed directory depth.",
+      "max_score": 3
+    }
+  ]
+}

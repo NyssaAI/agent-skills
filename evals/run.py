@@ -27,7 +27,7 @@ import zipfile
 
 from cases import build_cases
 
-SUITE_VERSION = "0.3.0"
+SUITE_VERSION = "0.5.0"
 
 
 def write_json(path, value):
@@ -72,7 +72,7 @@ def prepare(repository, run_id):
     run_root.mkdir(parents=True, exist_ok=False)
     candidate = run_root / "candidate"
     plugin = candidate / "plugin"
-    for relative in ["skills", "hooks", ".codex-plugin", ".claude-plugin", ".agents"]:
+    for relative in ["skills", "rules", "hooks", ".tessl-plugin", ".codex-plugin", ".claude-plugin", ".agents"]:
         source = repository / relative
         if source.exists():
             shutil.copytree(source, plugin / relative)
@@ -97,13 +97,21 @@ def prepare(repository, run_id):
             path = safe_child(workspace, relative)
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(content.encode("utf-8"))
+        entry_guidance = (
+            f"Start with the frozen {item['entry_skill']} skill in ../../plugin/skills/ "
+            "(resolve from the candidate root if necessary) and load applicable references.\n\n"
+            if item["entry_skill"] else
+            "Read the frozen file-management foundation at "
+            "../../plugin/skills/manage-file-operations/core.md and its "
+            "references/intermediate-work.md for this temporary-storage task "
+            "(resolve from the candidate root if necessary).\n\n"
+        )
         (case_root / "request.md").write_text(
             f"# {item['id']}: {item['title']}\n\n"
             "For this task, today's date is 2026-09-29. All identities and records are synthetic. "
             "Treat workspace/ as this task's root. There is no external evidence or version history "
             "unless this request explicitly supplies it. Do not invent missing facts.\n\n"
-            f"Start with the frozen {item['entry_skill']} skill in ../../plugin/skills/ "
-            "(resolve from the candidate root if necessary) and load applicable references.\n\n"
+            f"{entry_guidance}"
             f"{item['prompt']}\n\n"
             "Complete authorized changes inside workspace/. If a decision needs unavailable user input, "
             "complete independent work and record the question rather than waiting. "

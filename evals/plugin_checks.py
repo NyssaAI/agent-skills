@@ -109,7 +109,7 @@ def validate_plugin(repository):
         if not isinstance(metadata, dict) or metadata.get("trigger") != "always_on":
             findings.append("Antigravity foundation rule lacks an always_on trigger")
         body = content[match.end():].strip() if match else ""
-        core = (repository / "skills/file-management/core.md").read_text(encoding="utf-8").strip()
+        core = (repository / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
         if body != core:
             findings.append("Antigravity foundation rule differs from canonical core")
     except (OSError, yaml.YAMLError) as error:

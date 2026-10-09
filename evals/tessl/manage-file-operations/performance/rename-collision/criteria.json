@@ -1,0 +1,21 @@
+{
+  "context": "Judge final workspace artifacts and the execution record. Award each criterion only for demonstrated outcomes, not promises. The task is a synthetic file-operation test. Paths below are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "preserve-colliding-records",
+      "description": "Drafts/Report.txt and Drafts/Report-2.txt retain their exact original contents; neither is replaced by NOTES-31.",
+      "max_score": 4
+    },
+    {
+      "name": "stable-collision-name",
+      "description": "NOTES-31 is retained as Drafts/Report-3.txt, the first unused numeric suffix before the extension, with exact source content; Working Notes.txt is no longer the working item.",
+      "max_score": 3
+    },
+    {
+      "name": "catalog-identity",
+      "description": "Catalog links the working-notes entry to Report-3.txt while preserving the approved and other report links to their respective original records.",
+      "max_score": 3
+    }
+  ]
+}

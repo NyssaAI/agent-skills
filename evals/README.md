@@ -1,6 +1,6 @@
 # Plugin evaluation CLI
 
-The scored suite exercises `para-vault` and `file-management` through
+The scored suite exercises the five PARA workflows and `manage-file-operations` through
 24 isolated user tasks. A run means one independent candidate executes **all
 24 cases**, producing real workspace artifacts and one JSON response per case.
 New-note checks require `document-maturity`. C17 exercises explicitly authorized
@@ -15,11 +15,28 @@ longer hides an otherwise valid navigation link.
 
 Use `run.py` to prepare, execute, score, export, and verify runs. The [scorer](scoring.py) and [coverage matrix](matrix.json) define the public scoring and required targets.
 
+Suite version 0.5.0 routes filing cases to `file-para-content`, source records to
+`import-vault-source-records`, lifecycle changes to `manage-vault-lifecycle`,
+revisions/authority to `revise-vault-documents`, and navigation review to
+`maintain-vault-navigation`. C12 uses `manage-file-operations` with vault navigation
+guidance; C22 reads the retained temporary-storage guidance directly.
+Historical reports retain their original skill names and do not evaluate this split.
+The [Tessl composition sample](tessl/para-composition/README.md) exercises five
+representative cases plus an unrelated-writing activation control. Its private
+results are retained locally under `docs/tessl/`; this sample does not replace
+the full 24-case suite or host-runtime verification.
+
+The [source-record boundary scenarios](tessl/source-record-boundaries/README.md)
+extend that sample with direct imports and duplicate inbox captures, including
+reuse of an already-preserved original. The
+[calendar routing investigation](tessl/calendar-routing/README.md) tests equivalent
+request phrasings and a writing-only control separately from artifact scoring.
+
 ## Suite catalog and coverage
 
 | Suite | Cases and purpose | Entry and observable success | Reproduction |
 | --- | --- | --- | --- |
-| `file-and-para-24` | C01–C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct `para-vault` or `file-management` invocation; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
+| `file-and-para-24` | C01–C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct invocation of the case-specific workflow; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
 | `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, skill invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
 
 The machine-readable [coverage matrix](matrix.json) defines each required
@@ -72,7 +89,7 @@ repository. Older startup attempt receipts still refer to that repository's
 receipts remain unchanged. The three former file-and-PARA exports embedded the
 builder skill, so their complete, unmodified result directories are preserved in
 that private repository under `history/agent-skills-evals/`. They are historical
-evidence, not evidence for the current two-skill package. Earlier public Git
+evidence, not evidence for the current six-skill package. Earlier public Git
 history also retains the extracted content.
 
 ## Set up

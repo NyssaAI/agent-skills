@@ -1,13 +1,13 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `978bb628ac7dc4037c6c67827282bb2195535b9c52fb0de8c7423b5122d8cead`. Suite revision: `0.6.0`.
+Candidate SHA-256: `86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816`. Suite revision: `0.6.0`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 
 | Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [windows-final-20261005](results/windows-final-20261005/metadata.json) | Pass / 100.0/100 | Stale | [template-maturity-final-local-20261006](attempts/template-maturity-final-local-20261006/metadata.json): incomplete; Execute all 24 cases in an isolated fresh Codex agent, obtain independent artifact review, and export verified evidence for this candidate; separately complete required native startup/discovery rows before all-host release acceptance. |
+| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [windows-final-20261005](results/windows-final-20261005/metadata.json) | Pass / 100.0/100 | Stale | [template-maturity-final-local-20261006](attempts/template-maturity-final-local-20261006/metadata.json): incomplete on an earlier candidate; Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
 | startup-and-discovery | Codex | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-codex-startup-20261001](attempts/final-v3-codex-startup-20261001/metadata.json): unverified on an earlier candidate; Install the current package and probe H01-H03 with a native trace, including hook trust and startup delivery. |
 | startup-and-discovery | Claude Code | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-claude-code-startup-20261001](attempts/final-v3-claude-code-startup-20261001/metadata.json): incomplete on an earlier candidate; Renew Claude authentication; install and invoke both skills in a fresh project. |
 | startup-and-discovery | Claude Cowork | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-claude-cowork-startup-20261001](attempts/final-v3-claude-cowork-startup-20261001/metadata.json): incomplete on an earlier candidate; Upload the package and probe a fresh Cowork session. |

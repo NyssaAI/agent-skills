@@ -1,0 +1,3 @@
+interface:
+  display_name: "File PARA Content"
+  short_description: "Classify and file content in a PARA vault"

@@ -1,8 +1,12 @@
 {
   "name": "agent-skills",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "skills": [
-    "./skills/para-vault",
-    "./skills/file-management"
+    "./skills/manage-file-operations",
+    "./skills/file-para-content",
+    "./skills/maintain-vault-navigation",
+    "./skills/manage-vault-lifecycle",
+    "./skills/import-vault-source-records",
+    "./skills/revise-vault-documents"
   ]
 }

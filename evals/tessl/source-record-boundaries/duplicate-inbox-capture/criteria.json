@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts, including response.json, against supplied fixtures. Do not infer operation order from the final state or award credit for promises. Paths are relative to workspace/ unless explicitly prefixed supplied/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "payload-and-evidence-preservation",
+      "max_score": 4,
+      "description": "The existing current and older calendar payloads are byte-identical to their fixtures. An unchanged original of the processed inbox capture exists under 0-inbox/archive/. No YAML is inserted into native records; 0-inbox/planning.ics no longer remains an unprocessed working capture."
+    },
+    {
+      "name": "filing-and-deduplication-boundary",
+      "max_score": 4,
+      "description": "The existing current record is reused, with no extra working invitation or duplicate current link. Exactly one unchanged inbox original is retained. Reuse an identical already-preserved original when present; do not suffix or rename verified identical existing records. The Current target and older historical navigation remain correct."
+    },
+    {
+      "name": "navigation-and-completion",
+      "max_score": 2,
+      "description": "All calendar index links resolve to the intended versions and existing index frontmatter is preserved. The response accurately reports retained/reused records and final locations; it does not request confirmation of routine historical labels or already-authorized filing when no blocker remains."
+    }
+  ]
+}

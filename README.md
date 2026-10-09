@@ -1,12 +1,40 @@
 # NyssaAI Agent Skills
 
-Version: **0.6.0** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.6.1** (candidate; see [latest evaluation](evals/LATEST.md)).
+Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
 
-Two skills share one maintained source tree: [file-management](skills/file-management/SKILL.md)
-and [para-vault](skills/para-vault/SKILL.md). File-management has a lean
-[startup foundation](skills/file-management/core.md); PARA guidance is selected
-only for vault work. Plugin-builder is maintained separately in the private
-`NyssaAI/plugin-builder` repository.
+Six workflow skills share one maintained source tree and a brief
+[startup foundation](skills/manage-file-operations/core.md). Its PARA section
+applies only to recognized vaults; detailed guidance loads on demand.
+Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` repository.
+
+| Skill | Workflow |
+| --- | --- |
+| [manage-file-operations](skills/manage-file-operations/SKILL.md) | Safely move, rename, copy, import, or archive existing content, resolve collisions, and resume interrupted operations. Its `core.md` owns the shared startup foundation; deferred conventions remain in its references. |
+| [file-para-content](skills/file-para-content/SKILL.md) | Classify and file vault content, process inbox captures, or create a project and its index |
+| [maintain-vault-navigation](skills/maintain-vault-navigation/SKILL.md) | Review and repair vault indexes, MOCs, registers, and links |
+| [manage-vault-lifecycle](skills/manage-vault-lifecycle/SKILL.md) | Archive or reactivate vault items and intact project bundles, preserving history and lifecycle metadata. |
+| [import-vault-source-records](skills/import-vault-source-records/SKILL.md) | Ingest supplied email/calendar records, resolve versions and dates, and preserve native source evidence. |
+| [revise-vault-documents](skills/revise-vault-documents/SKILL.md) | Reconcile notes and propose or apply protected revisions |
+
+`para-vault` is retired. Its capabilities now live in the five focused vault
+workflows above. Shared guidance stays with one owning skill and is linked by
+consumers; reading a reference does not require activating its owner's workflow.
+Existing startup hooks/rules deliver the foundation. When it is absent from context,
+`manage-file-operations` and the shared vault conventions load the same core
+on demand without activating an additional workflow. Tessl loads the generated
+`rules/file-management.md` declared in `.tessl-plugin/plugin.json`; its source
+is the same `skills/manage-file-operations/core.md`. This split adds no commands,
+MCP dependencies, or background automation. The workflows compose with
+`manage-file-operations` for actual file transfers and recovery.
+
+`manage-file-operations` replaces the retired `file-management` skill. It covers
+moves, renames, copies, imports, archives, and interrupted-operation recovery.
+The startup foundation remains shared. Existing [file and folder naming](skills/manage-file-operations/references/naming.md),
+[temporary storage](skills/manage-file-operations/references/intermediate-work.md),
+and [document maturity](skills/manage-file-operations/references/document-maturity.md)
+guidance loads from the relevant workflow references when naming, temporary work,
+or template/output maturity decisions require it; these are not new skills.
 
 ## Document maturity compatibility
 
@@ -14,7 +42,7 @@ New PARA notes use `document-maturity` instead of `status`. Work-state fields
 such as `task-state` remain independent. Existing accepted legacy maturity values
 are readable without changing notes; migrating existing notes requires explicit
 user authorization. Conflicting fields are reported rather than overwritten.
-See the [migration rule](skills/para-vault/references/frontmatter-schemas.md#legacy-metadata-compatibility).
+See the [migration rule](skills/revise-vault-documents/references/frontmatter-schemas.md#legacy-metadata-compatibility).
 
 ## Package and activation
 
@@ -41,7 +69,7 @@ host's hook or rule activation.
 | OpenClaw | Install this package as a [compatible bundle](https://docs.openclaw.ai/plugins/bundles) with `openclaw plugins install <package-path>`, then inspect the detected format and loaded skills. | Bundle installation, startup guidance, and skill invocation remain unverified here. A native runtime adapter is unnecessary for these Markdown skills. |
 | Hermes Agent | The generated `.hermes/plugins/agent-skills/` provides a [native project plugin](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins) with the shared skills and startup foundation. | Enable project plugins with `HERMES_ENABLE_PROJECT_PLUGINS=true`, then enable this plugin. Fresh-session behavior remains unverified. |
 | Cursor | `.cursor-plugin/plugin.json` plus root `skills/` form the [Cursor plugin package](https://cursor.com/docs/reference/plugins). Install via marketplace / InstallPlugin into the plugin cache. | Static package support only so far; fresh-session and skill-invocation runtime remain unverified here. |
-| Grok Bot | Same Cursor package (`.cursor-plugin/plugin.json` + `skills/`). Fallback: UpdateState / workflows copy when marketplace install is unavailable. | Static/package support only. **No SessionStart hooks** — foundation is on-demand, not hook-injected. Runtime install and invocation remain unverified here. |
+| Grok Bot | Same Cursor package (`.cursor-plugin/plugin.json` + `skills/`). Fallback: UpdateState / workflows copy when marketplace install is unavailable. | Static/package support only. **No SessionStart hooks** â€” foundation is on-demand, not hook-injected. Runtime install and invocation remain unverified here. |
 | Muse | Only a proposed JSON-executable shim contract is known. | Loader, manifest, and installation are unverified; no support claim. |
 
 The exact per-host status and missing tests are in the
@@ -59,4 +87,4 @@ latest-score checks. Temporary work belongs under `.temp/`; retained review
 history belongs under the private, Git-ignored `docs/`. User settings, when a plugin needs them, belong
 in a separate `.{plugin-name}/` directory outside installed code.
 
-[MIT License](LICENSE) © 2026 NyssaAI.
+[MIT License](LICENSE) Â© 2026 NyssaAI.

@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts only, including response.json. Do not infer an unobserved process or award credit for promises. Compare preservation against supplied fixtures. Paths are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "bundle",
+      "max_score": 3,
+      "description": "The archived launch project returns intact to active Projects with its original folder/index identity and native evidence unchanged, without a duplicate archived working bundle or flattened structure."
+    },
+    {
+      "name": "lifecycle-history",
+      "max_score": 4,
+      "description": "The project index clears current archived, archived-from, and archive-reason fields only with their original values preserved in a dated body history entry. Its original created date, reviewed maturity, and canonical false remain intact."
+    },
+    {
+      "name": "navigation",
+      "max_score": 3,
+      "description": "The finance index reaches the active project index, describes it as active/resumed rather than currently archived, and the project index still resolves its internal evidence link."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts only, including response.json. Do not infer an unobserved process or award credit for promises. Compare preservation against supplied fixtures. Paths are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "version-ordering",
+      "max_score": 4,
+      "description": "The calendar index Current line identifies the incoming organizer update with the newer DTSTAMP at equal SEQUENCE, using its new event start date and correct UTC week-ending destination. It does not keep the earlier version designated current."
+    },
+    {
+      "name": "native-history",
+      "max_score": 3,
+      "description": "The earlier native invitation remains unchanged at its original path and the incoming payload remains unchanged both in its filed native record and in preserved inbox-original evidence. No YAML is inserted into either invitation."
+    },
+    {
+      "name": "version-navigation",
+      "max_score": 3,
+      "description": "The existing calendar index links to both versions with meaningful current/historical descriptions. All those links resolve to the intended native records; the earlier event is not moved just to share a folder with the update."
+    }
+  ]
+}

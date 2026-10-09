@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts only, including response.json. Do not infer an unobserved process or award credit for promises. Compare preservation against supplied fixtures. Paths are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "accepted-revision",
+      "max_score": 4,
+      "description": "At the original policy path, the approved one-reviewer rule replaces the old two-reviewer rule. The policy keeps its original creation date and canonical designation and retains established maturity justified by the explicit acceptance. The completed revision is reported without a redundant approval request."
+    },
+    {
+      "name": "durable-evidence",
+      "max_score": 4,
+      "description": "With no version-control history available, a byte-for-byte unchanged copy of the original accepted policy is retained in the resolved durable archive, with a companion metadata note identifying its historical purpose, archived-from path, archive date, reason, and link to the snapshot. The snapshot is not treated as a competing current canonical policy."
+    },
+    {
+      "name": "bounded-migration",
+      "max_score": 2,
+      "description": "The specifically authorized legacy status field is replaced by document-maturity while task-state and other unrelated operational fields and evidence are preserved."
+    }
+  ]
+}

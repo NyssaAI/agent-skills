@@ -1,6 +1,6 @@
 {
   "format": "hermes-plugin",
   "source": "scripts/assemble.py",
-  "source_sha256": "7fb8738e92fd9fa919043b1fbdff0d5ab5830f6b01db1c5dc93611c33799543b",
-  "version": "0.6.1"
+  "source_sha256": "cda48881276f5d17d353d75cd813cd93a9edc8fd5895991cf6979d5b7e422d84",
+  "version": "0.6.2"
 }

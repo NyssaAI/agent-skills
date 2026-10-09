@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "run_id": "native-061-agy-cli-20261009",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Antigravity CLI",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-09T15:25:18.761952+00:00",
+  "completed_at": "2026-10-09T15:25:18.761952+00:00",
+  "candidate_version": "0.6.1",
+  "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816",
+  "suite_revision": "0.6.0",
+  "suite_sha256": "1d7490f1b0de5a21e3017d94c830da4f5b3952845f0325c941ee2b06a5f0138b",
+  "stage": "Sandboxed native invocation reached authentication prompt",
+  "diagnostic": "agy executable is installed. A sandboxed isolated-project print invocation could not access keyring, reported not authenticated, attempted OAuth, and exited without model output. Network DNS was also unavailable. This does not establish authentication state outside the sandbox. No package installation or H01-H03 completed.",
+  "next_check": "Run an authorized host invocation with working keyring/network; complete login if required, install the assembled project plugin and run H01-H03.",
+  "command_or_host_action_attempted": [
+    "agy plugin list",
+    "agy --project isolated-synthetic-project --print component-query --output-format json --print-timeout 30s"
+  ],
+  "last_completed_case": null,
+  "exit_status": "incomplete",
+  "evidence_omitted": "No trusted host-export verifier is available. No passing score assigned. Probe command strings in this receipt are redacted summaries, not literal argv."
+}

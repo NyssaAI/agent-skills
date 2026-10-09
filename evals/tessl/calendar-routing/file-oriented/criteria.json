@@ -10,7 +10,7 @@
     {
       "name": "native-history",
       "max_score": 3,
-      "description": "The earlier native invitation remains unchanged at its original path and the incoming payload remains unchanged both in its filed native record and in preserved inbox-original evidence. No YAML is inserted into either invitation."
+      "description": "The earlier native invitation remains unchanged at its original path and the incoming payload remains byte-identical in its single filed native record; the processed inbox item is removed without creating an inbox archive duplicate. No YAML is inserted into either invitation."
     },
     {
       "name": "version-navigation",

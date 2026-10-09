@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "run_id": "native-061-codex-20261009",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Codex",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-09T15:25:18.761952+00:00",
+  "completed_at": "2026-10-09T15:25:18.761952+00:00",
+  "candidate_version": "0.6.1",
+  "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816",
+  "suite_revision": "0.6.0",
+  "suite_sha256": "1d7490f1b0de5a21e3017d94c830da4f5b3952845f0325c941ee2b06a5f0138b",
+  "stage": "H01 attempted twice; no filesystem action completed",
+  "diagnostic": "Codex CLI 0.161.0 installed agent-skills@nyssaai 0.6.1 through marketplace upgrade/add. Both shared-daemon and --no-daemon fresh workspace-write sessions failed all shell and Node filesystem tools with helper_unknown_error: setup refresh had errors. codex doctor confirms elevated Windows sandbox provisioning recorded a structured failure. The Tessl reference observed in startup exists in global ~/.codex/AGENTS.md; repository contamination is not established. No H01 artifacts changed. H02-H03 and hook trust/delivery variants remain unrun.",
+  "next_check": "Repair Windows sandbox provisioning, then rerun isolated H01-H03 and focused variants with trusted host session exports.",
+  "command_or_host_action_attempted": [
+    "codex plugin marketplace upgrade nyssaai",
+    "codex plugin add agent-skills@nyssaai --json",
+    "codex exec --json --ephemeral --skip-git-repo-check -s workspace-write -C isolated-synthetic-project",
+    "codex --no-daemon exec with same flags",
+    "codex doctor --summary"
+  ],
+  "last_completed_case": null,
+  "exit_status": "incomplete",
+  "evidence_omitted": "No trusted host-export verifier is available. No passing score assigned. Probe command strings in this receipt are redacted summaries, not literal argv.",
+  "assembled_artifact_inventory_sha256": "9717c66b03c70a4bff2a7c6c76d2b222b334b523ced1398f06a2d003d84c20d1",
+  "evidence": "evidence.json"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "run_id": "native-061-claude-code-20261009",
+  "state": "incomplete",
+  "key": [
+    "startup-and-discovery",
+    "Claude Code",
+    "windows-x86_64",
+    "default"
+  ],
+  "started_at": "2026-10-09T15:25:18.761952+00:00",
+  "completed_at": "2026-10-09T15:25:18.761952+00:00",
+  "candidate_version": "0.6.1",
+  "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816",
+  "suite_revision": "0.6.0",
+  "suite_sha256": "1d7490f1b0de5a21e3017d94c830da4f5b3952845f0325c941ee2b06a5f0138b",
+  "stage": "Authentication prerequisite check",
+  "diagnostic": "claude auth status reports loggedIn=false, authMethod=none. No native test started.",
+  "next_check": "Authenticate Claude Code, then install 0.6.1 with the supported plugin flow and run H01-H03.",
+  "command_or_host_action_attempted": [
+    "claude auth status"
+  ],
+  "last_completed_case": null,
+  "exit_status": "incomplete",
+  "evidence_omitted": "No trusted host-export verifier is available. No passing score assigned. Probe command strings in this receipt are redacted summaries, not literal argv."
+}

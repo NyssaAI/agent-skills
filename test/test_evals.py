@@ -38,11 +38,13 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY / "evals"))
 
 from cases import check, note
+from calibrate import calibrate, mutations
 from run import execute, inventory, prepare, read_json, safe_child, score, verify, write_json
 from scoring import evaluate_check, score_run
 
@@ -73,6 +75,34 @@ class OutcomeScoringTests(unittest.TestCase):
         self.assertTrue(self.evaluate(assertion, original))
         self.write("record.ics", "---\ntype: note\n---\nBEGIN:VCALENDAR\nEND:VCALENDAR\n")
         self.assertFalse(self.evaluate(assertion, original))
+
+    def test_calendar_history_calibration_detects_lost_payload(self):
+        mutation = next(item for item in mutations() if item['id'] == 'lost-calendar-history')
+        relative = '2-areas/calendar/we-2026.10.04/2026.09.30-planning.ics'
+        candidate = self.root / 'candidate'
+        payload = self.write('candidate/cases/C08/workspace/' + relative, 'BEGIN:VCALENDAR\nEND:VCALENDAR\n')
+        self.write('candidate/PACKET.md', 'Frozen calendar request')
+        self.write('candidate/cases/C08/request.md', 'Retain calendar history')
+        assertions = [check('Current payload untouched', 'preservation', 'unchanged', True, path=relative)]
+        assertions.extend(check(dimension, dimension, 'unchanged', path=relative)
+                          for dimension in ('task', 'metadata', 'navigation'))
+        suite = {'version': 'test', 'cases': [{'id': 'C08', 'title': 'Calendar history',
+                 'files': {relative: payload.read_text(encoding='utf-8')}, 'checks': assertions}]}
+        manifest = {'run_id': 'calendar-history', 'case_ids': ['C08'],
+                    'initial_files': inventory(candidate), 'execution': {'kind': 'test'}}
+        write_json(self.root / 'control/suite.json', suite)
+        write_json(self.root / 'control/manifest.json', manifest)
+        write_json(self.root / 'control/review.json', {'reviewer': 'test', 'method': 'artifact review',
+                   'cases': {'C08': {'score': 2, 'evidence': 'Native payload retained'}}})
+        write_json(candidate / 'cases/C08/response.json', {'case_id': 'C08', 'status': 'completed',
+                   'summary': 'Retained calendar history', 'questions': [], 'limitations': [], 'decisions': {}})
+        output = self.root / 'calibration.json'
+        with patch('calibrate.mutations', return_value=[mutation]), contextlib.redirect_stdout(io.StringIO()):
+            self.assertTrue(calibrate(self.root, output))
+        result = read_json(output)
+        self.assertEqual(result['detected'], 1)
+        self.assertLessEqual(result['mutations'][0]['score'], 59)
+        self.assertTrue(payload.is_file())
 
     def test_frontmatter_dates_parse_as_dates_without_false_failure(self):
         self.write("note.md", note("Body", created="2026-09-29"))

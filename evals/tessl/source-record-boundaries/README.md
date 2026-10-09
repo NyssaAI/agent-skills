@@ -1,14 +1,15 @@
 # Source-record filing boundaries
 
-These three synthetic scenarios distinguish a new direct import from processing
+These four synthetic scenarios distinguish a new direct import from processing
 an existing inbox capture. They extend the calendar-reschedule fixture without
 changing the earlier comparison or activation scenarios.
 
 | Scenario | Boundary under test |
 | --- | --- |
+| accessible-source-link-only | Link to an explicitly reachable native source without fetching or manufacturing a local payload. |
 | direct-calendar-import | File a supplied update directly, retaining its external source without manufacturing an inbox capture or evidence copy. |
-| duplicate-inbox-capture | Reuse the filed current record while preserving an unchanged inbox original and completing inbox processing. |
-| duplicate-preserved-original | Reuse both the filed record and a verified identical preserved original without creating more copies. |
+| duplicate-inbox-capture | Reuse the filed current record and remove only the verified identical inbox working item, without creating an archive duplicate. |
+| duplicate-preserved-original | Reuse the filed record and leave the existing historical inbox archive copy untouched, without creating more copies. |
 
 Rubrics inspect final payloads, current/historical links, evidence copies, and
 reported completion. They do not infer the sequence of operations. Fixtures

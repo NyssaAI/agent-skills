@@ -5,12 +5,13 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parent
 SKILLS = PLUGIN_ROOT / "skills"
-CORE = SKILLS / "file-management" / "core.md"
+CORE = SKILLS / "manage-file-operations" / "core.md"
 BEGIN = "<!-- agent-skills:file-management:begin -->"
 END = "<!-- agent-skills:file-management:end -->"
 SKILL_HINT = (
-    "Hermes plugin skills: load agent-skills:file-management or "
-    "agent-skills:para-vault with skill_view when relevant."
+    "Use skill_view to load the relevant agent-skills workflow: "
+    "manage-file-operations, file-para-content, maintain-vault-navigation, "
+    "manage-vault-lifecycle, import-vault-source-records, or revise-vault-documents."
 )
 
 

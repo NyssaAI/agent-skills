@@ -1,0 +1,3 @@
+Supplier-ID: SUP-02
+Name: Birch Print
+Terms: net 15

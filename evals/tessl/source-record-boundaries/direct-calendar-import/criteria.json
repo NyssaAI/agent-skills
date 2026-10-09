@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts, including response.json, against supplied fixtures. Do not infer operation order from the final state or award credit for promises. Paths are relative to workspace/ unless explicitly prefixed supplied/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "payload-and-evidence-preservation",
+      "max_score": 4,
+      "description": "The incoming payload is byte-identical in supplied/planning.ics and the filed workspace record. The existing older invitation remains byte-identical at its original path. No YAML is inserted into native records."
+    },
+    {
+      "name": "filing-and-deduplication-boundary",
+      "max_score": 4,
+      "description": "The record is filed directly: no inbox capture, inbox archive evidence copy, or competing working record is manufactured. Current points to the newer event at 2-areas/calendar/we-2026.10.11/2026.10.05-planning.ics; an existing older native record remains linked as history."
+    },
+    {
+      "name": "navigation-and-completion",
+      "max_score": 2,
+      "description": "All calendar index links resolve to the intended versions and existing index frontmatter is preserved. The response accurately reports retained/reused records and final locations; it does not request confirmation of routine historical labels or already-authorized filing when no blocker remains."
+    }
+  ]
+}

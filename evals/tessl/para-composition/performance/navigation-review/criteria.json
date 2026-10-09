@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts only, including response.json. Do not infer an unobserved process or award credit for promises. Compare preservation against supplied fixtures. Paths are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "missing-target",
+      "max_score": 3,
+      "description": "response.json identifies the finance index and its missing.md link as broken, without inventing a replacement target."
+    },
+    {
+      "name": "ambiguous-target",
+      "max_score": 4,
+      "description": "response.json identifies the unqualified policy wikilink as ambiguous in this vault, explaining that distinct finance and marketing policy notes exist; it does not claim that a matching basename establishes identity."
+    },
+    {
+      "name": "review-scope",
+      "max_score": 3,
+      "description": "All supplied workspace files remain byte-for-byte unchanged and no extra vault files are created. This is specifically a review-only task, including ambiguous and broken entries that must not be silently removed or retargeted. response.json outside workspace is allowed."
+    }
+  ]
+}

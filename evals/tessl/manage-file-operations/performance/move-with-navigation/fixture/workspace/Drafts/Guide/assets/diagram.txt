@@ -1,0 +1,1 @@
+GUIDE-17 diagram: intake -> review -> delivery

@@ -1,0 +1,10 @@
+{
+  "description": "Reactivate project with history",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

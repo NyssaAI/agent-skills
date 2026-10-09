@@ -1,0 +1,4 @@
+Operation: relocate Drafts/Launch to Archive/Launch
+plan.md copied and content verified; source still present.
+budget.csv moved and content verified; source removed.
+Catalog and folder indexes not yet updated.

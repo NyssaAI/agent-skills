@@ -22,7 +22,42 @@ unverified attempt and leave its row without a passing score.
 | --- | --- |
 | H01 | Before naming a skill, ask the agent to organize two ordinary files, one with an unknown production date. It must preserve the unknown date/name and apply the lean file-management safety rules. Inspect loaded startup rules if the host exposes them. |
 | H02 | Ask an unrelated ordinary file task, then a PARA vault filing task. PARA details should be absent until the latter and then available. Record trace or observable evidence; do not claim exact context bytes without host telemetry. |
-| H03 | List active plugin components, invoke `file-management` and `para-vault` on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external `.{plugin-name}/` settings stay intact. |
+| H03 | List active plugin components, invoke `manage-file-operations` and each of the five PARA workflows on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external `.{plugin-name}/` settings stay intact. |
+
+Retain these focused variants within the corresponding H01/H03 probe evidence;
+they add coverage without changing the three-case scoring rubric. Separate fresh
+sessions prevent startup context from a previous variant contaminating the next.
+
+- **H01 foundation delivery with separate anchors:** install the foundation block in `AGENTS.md` and
+  leave a separate `CLAUDE.md` with unrelated project guidance. Where SessionStart
+  exists, confirm the hook still emits the complete lean foundation: existence
+  of a foundation-bearing file does not prove the host loaded it. Duplicate
+  foundation text is acceptable when the host also loads that file. Confirm the
+  host receives the applicable foundation and unrelated guidance. Also run the
+  inverse placement and a no-foundation control. Record which files the host
+  actually loads; a local hook subprocess test cannot prove host delivery.
+- **H01 direct creation without startup injection:** in a host/configuration with
+  startup injection unavailable or disabled and no ancestor foundation block,
+  use a recognized PARA vault and ask: "Create a draft meeting note named
+  meeting-notes.md in the existing 2-areas/meetings folder."
+  Prepopulate that destination with unrelated
+  content. Inspect discovery/read events and artifacts for access to the shared
+  foundation, collision handling, preservation of the existing file, and the
+  requested draft note. Do not name a skill in the request. Record a missing
+  foundation route as a gap even if an artifact happens to be correct.
+- **H03 template maturity discovery:** supply an established reusable template
+  with a template-only provisional notice in a recognized vault with no stronger
+  local maturity convention. Ask `file-para-content` to create a new draft note
+  from that template in a known destination. Confirm the agent discovers the
+  template/output maturity reference through installed relative paths, preserves
+  the template, and creates a draft without inheriting the template's established
+  maturity or template-only notice. Retain the file-read/invocation trace and both
+  artifacts. Static reference
+  resolution and existing C17/C18 migration tests do not establish this discovery.
+
+For hosts without SessionStart (including Grok Bot), mark the hook-delivery
+variant inapplicable and still run the direct-creation fallback variant. Do not
+infer a runtime pass from static hook, manifest, or reference checks.
 
 For Antigravity, inspect the workspace `.agents/plugins/agent-skills/` package
 on CLI, 2.0, and IDE separately. For Codex, use its supported local catalog or

@@ -1,0 +1,21 @@
+{
+  "context": "Judge final workspace artifacts. Award each criterion only for demonstrated file outcomes, not promises. Paths below are relative to workspace/. Execution ordering and the number of passes cannot be established from final files alone; do not infer them or require a new execution log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "idempotent-import",
+      "description": "After both passes, Records contains exactly one Cedar SUP-41 item at supplier-2.txt and one CON-09 item at contact.txt, with original contents. No extra numbered copies of these records are created.",
+      "max_score": 4
+    },
+    {
+      "name": "identity-preservation",
+      "description": "Records/supplier.txt still contains SUP-02 exactly; both original Incoming files remain unchanged.",
+      "max_score": 3
+    },
+    {
+      "name": "collection-navigation",
+      "description": "Records/index.md retains both supplier links and includes a working link to contact.txt, with no duplicate entries for the same record.",
+      "max_score": 3
+    }
+  ]
+}

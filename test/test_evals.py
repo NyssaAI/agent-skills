@@ -155,14 +155,14 @@ class OutcomeScoringTests(unittest.TestCase):
         command = [sys.executable, str(REPOSITORY / "hooks/session-start.py")]
         first = subprocess.run(command, cwd=project, env=environment,
                                capture_output=True, text=True, check=True)
-        core = (REPOSITORY / "skills/file-management/core.md").read_text(encoding="utf-8").strip()
+        core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
         self.assertEqual(first.stdout.strip(), core)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\n" + core +
                                            "\n<!-- agent-skills:file-management:end -->",
                                            encoding="utf-8")
         second = subprocess.run(command, cwd=project, env=environment,
                                 capture_output=True, text=True, check=True)
-        self.assertEqual(second.stdout, "")
+        self.assertEqual(second.stdout.strip(), core)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
                                            "<!-- agent-skills:file-management:end -->", encoding="utf-8")
         third = subprocess.run(command, cwd=project, env=environment,
@@ -175,12 +175,33 @@ class OutcomeScoringTests(unittest.TestCase):
         nested.mkdir()
         inherited = subprocess.run(command, cwd=nested, env=environment,
                                    capture_output=True, text=True, check=True)
-        self.assertEqual(inherited.stdout, "")
+        self.assertEqual(inherited.stdout.strip(), core)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
                                            "<!-- agent-skills:file-management:end -->", encoding="utf-8")
         stale_inherited = subprocess.run(command, cwd=nested, env=environment,
                                         capture_output=True, text=True, check=True)
         self.assertEqual(stale_inherited.stdout.strip(), core)
+
+    def test_startup_hook_loads_core_when_project_instructions_may_not_load_agents(self):
+        core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
+        block = "<!-- agent-skills:file-management:begin -->\n" + core + "\n<!-- agent-skills:file-management:end -->"
+        for instruction_file, root_variable in (
+            ("CLAUDE.md", "CLAUDE_PLUGIN_ROOT"),
+            ("AGENTS.override.md", "PLUGIN_ROOT"),
+        ):
+            with self.subTest(instruction_file=instruction_file):
+                project = self.root / instruction_file.removesuffix(".md")
+                project.mkdir()
+                (project / ".git").mkdir()
+                (project / "AGENTS.md").write_text(block, encoding="utf-8")
+                (project / instruction_file).write_text("# Project instructions\n", encoding="utf-8")
+                environment = {key: value for key, value in os.environ.items()
+                               if key not in {"CLAUDE_PLUGIN_ROOT", "PLUGIN_ROOT"}}
+                environment[root_variable] = str(REPOSITORY)
+                result = subprocess.run([sys.executable, str(REPOSITORY / "hooks/session-start.py")],
+                                        cwd=project, env=environment,
+                                        capture_output=True, text=True, check=True)
+                self.assertEqual(result.stdout.strip(), core)
 
     def sample_run(self):
         self.write("PACKET.md", "Frozen packet")

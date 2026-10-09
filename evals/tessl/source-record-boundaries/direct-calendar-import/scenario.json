@@ -1,0 +1,15 @@
+{
+  "description": "direct calendar import",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    },
+    "supplied": {
+      "type": "directory",
+      "path": "./fixture/supplied",
+      "installPath": "supplied"
+    }
+  }
+}

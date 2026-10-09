@@ -1,0 +1,3 @@
+interface:
+  display_name: "Manage File Operations"
+  short_description: "Move, copy, and archive files with verified recovery"

@@ -15,7 +15,8 @@ DEST = ROOT / ".agents" / "plugins" / "agent-skills"
 HERMES_DEST = ROOT / ".hermes" / "plugins" / "agent-skills"
 BEGIN = "<!-- agent-skills:file-management:begin -->"
 END = "<!-- agent-skills:file-management:end -->"
-CORE = ROOT / "skills" / "file-management" / "core.md"
+CORE = ROOT / "skills" / "manage-file-operations" / "core.md"
+TESSL_RULE = ROOT / "rules" / "file-management.md"
 
 
 def canonical_hash_content(content: bytes) -> bytes:
@@ -138,12 +139,15 @@ def main() -> int:
     parser.add_argument("mode", choices=("write", "check"))
     args = parser.parse_args()
     target_agents = anchored_agents()
+    target_rule = CORE.read_text(encoding="utf-8").strip() + "\n"
     package = expected_files()
     hermes_package = hermes_expected_files()
     if args.mode == "check":
         errors = []
         if (ROOT / "AGENTS.md").read_text(encoding="utf-8") != target_agents:
             errors.append("AGENTS.md foundation differs from canonical core")
+        if not TESSL_RULE.is_file() or TESSL_RULE.read_text(encoding="utf-8") != target_rule:
+            errors.append("Tessl foundation rule differs from canonical core")
         for label, destination, expected in (
             ("Antigravity", DEST, package), ("Hermes", HERMES_DEST, hermes_package)
         ):
@@ -157,14 +161,18 @@ def main() -> int:
         for error in errors:
             print(error, file=sys.stderr)
         if not errors:
-            print(f"Startup, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files match canonical source")
+            print(f"Startup, Tessl rule, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files match canonical source")
         return bool(errors)
     ensure_owned_destination(DEST, "antigravity-plugin")
     ensure_owned_destination(HERMES_DEST, "hermes-plugin")
+    if not TESSL_RULE.resolve().is_relative_to(ROOT.resolve()):
+        raise ValueError(f"Unsafe rule destination: {TESSL_RULE}")
     write_package(DEST, package)
     write_package(HERMES_DEST, hermes_package)
     (ROOT / "AGENTS.md").write_text(target_agents, encoding="utf-8")
-    print(f"Wrote startup foundation, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files")
+    TESSL_RULE.parent.mkdir(parents=True, exist_ok=True)
+    TESSL_RULE.write_text(target_rule, encoding="utf-8")
+    print(f"Wrote startup foundation, Tessl rule, {len(package)} Antigravity files, and {len(hermes_package)} Hermes files")
     return 0
 
 

@@ -1,0 +1,11 @@
+{
+  "context": "Judge final workspace artifacts and the execution record. Award each criterion only for demonstrated outcomes, not promises. The task is a synthetic file-operation test. Paths below are relative to workspace/.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "routing",
+      "description": "The agent provides three welcoming sentences without invoking manage-file-operations or any PARA workflow skill and without changing workspace files.",
+      "max_score": 1
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "context": "Natural activation control. Judge observable selected skills and final output; do not infer routing from output alone.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "routing",
+      "max_score": 1,
+      "description": "Neither writing-voice skill is invoked; useful explanation is delivered with no profile onboarding or workspace mutation."
+    }
+  ]
+}

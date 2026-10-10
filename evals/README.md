@@ -36,8 +36,9 @@ request phrasings and a writing-only control separately from artifact scoring.
 
 | Suite | Cases and purpose | Entry and observable success | Reproduction |
 | --- | --- | --- | --- |
-| `file-and-para-24` | C01–C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct invocation of the case-specific workflow; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
+| `file-and-para-24` | C01â€“C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct invocation of the case-specific workflow; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
 | `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, skill invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
+| `writing-voice` | WV01â€“WV06: synthetic profile safety, modes, approved learning, missing profile, root isolation, and source preservation; four activation controls | Full-plugin natural activation and independently reviewed artifacts; installation/update coverage uses the H03 variant | Follow the [writing voice scaffold](tessl/writing-voice/README.md); local behavioral checks passed; native startup-hook delivery remains unresolved |
 
 The machine-readable [coverage matrix](matrix.json) defines each required
 suite, harness, OS/architecture, and configuration row. Muse is provisional and
@@ -52,9 +53,9 @@ does not imply other platforms are runtime verified.
 run, UTC completion, exact row key, candidate, frozen suite, and artifact
 hashes, host/version/platform/configuration/model, case outcomes, scoring
 method, independent reviewer/method, and critical failures. It links a hashed
-evidence file and inspectable artifact ZIP. For C01–C24, `report.py check`
+evidence file and inspectable artifact ZIP. For C01â€“C24, `report.py check`
 replays the suite's export verifier and compares the recomputed score. For
-H01–H03, it checks every case's reviewed artifact bytes in the ZIP,
+H01â€“H03, it checks every case's reviewed artifact bytes in the ZIP,
 recomputes the score, and requires a host invocation trace. The latter is
 reviewable evidence, not cryptographic proof of a host session; independent
 review must verify its provenance before setting `verified: true`. A bare
@@ -123,7 +124,7 @@ Give a fresh agent this instruction, replacing the run path:
 
 > Read `.temp/evals/run-01/candidate/PACKET.md` and execute all its requests using the frozen plugin. Read only the candidate directory and host tools needed to operate it. Write only case workspaces and their response.json files. Do not read grading materials, delegate, contact external services, or modify the plugin/requests. Record missing-input questions instead of waiting. Report the case ids completed and runtime limitations.
 
-Record the actual host, model/version if exposed, start/end time, execution receipt, and context/isolation policy under `control/manifest.json` → `execution`. Do not invent unavailable model identifiers, seeds, tokens, or tool transcripts. Put a textual host receipt in `control/execution-notes.md` when the host cannot export its transcript. Case responses are not a substitute for filesystem artifacts.
+Record the actual host, model/version if exposed, start/end time, execution receipt, and context/isolation policy under `control/manifest.json` â†’ `execution`. Do not invent unavailable model identifiers, seeds, tokens, or tool transcripts. Put a textual host receipt in `control/execution-notes.md` when the host cannot export its transcript. Case responses are not a substitute for filesystem artifacts.
 
 For a CLI candidate, `execute` accepts a JSON argument array, uses no shell, passes PACKET.md on stdin, and captures stdout/stderr:
 

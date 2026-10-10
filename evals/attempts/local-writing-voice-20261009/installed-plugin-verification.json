@@ -1,0 +1,44 @@
+{
+  "host": "codex-cli 0.161.0",
+  "model_requested": "gpt-6.1-sol",
+  "reasoning_effort_requested": "medium",
+  "execution": "YOLO, ephemeral sessions, isolated CODEX_HOME, actual plugin marketplace add and plugin add",
+  "location": "outside repository and repository ancestors",
+  "installed_skill_count": 8,
+  "nested_working_directory": "C:\\Users\\jmayn\\.codex\\visualizations\\2026\\10\\09\\01a1213f-b1f3-7552-8373-afca639ebe15\\.temp\\installed-voice-verification\\project\\nested\\work",
+  "candidate_installed_version": "0.6.2",
+  "update_transport_version": "0.6.3 (synthetic test package only; repository version unchanged)",
+  "preservation_checks": {
+    "installed_version": "0.6.2",
+    "other_host_unchanged": true,
+    "scratch_unchanged": true,
+    "update_marker_present": true,
+    "profile_unchanged": true
+  },
+  "startup_hook_delivery": "not observed; process sentinel absent even with explicit synthetic OpenAI hook extension and --dangerously-bypass-hook-trust",
+  "startup_context": "installed eight-skill catalog was visible; full foundation was absent",
+  "nested_draft": "Please send the budget draft by Friday. The estimate is $12,000, but it hasn't been confirmed. We may review it Monday.",
+  "limitations": [
+    "First drafting session read an ancestor AGENTS.md during tool use; its startup foundation assertion is not a clean no-anchor acceptance result.",
+    "Subsequent no-tool startup sessions used --ignore-rules and still observed no full foundation.",
+    "Persisted interactive hook trust not tested; reviewed-hook bypass was used for automation.",
+    "Other-host sentinel tests preservation only, not acceptance on those hosts.",
+    "No independent suite export verifier; this receipt does not certify release acceptance."
+  ],
+  "evidence": {
+    "untrusted-result.txt": "The startup instructions included these skill descriptions, but I have not read their `SKILL.md` files:\n\n- **File management:** Use `manage-file-operations` for moving, renaming, copying, importing, or archiving files. Preserve content, resolve collisions, repair affected references, and verify completion. Other listed skills cover filing, navigation, and lifecycle management in PARA vaults.\n- **Writing voice:** Use `write-in-user-voice` for material you will send or publish as yourself; preserve facts and required house style, and leave voice profiles unchanged. Use `maintain-writing-voice` when asked to learn your voice or save writing preferences.\n\nGeneral startup instructions also say your explicit instructions take precedence over skill guidance.\n\n**Hook warning:** No hook warning was shown in the startup context I received. I have not inferred any instructions from the plugin name or used tools.",
+    "trusted-result.txt": "Saved only the email to [draft.md](C:/Users/jmayn/.codex/visualizations/2026/10/09/01a1213f-b1f3-7552-8373-afca639ebe15/.temp/installed-voice-verification/project/draft.md). Your profile is unchanged.\n\nStartup instructions received: general Codex instructions and the installed skill catalog. No plugin startup foundation instructions were supplied. During the task, I read the writing skill, project voice guidance, and the ancestor `AGENTS.md` with its linked Tessl rules.",
+    "update-install.json": "{\n  \"pluginId\": \"agent-skills@voice-verification\",\n  \"name\": \"agent-skills\",\n  \"marketplaceName\": \"voice-verification\",\n  \"version\": \"0.6.2\",\n  \"installedPath\": \"C:\\\\Users\\\\jmayn\\\\.codex\\\\visualizations\\\\2026\\\\10\\\\09\\\\01a1213f-b1f3-7552-8373-afca639ebe15\\\\.temp\\\\installed-voice-verification\\\\home\\\\plugins\\\\cache\\\\voice-verification\\\\agent-skills\\\\0.6.2\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+    "update-checks.json": "{\n  \"installed_version\": \"0.6.2\",\n  \"other_host_unchanged\": true,\n  \"scratch_unchanged\": true,\n  \"update_marker_present\": true,\n  \"profile_unchanged\": true\n}\n",
+    "update-startup-result.txt": "I received **no full plugin startup foundation text** and no `SKILL.md` contents.\n\nI received a **skill catalog** for `agent-skills` version `0.6.2`, listing names, descriptions, and paths for:\n\n- `file-para-content`\n- `import-vault-source-records`\n- `maintain-vault-navigation`\n- `maintain-writing-voice`\n- `manage-file-operations`\n- `manage-vault-lifecycle`\n- `revise-vault-documents`\n- `write-in-user-voice`\n\nI also received general instructions about discovering and using skills, plugins, and apps. Those are general operating instructions, **not this plugin\u2019s foundation text**.\n\nNo missing foundation instructions can be established from the catalog alone.",
+    "diagnostic-install.json": "{\n  \"pluginId\": \"agent-skills@voice-verification\",\n  \"name\": \"agent-skills\",\n  \"marketplaceName\": \"voice-verification\",\n  \"version\": \"0.6.3\",\n  \"installedPath\": \"C:\\\\Users\\\\jmayn\\\\.codex\\\\visualizations\\\\2026\\\\10\\\\09\\\\01a1213f-b1f3-7552-8373-afca639ebe15\\\\.temp\\\\installed-voice-verification\\\\home\\\\plugins\\\\cache\\\\voice-verification\\\\agent-skills\\\\0.6.3\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+    "diagnostic-result.txt": "No. I received a skill catalog and general operating instructions, but not the full file-management foundation text or writing voice convention at startup. I therefore can\u2019t quote the hidden state storage path convention or temporary-output convention without reading files."
+  },
+  "raw_trace_sha256": {
+    "diagnostic-session.jsonl": "471965b843f2a665dcb09f4195b083eb37f514cfa1701bdd6cabc8ce22a19e0e",
+    "trusted-session.jsonl": "e599d7d99e954a0f69017f122586e66ba2fd1bce41d468f863d05e8db5382b56",
+    "untrusted-session.jsonl": "aa12b207607cd7cb04eeaaa48a7d5c73a9504915f574eab006f7cdfea14f3ad5",
+    "update-startup-session.jsonl": "5bd5119270dc804656f0caddce558de3f22ced1649323bd797b2bea014c75a89"
+  },
+  "raw_trace_location": "C:\\Users\\jmayn\\.codex\\visualizations\\2026\\10\\09\\01a1213f-b1f3-7552-8373-afca639ebe15\\.temp\\installed-voice-verification\\logs"
+}

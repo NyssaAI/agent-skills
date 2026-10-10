@@ -1,0 +1,10 @@
+{
+  "description": "apply-profile",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

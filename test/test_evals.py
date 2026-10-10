@@ -43,7 +43,7 @@ from unittest.mock import patch
 REPOSITORY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY / "evals"))
 
-from cases import check, note
+from cases import build_cases, build_writing_voice_cases, check, note
 from calibrate import calibrate, mutations
 from run import execute, inventory, prepare, read_json, safe_child, score, verify, write_json
 from scoring import evaluate_check, score_run
@@ -186,18 +186,20 @@ class OutcomeScoringTests(unittest.TestCase):
         first = subprocess.run(command, cwd=project, env=environment,
                                capture_output=True, text=True, check=True)
         core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
-        self.assertEqual(first.stdout.strip(), core)
+        voice = (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8").strip()
+        foundation = core + "\n\n" + voice
+        self.assertEqual(first.stdout.strip(), foundation)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\n" + core +
                                            "\n<!-- agent-skills:file-management:end -->",
                                            encoding="utf-8")
         second = subprocess.run(command, cwd=project, env=environment,
                                 capture_output=True, text=True, check=True)
-        self.assertEqual(second.stdout.strip(), core)
+        self.assertEqual(second.stdout.strip(), foundation)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
                                            "<!-- agent-skills:file-management:end -->", encoding="utf-8")
         third = subprocess.run(command, cwd=project, env=environment,
                                capture_output=True, text=True, check=True)
-        self.assertEqual(third.stdout.strip(), core)
+        self.assertEqual(third.stdout.strip(), foundation)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\n" + core +
                                            "\n<!-- agent-skills:file-management:end -->",
                                            encoding="utf-8")
@@ -205,15 +207,17 @@ class OutcomeScoringTests(unittest.TestCase):
         nested.mkdir()
         inherited = subprocess.run(command, cwd=nested, env=environment,
                                    capture_output=True, text=True, check=True)
-        self.assertEqual(inherited.stdout.strip(), core)
+        self.assertEqual(inherited.stdout.strip(), foundation)
         (project / "AGENTS.md").write_text("<!-- agent-skills:file-management:begin -->\nStale core.\n"
                                            "<!-- agent-skills:file-management:end -->", encoding="utf-8")
         stale_inherited = subprocess.run(command, cwd=nested, env=environment,
                                         capture_output=True, text=True, check=True)
-        self.assertEqual(stale_inherited.stdout.strip(), core)
+        self.assertEqual(stale_inherited.stdout.strip(), foundation)
 
     def test_startup_hook_loads_core_when_project_instructions_may_not_load_agents(self):
         core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
+        voice = (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8").strip()
+        foundation = core + "\n\n" + voice
         block = "<!-- agent-skills:file-management:begin -->\n" + core + "\n<!-- agent-skills:file-management:end -->"
         for instruction_file, root_variable in (
             ("CLAUDE.md", "CLAUDE_PLUGIN_ROOT"),
@@ -231,7 +235,7 @@ class OutcomeScoringTests(unittest.TestCase):
                 result = subprocess.run([sys.executable, str(REPOSITORY / "hooks/session-start.py")],
                                         cwd=project, env=environment,
                                         capture_output=True, text=True, check=True)
-                self.assertEqual(result.stdout.strip(), core)
+                self.assertEqual(result.stdout.strip(), foundation)
 
     def sample_run(self):
         self.write("PACKET.md", "Frozen packet")
@@ -283,6 +287,82 @@ class OutcomeScoringTests(unittest.TestCase):
         result = score_run(self.root, suite, manifest, review)
         self.assertFalse(result["release_ready"])
         self.assertIn("Evaluation boundary modified: PACKET.md", result["critical_failures"])
+
+
+class WritingVoiceScaffoldTests(unittest.TestCase):
+    def test_voice_corpus_does_not_extend_frozen_file_suite(self):
+        self.assertEqual([item["id"] for item in build_cases()], [f"C{i:02}" for i in range(1, 25)])
+        self.assertEqual([item["id"] for item in build_writing_voice_cases()],
+                         [f"WV{i:02}" for i in range(1, 7)])
+
+    def test_tessl_fixtures_match_independent_corpus_and_rubrics(self):
+        root = REPOSITORY / "evals/tessl/writing-voice"
+        scenarios = sorted((root / "performance").glob("*/scenario.json"))
+        self.assertEqual(len(scenarios), 6)
+        cases = {item["title"]: item for item in build_writing_voice_cases()}
+        for scenario in scenarios:
+            data = read_json(scenario)
+            item = cases.pop(data["description"])
+            fixture = scenario.parent / data["fixtures"]["workspace"]["path"]
+            actual = {path.relative_to(fixture).as_posix(): path.read_text(encoding="utf-8")
+                      for path in fixture.rglob("*") if path.is_file()}
+            self.assertEqual(actual, item["files"])
+            self.assertIn(item["prompt"], (scenario.parent / "task.md").read_text(encoding="utf-8"))
+            rubric = read_json(scenario.parent / "criteria.json")
+            self.assertEqual(rubric["type"], "weighted_checklist")
+            self.assertEqual(sum(row["max_score"] for row in rubric["checklist"]), 10)
+        self.assertFalse(cases)
+        controls = {path.parent.name for path in (root / "activation-only").glob("*/scenario.json")}
+        self.assertEqual(controls, {"maintain-preference", "apply-profile", "unrelated-explanation",
+                                    "third-party-house-style"})
+        for scenario in (root / "activation-only").glob("*/scenario.json"):
+            data = read_json(scenario)
+            fixture = scenario.parent / data["fixtures"]["workspace"]["path"]
+            self.assertTrue((fixture / ".nyssa-ai/agent-skills/writing-voice/VOICE.md").is_file())
+            rubric = read_json(scenario.parent / "criteria.json")
+            self.assertEqual(rubric["type"], "weighted_checklist")
+            self.assertEqual(sum(row["max_score"] for row in rubric["checklist"]), 1)
+            self.assertTrue((scenario.parent / "task.md").is_file())
+
+    def test_drafting_preservation_detects_profile_and_example_mutation(self):
+        item = next(item for item in build_writing_voice_cases() if item["id"] == "WV02")
+        scratch = REPOSITORY / ".temp/eval-unit-tests"
+        scratch.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=scratch) as temporary:
+            workspace = Path(temporary)
+            for relative, content in item["files"].items():
+                path = workspace / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8", newline="\n")
+            assertions = [row for row in item["checks"] if row["operation"] == "unchanged"]
+            for assertion in assertions:
+                self.assertTrue(evaluate_check(assertion, workspace, item["files"], {})[0])
+                path = workspace / assertion["path"]
+                path.write_text("Unauthorized learned preference.\n", encoding="utf-8")
+                self.assertFalse(evaluate_check(assertion, workspace, item["files"], {})[0])
+                path.write_text(item["files"][assertion["path"]], encoding="utf-8", newline="\n")
+
+    def test_privacy_checks_require_both_narrow_exclusions(self):
+        scratch = REPOSITORY / ".temp/eval-unit-tests"
+        scratch.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=scratch) as temporary:
+            workspace = Path(temporary)
+            for item in build_writing_voice_cases():
+                if item["id"] not in {"WV01", "WV03"}:
+                    continue
+                assertion = next(row for row in item["checks"]
+                                 if row["label"] == "Narrow exclusions and existing rule retained")
+                path = workspace / ".gitignore"
+                correct = "/build/\n/.nyssa-ai/agent-skills/writing-voice/\n/.temp/agent-skills/writing-voice/\n"
+                path.write_text(correct, encoding="utf-8")
+                self.assertTrue(evaluate_check(assertion, workspace, item["files"], {})[0])
+                for corrupt in (
+                    correct.replace("/.temp/agent-skills/writing-voice/\n", ""),
+                    correct.replace("/.nyssa-ai/agent-skills/writing-voice/", "/.nyssa-ai/"),
+                    correct.replace("/build/\n", ""),
+                ):
+                    path.write_text(corrupt, encoding="utf-8")
+                    self.assertFalse(evaluate_check(assertion, workspace, item["files"], {})[0])
 
 
 class EvidenceExportTests(unittest.TestCase):

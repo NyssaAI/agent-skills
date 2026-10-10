@@ -1,0 +1,35 @@
+{
+  "key": [
+    "writing-voice",
+    "Codex",
+    "windows-x86_64",
+    "synthetic-full-plugin"
+  ],
+  "state": "unverified",
+  "started_at": "2026-10-09T18:57:00Z",
+  "completed_at": "2026-10-09T19:03:38Z",
+  "stage": "local behavior, review, native marketplace installation and update-isolation checks complete; startup hook unresolved",
+  "diagnostic": "45 unit tests, 266 package checks, 29/29 artifacts, 60/60 synthetic performance and 4/4 activation passed. Native isolated installation discovered eight skills; update preserved profiles, examples, scratch and unrelated plugin sentinel. Fresh Codex CLI 0.161.0 sessions did not receive full startup foundation, and diagnostic hook process never executed. Release acceptance remains unverified.",
+  "next_check": "Resolve native plugin startup-hook delivery (or explicitly establish a supported host mechanism), then rerun clean startup probes and independent release export verification.",
+  "candidate_sha256": "41377881fed57f9bdc8faa1eb1e2b5aef1836b2e7d263133d0ff255befa8b9af",
+  "model_requested": "gpt-6.1-sol",
+  "reasoning_effort_requested": "medium",
+  "model_identity_limit": "Session traces do not independently attest backend model identity.",
+  "local_results": {
+    "artifact_checks": 29,
+    "artifact_checks_passed": 29,
+    "performance_score": 60,
+    "performance_max": 60,
+    "activation_score": 4,
+    "activation_max": 4,
+    "unit_tests": 45,
+    "package_checks": 266
+  },
+  "raw_evidence_location": ".temp/local-voice-validation-20261009/",
+  "review_method": "Independent fresh local Codex sessions inspected actual diff, fixture/artifact bytes, rubric and skill-read traces. Finding verified after fix.",
+  "review_evidence_sha256": {
+    "code-review.json": "872057e00c864acb09b0488b441893bd1f2538824522aa33c0d0dfe6510e9b9c",
+    "independent-grading.json": "039c85ea966aebdf838e8dbbb66d781be019ae1e7159c4c8fcd821bbe6b6b925",
+    "review-fix-verification.json": "ea325abe362d7e29b0dfe7a5b846d48fa66e481af83d48d1b644bc74717ff159"
+  }
+}

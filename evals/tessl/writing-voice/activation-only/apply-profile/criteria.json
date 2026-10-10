@@ -1,0 +1,11 @@
+{
+  "context": "Natural activation control. Judge observable selected skills and final output; do not infer routing from output alone.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "routing",
+      "max_score": 1,
+      "description": "write-in-user-voice is selected; maintenance is not invoked and existing profile bytes stay unchanged."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "status": "reviewed_with_findings",
+  "actionable_findings": [
+    {
+      "file": "evals/report.py",
+      "line": 33,
+      "severity": "low",
+      "consequence": "The blanket .temp exclusion omits the new synthetic interrupted-update fixtures from the candidate fingerprint. An in-memory change to pending.md left candidate_sha256 unchanged, so that fingerprint does not identify every benchmark input.",
+      "fix": "Include explicitly scoped synthetic scratch fixtures in source_inventory while continuing to exclude actual scratch. Add an assertion that changing either synthetic scratch fixture changes the fingerprint."
+    }
+  ],
+  "coverage": {
+    "scope": "Read AGENTS.md and the implementation plan; inspected the actual diff against main and all untracked source, generated copies, and synthetic evaluation files.",
+    "assembly_and_startup": "Generated-package equality passed. Changed Python parsed successfully. Startup output matched core plus voice convention.",
+    "root_and_profile_resolution": "Reviewed explicit-root precedence, nested directories, project isolation, and selected-source preservation; no concrete application defect found.",
+    "authority_and_facts": "Reviewed consent boundaries, sample injection, factual corrections, commitments, uncertainty, and house-style precedence.",
+    "privacy": "Reviewed profile exclusions, tracked-file checks, scratch recovery privacy, retention, and packaging boundaries.",
+    "packages": "Inspected the existing Tessl archive: no skill/reference omissions, source byte differences, or configuration/scratch entries.",
+    "git_portability": "Verified synthetic scratch exceptions and actual scratch exclusion; inspected newline normalization and fixture comparisons.",
+    "tests_and_criteria": "Two read-only scaffold tests passed. In-memory challenges confirmed preservation and exclusion assertions reject targeted corruption. Reviewed task/rubric consistency and maintainability. Did not rerun the full scratch-writing test suite.",
+    "limitations": "Behavioral evaluations and installation/update isolation remain pending. Local checks establish neither marketplace installation nor native startup-hook trust. Subjective personal-voice resemblance remains unmeasured.",
+    "repository_rules": "The referenced ../.tessl/RULES.md was absent.",
+    "changes_made": "None; no external services or messaging used."
+  },
+  "verdict": "One low-severity evaluation provenance finding remains. No concrete production-blocking defect found. The approved two-skill, project-local design is preserved; release evidence remains incomplete."
+}

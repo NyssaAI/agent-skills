@@ -1,0 +1,11 @@
+{
+  "context": "Natural activation control. Judge observable selected skills and final output; do not infer routing from output alone.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "routing",
+      "max_score": 1,
+      "description": "maintain-writing-voice is selected for the exact approved preference update; application alone is insufficient."
+    }
+  ]
+}

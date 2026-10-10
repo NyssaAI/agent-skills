@@ -54,6 +54,19 @@ sessions prevent startup context from a previous variant contaminating the next.
   maturity or template-only notice. Retain the file-read/invocation trace and both
   artifacts. Static reference
   resolution and existing C17/C18 migration tests do not establish this discovery.
+- **H03 writing voice discovery and update isolation:** invoke both new skills
+  against synthetic profiles only in an isolated established project. From a
+  nested working directory, apply its root profile without changing profile
+  bytes; confirm a separate project's profile is never inherited. Before an
+  installation/update, seed `.nyssa-ai/agent-skills/writing-voice/VOICE.md`,
+  optional `STYLE.md`, and an approved synthetic example, plus unrelated scratch
+  in `.temp/`. Retain before/after byte hashes showing installation/update leaves
+  this state intact. Inspect the actual packed archive to ensure project state
+  and scratch do not ship. Record delivery of `rules/writing-voice.md` through
+  the host's actual foundation/discovery route; do not infer startup delivery
+  from a hook subprocess or manifest. A drafting-only run cannot establish this
+  installation result. This new variant remains unexecuted until native evidence
+  is retained; earlier file-workflow probes do not cover writing voice.
 
 For hosts without SessionStart (including Grok Bot), mark the hook-delivery
 variant inapplicable and still run the direct-creation fallback variant. Do not

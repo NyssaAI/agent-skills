@@ -17,6 +17,9 @@ BEGIN = "<!-- agent-skills:file-management:begin -->"
 END = "<!-- agent-skills:file-management:end -->"
 CORE = ROOT / "skills" / "manage-file-operations" / "core.md"
 TESSL_RULE = ROOT / "rules" / "file-management.md"
+VOICE_RULE = ROOT / "rules" / "writing-voice.md"
+VOICE_BEGIN = "<!-- agent-skills:writing-voice:begin -->"
+VOICE_END = "<!-- agent-skills:writing-voice:end -->"
 
 
 def canonical_hash_content(content: bytes) -> bytes:
@@ -26,25 +29,30 @@ def canonical_hash_content(content: bytes) -> bytes:
 
 def startup_text() -> str:
     core = CORE.read_text(encoding="utf-8").strip()
-    return f"{BEGIN}\n{core}\n{END}"
+    voice = VOICE_RULE.read_text(encoding="utf-8").strip()
+    return f"{BEGIN}\n{core}\n{END}\n\n{VOICE_BEGIN}\n{voice}\n{VOICE_END}"
 
 
 def anchored_agents() -> str:
     original = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-    block = startup_text()
-    if BEGIN in original or END in original:
-        if original.count(BEGIN) != 1 or original.count(END) != 1:
-            raise ValueError("AGENTS.md has an invalid managed foundation block")
-        start = original.index(BEGIN)
-        stop = original.index(END) + len(END)
-        return original[:start] + block + original[stop:]
-    return original.rstrip() + "\n\n" + block + "\n"
+    for begin, end, source in ((BEGIN, END, CORE), (VOICE_BEGIN, VOICE_END, VOICE_RULE)):
+        block = f"{begin}\n{source.read_text(encoding='utf-8').strip()}\n{end}"
+        if begin in original or end in original:
+            if original.count(begin) != 1 or original.count(end) != 1 or original.index(begin) > original.index(end):
+                raise ValueError("AGENTS.md has an invalid managed foundation block")
+            start = original.index(begin)
+            stop = original.index(end) + len(end)
+            original = original[:start] + block + original[stop:]
+        else:
+            original = original.rstrip() + "\n\n" + block + "\n"
+    return original
 
 
 def skill_files() -> dict[str, bytes]:
     output = {}
     for source in sorted((ROOT / "skills").rglob("*")):
-        if not source.is_file() or "__pycache__" in source.parts:
+        if not source.is_file() or any(part in ("__pycache__", ".nyssa-ai", ".temp")
+                                       for part in source.relative_to(ROOT).parts):
             continue
         output[source.relative_to(ROOT).as_posix()] = source.read_bytes()
     return output
@@ -73,6 +81,10 @@ def expected_files() -> dict[str, bytes]:
         "---\n\n"
     ).encode()
     output["rules/file-management.md"] = rule_header + CORE.read_bytes().rstrip() + b"\n"
+    output["rules/writing-voice.md"] = (
+        b"---\ntrigger: always_on\ndescription: Apply the user's project writing voice.\n---\n\n"
+        + VOICE_RULE.read_bytes().rstrip() + b"\n"
+    )
     output.update(skill_files())
     output["assembly.json"] = (
         json.dumps({
@@ -95,6 +107,7 @@ def hermes_expected_files() -> dict[str, bytes]:
     output = {
         "plugin.yaml": manifest.encode("utf-8"),
         "__init__.py": (ROOT / "adapters" / "hermes" / "plugin.py").read_bytes(),
+        "rules/writing-voice.md": VOICE_RULE.read_bytes(),
     }
     output.update(skill_files())
     output["assembly.json"] = (

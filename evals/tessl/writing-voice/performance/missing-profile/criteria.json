@@ -1,0 +1,16 @@
+{
+  "context": "Judge final artifacts, response.json, and observable trace only; do not infer hidden execution order or award promises. All evidence is synthetic. This rubric measures instruction following and preservation, not proven subjective voice accuracy.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "observable-artifacts",
+      "max_score": 3,
+      "description": "Inspect final artifacts against supplied fixtures. Required outcomes: Useful draft delivered; No unsolicited onboarding state; Missing-profile limitation disclosed; Existing context unchanged. Byte-preservation failures or unauthorized deletion receive no preservation credit."
+    },
+    {
+      "name": "useful-with-limitation",
+      "max_score": 7,
+      "description": "A useful concise message asks Rowan for Friday review and preserves 12 participants and launch uncertainty. The response accurately states no profile exists without claiming a demonstrated match, blocking useful work, or starting unsolicited profile setup."
+    }
+  ]
+}

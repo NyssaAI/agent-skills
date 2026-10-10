@@ -1,0 +1,16 @@
+{
+  "context": "Judge final artifacts, response.json, and observable trace only; do not infer hidden execution order or award promises. All evidence is synthetic. This rubric measures instruction following and preservation, not proven subjective voice accuracy.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "observable-artifacts",
+      "max_score": 3,
+      "description": "Inspect final artifacts against supplied fixtures. Required outcomes: Draft retained in active project; project-a state unchanged; project-b state unchanged; No nested configuration root. Byte-preservation failures or unauthorized deletion receive no preservation credit."
+    },
+    {
+      "name": "root-selection",
+      "max_score": 7,
+      "description": "The draft uses project-a mode rather than the project-b BEHOLD/exclamation habit. No nested or global configuration is created and both profiles are byte-identical. Explicit established project root wins over nested working directory."
+    }
+  ]
+}

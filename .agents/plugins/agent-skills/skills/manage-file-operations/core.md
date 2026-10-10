@@ -19,6 +19,16 @@ Use `manage-file-operations` when moving, renaming, copying, importing, or
 archiving existing content, resolving destination collisions, or resuming
 interrupted operations. These foundation rules apply whether or not a skill is loaded.
 
+## Plugin configuration
+
+Keep plugin-owned configuration and persistent state under
+`<project-root>/.nyssa-ai/<plugin-name>/`, outside installation caches. Resolve
+the explicit project/workspace root, then the applicable repository root; for
+non-Git work use the established working root. A nested working directory is
+not a new root. Ask only when ambiguous; never silently select the home directory.
+Keep disposable work in the established `.temp/` scheme. Packages must exclude
+user configuration, persistent state, and scratch data.
+
 ## PARA foundation
 
 Apply PARA guidance only in a recognized PARA vault. Follow the user's instructions

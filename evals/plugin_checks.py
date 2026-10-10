@@ -14,6 +14,11 @@ def validate_plugin(repository):
     findings = []
     checks = 0
     skills = sorted((repository / "skills").glob("*/SKILL.md"))
+    required_voice_skills = {"maintain-writing-voice", "write-in-user-voice"}
+    checks += 1
+    missing_voice_skills = required_voice_skills - {path.parent.name for path in skills}
+    if missing_voice_skills:
+        findings.append(f"Missing writing voice skills: {sorted(missing_voice_skills)}")
     if not skills:
         findings.append("No skill entrypoints found")
     for path in skills:
@@ -114,6 +119,32 @@ def validate_plugin(repository):
             findings.append("Antigravity foundation rule differs from canonical core")
     except (OSError, yaml.YAMLError) as error:
         findings.append(f"Antigravity foundation rule: {error}")
+    for package in (".agents/plugins/agent-skills", ".hermes/plugins/agent-skills"):
+        checks += 1
+        declared = {path.parent.name for path in (repository / package / "skills").glob("*/SKILL.md")}
+        if declared != {path.parent.name for path in skills}:
+            findings.append(f"{package}: packaged skill inventory differs from catalog")
+        checks += 1
+        try:
+            source = (repository / "rules/writing-voice.md").read_text(encoding="utf-8").strip()
+            content = (repository / package / "rules/writing-voice.md").read_text(encoding="utf-8")
+            if package.startswith(".agents/"):
+                match = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n", content, re.S)
+                metadata = yaml.safe_load(match.group(1)) if match else None
+                if not isinstance(metadata, dict) or metadata.get("trigger") != "always_on":
+                    findings.append("Antigravity writing voice rule lacks an always_on trigger")
+                content = content[match.end():] if match else ""
+            if content.strip() != source:
+                findings.append(f"{package}: writing voice rule differs from canonical source")
+        except (OSError, yaml.YAMLError) as error:
+            findings.append(f"{package}: writing voice rule: {error}")
+    for directory in ("skills", "rules", ".agents/plugins/agent-skills", ".hermes/plugins/agent-skills"):
+        for path in (repository / directory).rglob("*"):
+            if path.is_file():
+                checks += 1
+                parts = path.relative_to(repository / directory).parts
+                if any(part in (".nyssa-ai", ".temp") for part in parts):
+                    findings.append(f"{path.relative_to(repository)}: private configuration or scratch in package source")
     checks += 1
     try:
         hooks = json.loads((repository / "hooks/hooks.json").read_text(encoding="utf-8"))

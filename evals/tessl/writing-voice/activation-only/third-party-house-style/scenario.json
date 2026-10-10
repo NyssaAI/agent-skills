@@ -1,0 +1,10 @@
+{
+  "description": "third-party-house-style",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

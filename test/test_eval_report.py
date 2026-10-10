@@ -41,6 +41,31 @@ class ReportTests(unittest.TestCase):
         (self.evals / "host-probes.md").write_bytes(b"host\nfixture\n")
         self.assertEqual(crlf_hash, report.suite_sha256("startup-and-discovery"))
 
+    def test_candidate_hash_tracks_rules_but_not_personal_configuration(self):
+        rules = self.root / "rules"
+        rules.mkdir()
+        rule = rules / "writing-voice.md"
+        rule.write_text("Use the approved voice.", encoding="utf-8")
+        original = report.candidate_sha256()
+        rule.write_text("Preserve facts and use the approved voice.", encoding="utf-8")
+        changed = report.candidate_sha256()
+        self.assertNotEqual(original, changed)
+        profile = self.root / ".nyssa-ai" / "agent-skills" / "writing-voice"
+        profile.mkdir(parents=True)
+        (profile / "VOICE.md").write_text("Private voice", encoding="utf-8")
+        self.assertEqual(changed, report.candidate_sha256())
+
+    def test_candidate_hash_tracks_public_interrupted_update_fixtures(self):
+        scratch = self.evals / "tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp"
+        for name in ("agent-skills/writing-voice/pending.md", "other-task/keep.txt"):
+            with self.subTest(fixture=name):
+                fixture = scratch / name
+                fixture.parent.mkdir(parents=True, exist_ok=True)
+                fixture.write_text("Synthetic original", encoding="utf-8")
+                before = report.candidate_sha256()
+                fixture.write_text("Synthetic changed", encoding="utf-8")
+                self.assertNotEqual(before, report.candidate_sha256())
+
     def test_candidate_hash_normalizes_text_but_preserves_binary_bytes(self):
         source = self.evals / "host-probes.md"
         source.write_bytes(b"host\r\nfixture\r\n")

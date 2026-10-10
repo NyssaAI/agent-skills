@@ -1,10 +1,11 @@
 # NyssaAI Agent Skills
 
-Version: **0.6.2** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.6.3** (candidate; see [latest evaluation](evals/LATEST.md)).
 Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
 
-Six workflow skills share one maintained source tree and a brief
-[startup foundation](skills/manage-file-operations/core.md). Its PARA section
+Eight workflow skills share one maintained source tree, a brief
+[startup foundation](skills/manage-file-operations/core.md), and a
+[writing voice convention](rules/writing-voice.md). Its PARA section
 applies only to recognized vaults; detailed guidance loads on demand.
 Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` repository.
 
@@ -16,6 +17,8 @@ Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` 
 | [manage-vault-lifecycle](skills/manage-vault-lifecycle/SKILL.md) | Archive or reactivate vault items and intact project bundles, preserving history and lifecycle metadata. |
 | [import-vault-source-records](skills/import-vault-source-records/SKILL.md) | Ingest supplied email/calendar records, resolve versions and dates, and preserve native source evidence. |
 | [revise-vault-documents](skills/revise-vault-documents/SKILL.md) | Reconcile notes and propose or apply protected revisions |
+| [maintain-writing-voice](skills/maintain-writing-voice/SKILL.md) | Establish, inspect, and refine a project-local writing voice from authorized samples and preferences |
+| [write-in-user-voice](skills/write-in-user-voice/SKILL.md) | Draft and revise material the user will send or publish as themselves, preserving meaning and task constraints |
 
 `para-vault` is retired. Its capabilities now live in the five focused vault
 workflows above. Shared guidance stays with one owning skill and is linked by
@@ -24,7 +27,9 @@ Existing startup hooks/rules deliver the foundation. When it is absent from cont
 `manage-file-operations` and the shared vault conventions load the same core
 on demand without activating an additional workflow. Tessl loads the generated
 `rules/file-management.md` declared in `.tessl-plugin/plugin.json`; its source
-is the same `skills/manage-file-operations/core.md`. This split adds no commands,
+is the same `skills/manage-file-operations/core.md`. The canonical
+`rules/writing-voice.md` is also delivered by the existing startup hook, managed
+project anchor, Antigravity rules, Tessl rules, and Hermes prompt section. This adds no commands,
 MCP dependencies, or background automation. The workflows compose with
 `manage-file-operations` for actual file transfers and recovery.
 
@@ -62,13 +67,17 @@ The canonical content lives under `skills/`. The root `plugin.json`,
 shim also covers Grok Bot (same packaging; no SessionStart hooks). `scripts/assemble.py write` builds the project Antigravity
 plugin at `.agents/plugins/agent-skills/`, the Hermes plugin at
 `.hermes/plugins/agent-skills/`, and the managed foundation
-in `AGENTS.md`; the generated Antigravity rule and `hooks/hooks.json` deliver
-the same core to supported plugin sessions. Codex requires users to trust the
+in `AGENTS.md`; the generated Antigravity rules and `hooks/hooks.json` deliver
+the same foundation and writing convention to supported plugin sessions. Codex requires users to trust the
 installed hook before it runs. `scripts/assemble.py check` verifies exact source equality
 without modifying files. `CLAUDE.md` imports the root anchor for a project that
 loads it. A plugin installed into an unrelated project does not automatically
 bring that project's startup anchor with it; startup delivery depends on the
 host's hook or rule activation.
+
+Hosts without startup delivery can load writing guidance through the relevant
+skill. Native host acceptance of the new writing workflows remains unverified;
+existing file-workflow results do not establish voice accuracy or activation.
 
 | Host | Package route | Activation evidence |
 | --- | --- | --- |
@@ -94,7 +103,27 @@ Run `python scripts/assemble.py write` after changing any skill, then
 `python scripts/assemble.py check`. The [eval catalog](evals/README.md)
 contains the behavioral cases, run commands, retained result format, and
 latest-score checks. Temporary work belongs under `.temp/`; retained review
-history belongs under the private, Git-ignored `docs/`. User settings, when a plugin needs them, belong
-in a separate `.{plugin-name}/` directory outside installed code.
+history belongs under the private, Git-ignored `docs/`.
+
+## Project configuration and writing voice
+
+Plugin-owned configuration and persistent state belongs under
+`<project-root>/.nyssa-ai/<plugin-name>/`, outside installed code. Resolve the
+explicit project/workspace root first, then the applicable repository root;
+for non-Git workspaces use the established working root. Nested directories
+share that root. Do not silently choose the home directory or create competing roots.
+
+Agent Skills stores voice guidance in `.nyssa-ai/agent-skills/writing-voice/`:
+`VOICE.md` for voice characteristics, optional `STYLE.md` for editorial standards,
+and `examples/` for approved curated examples. The maintenance skill owns the
+[detailed storage contract](skills/maintain-writing-voice/references/storage.md).
+Existing user-selected samples and profiles remain in place. Disposable calibration
+work belongs under `.temp/agent-skills/writing-voice/`.
+
+Private profiles require a verified, narrowly scoped local Git exclusion or an
+accepted project ignore convention; a dot-prefixed directory alone provides no
+privacy. Do not ignore all `.nyssa-ai/`, as sibling plugins may share their data.
+Sharing profiles requires an explicit decision. Packages exclude user configuration,
+state, and scratch data. Ordinary drafting reads profiles without changing them.
 
 [MIT License](LICENSE) Â© 2026 NyssaAI.

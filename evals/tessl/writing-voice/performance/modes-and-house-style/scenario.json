@@ -1,0 +1,10 @@
+{
+  "description": "Modes, house style, and read-only application",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

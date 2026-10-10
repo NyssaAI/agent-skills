@@ -2,6 +2,9 @@
 node_modules/
 __pycache__/
 .temp/
+# Public synthetic interrupted-update fixtures; actual scratch remains ignored.
+!evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/
+!evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/**
 *.log
 .DS_Store
 Thumbs.db

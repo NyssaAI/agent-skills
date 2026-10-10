@@ -1,0 +1,21 @@
+{
+  "context": "Judge final artifacts, response.json, and observable trace only; do not infer hidden execution order or award promises. All evidence is synthetic. This rubric measures instruction following and preservation, not proven subjective voice accuracy.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "observable-artifacts",
+      "max_score": 3,
+      "description": "Inspect final artifacts against supplied fixtures. Required outcomes: email.md keeps factual tokens; chat.md keeps factual tokens; VOICE.md unchanged; STYLE.md unchanged; examples/approved-chat.md unchanged; No extra profile files. Byte-preservation failures or unauthorized deletion receive no preservation credit."
+    },
+    {
+      "name": "meaning-and-modes",
+      "max_score": 4,
+      "description": "Both drafts retain 12 participants, October 14 draft due date, uncertain launch timing, and the Friday review request to Rowan without new promises. Email and chat use their appropriate approved modes."
+    },
+    {
+      "name": "destination-precedence",
+      "max_score": 3,
+      "description": "Email includes Pilot update and a greeting with no contractions. Chat may use contractions and omits a greeting. House style overrides incompatible personal habits; no silent profile update occurs."
+    }
+  ]
+}

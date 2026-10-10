@@ -1,0 +1,14 @@
+{
+  "status": "verified",
+  "unresolved_findings": [],
+  "fix_verified": {
+    "public_fixtures": "Both pending.md and keep.txt are inventoried; changing either independently changes candidate_sha256.",
+    "exclusions": "In-memory changes to actual scratch, adjacent recovery files, and private configuration leave the hash unchanged.",
+    "regression": "The new regression asserts hash changes for both public fixtures."
+  },
+  "limitations": [
+    "Verification used read-only inspection and an in-memory root/filesystem patch; no files written.",
+    "The disk-writing regression and full test suite were not run; unchanged features were not reviewed.",
+    "Referenced ../.tessl/RULES.md is absent."
+  ]
+}

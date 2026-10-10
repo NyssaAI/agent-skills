@@ -14,6 +14,10 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
 EXCLUDED = {".temp", ".git", "__pycache__", "results", "attempts"}
+PUBLIC_SCRATCH_FIXTURES = {
+    "evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/agent-skills/writing-voice/pending.md",
+    "evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/other-task/keep.txt",
+}
 
 
 def read_json(path: Path) -> dict:
@@ -23,14 +27,16 @@ def read_json(path: Path) -> dict:
 def source_inventory() -> dict[str, str]:
     """Freeze the declared behavior/assembly/suite inputs, not evidence outputs."""
     paths = []
-    for top in ("skills", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals"):
+    for top in ("skills", "rules", ".tessl-plugin", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals"):
         paths.extend((ROOT / top).rglob("*"))
     paths.extend(ROOT / name for name in ("plugin.json", "gemini-extension.json",
                                           "AGENTS.md", "CLAUDE.md", "GEMINI.md",
                                           "README.md"))
     result = {}
     for path in sorted(set(paths)):
-        if not path.is_file() or any(part in EXCLUDED for part in path.relative_to(ROOT).parts):
+        relative = path.relative_to(ROOT)
+        if not path.is_file() or (relative.as_posix() not in PUBLIC_SCRATCH_FIXTURES and
+                                 any(part in EXCLUDED for part in relative.parts)):
             continue
         if path.name == "LATEST.md" or path.is_symlink():
             continue

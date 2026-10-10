@@ -1,0 +1,10 @@
+{
+  "description": "Approved edits and interrupted update evidence",
+  "fixtures": {
+    "workspace": {
+      "type": "directory",
+      "path": "./fixture/workspace",
+      "installPath": "workspace"
+    }
+  }
+}

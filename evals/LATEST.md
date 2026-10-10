@@ -1,7 +1,7 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `a415f3029b630cdd273db1701e71ebb670d3859e0948ffc4137605d902e400e2`. Suite revision: `0.6.1-filing-history`.
+Candidate SHA-256: `d55886af0a2056187be5409c667f8887355dad158e486f1aab69b9ff97de8621`. Suite revision: `0.6.1-filing-history`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 
@@ -19,5 +19,6 @@ A missing or failing required row blocks release. A consistent report does not i
 | startup-and-discovery | Cursor | windows-x86_64 | default | No | Not run | Score unavailable | No result | Static package support via .cursor-plugin/plugin.json + skills/; probe marketplace/InstallPlugin cache install and H01-H03 before claiming runtime. Do not invent verified SessionStart foundation. |
 | startup-and-discovery | Grok Bot | windows-x86_64 | default | No | Not run | Score unavailable | No result | Same Cursor package. Static/package support only. No SessionStart hooks (foundation on-demand). Fallback UpdateState/workflows copy unverified; probe install and skill invocation before claiming runtime. |
 | startup-and-discovery | Muse | unknown | provisional | No | Not run | Score unavailable | No result | Identify the product and verify its loader and manifest before adding a required runtime row. |
+| writing-voice | Codex | windows-x86_64 | synthetic-full-plugin | Yes | Not run | Score unavailable | No result | [local-writing-voice-20261009](attempts/local-writing-voice-20261009/metadata.json): unverified on an earlier candidate; Not run: after lint/pack/archive validation, execute six synthetic performance scenarios and four natural activation controls with independent artifact review. Add an export verifier before certifying this new suite; subjective voice resemblance and native host delivery remain unverified. |
 
 Release acceptance: **Fail — required evidence missing, stale, or failing**.

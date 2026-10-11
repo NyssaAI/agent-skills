@@ -6,7 +6,7 @@ Use Markdown headings and concrete guidance, adapting an existing readable profi
 
 Include only sections supported by approved evidence or explicit preferences:
 
-- **Scope:** the project and contexts this profile covers; known evidence limitations.
+- **Scope:** the user or project scope and contexts this profile covers; known evidence limitations.
 - **Explicit preferences:** direct user instructions, including exclusions and exceptions.
 - **Voice characteristics:** syntax, diction, cadence, tone, and characteristic ways of opening, explaining, or closing. Make each rule actionable.
 - **Context modes:** relevant differences for email, chat, posts, or documents. Do not assume one sample's context applies everywhere.

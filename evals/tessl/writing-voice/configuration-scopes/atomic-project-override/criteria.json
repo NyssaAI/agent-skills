@@ -1,0 +1,8 @@
+{
+  "criteria": [
+    {
+      "name": "scope behavior",
+      "description": "Project voice applies; no HOME-MARKER or user style/examples read; no state writes."
+    }
+  ]
+}

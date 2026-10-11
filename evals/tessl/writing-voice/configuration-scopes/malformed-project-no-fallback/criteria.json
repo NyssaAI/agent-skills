@@ -1,0 +1,8 @@
+{
+  "criteria": [
+    {
+      "name": "scope behavior",
+      "description": "Diagnostic identifies incomplete project bundle; no silent user fallback or unsupported voice match; no profile writes."
+    }
+  ]
+}

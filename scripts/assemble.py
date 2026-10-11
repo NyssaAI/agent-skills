@@ -51,7 +51,7 @@ def anchored_agents() -> str:
 def skill_files() -> dict[str, bytes]:
     output = {}
     for source in sorted((ROOT / "skills").rglob("*")):
-        if not source.is_file() or any(part in ("__pycache__", ".nyssa-ai", ".temp")
+        if not source.is_file() or any(part in ("__pycache__", ".nyssa-ai", ".nyssaai", ".nyssa", ".temp")
                                        for part in source.relative_to(ROOT).parts):
             continue
         output[source.relative_to(ROOT).as_posix()] = source.read_bytes()
@@ -82,7 +82,7 @@ def expected_files() -> dict[str, bytes]:
     ).encode()
     output["rules/file-management.md"] = rule_header + CORE.read_bytes().rstrip() + b"\n"
     output["rules/writing-voice.md"] = (
-        b"---\ntrigger: always_on\ndescription: Apply the user's project writing voice.\n---\n\n"
+        b"---\ntrigger: always_on\ndescription: Apply the user's applicable writing voice.\n---\n\n"
         + VOICE_RULE.read_bytes().rstrip() + b"\n"
     )
     output.update(skill_files())

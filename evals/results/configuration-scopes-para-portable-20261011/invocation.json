@@ -1,0 +1,26 @@
+{
+  "command": [
+    "node",
+    "C:\\Users\\jmayn\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\bin\\codex.js",
+    "exec",
+    "--ignore-user-config",
+    "--skip-git-repo-check",
+    "--model",
+    "gpt-6.1-sol",
+    "--sandbox",
+    "danger-full-access",
+    "-c",
+    "approval_policy=\"never\"",
+    "--json",
+    "--cd",
+    "D:\\repos\\NyssaAI\\agent-skills\\.worktrees\\configuration-scopes\\.temp\\evals\\configuration-scopes-para-portable-20261011\\candidate",
+    "--output-last-message",
+    "D:\\repos\\NyssaAI\\.temp\\native-evals\\agent-skills-configuration-scopes-para-portable-20261011\\last-message.txt",
+    "-"
+  ],
+  "cwd": "D:\\repos\\NyssaAI\\agent-skills\\.worktrees\\configuration-scopes\\.temp\\evals\\configuration-scopes-para-portable-20261011\\candidate",
+  "packet": "D:\\repos\\NyssaAI\\agent-skills\\.worktrees\\configuration-scopes\\.temp\\evals\\configuration-scopes-para-portable-20261011\\candidate\\PACKET.md",
+  "started_at": "2026-10-11T22:12:59.680805+00:00",
+  "completed_at": "2026-10-11T22:15:42.755240+00:00",
+  "exit_code": 0
+}

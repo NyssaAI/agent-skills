@@ -1,13 +1,13 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `d55886af0a2056187be5409c667f8887355dad158e486f1aab69b9ff97de8621`. Suite revision: `0.6.1-filing-history`.
+Candidate SHA-256: `9e459a2b3f23e8f4016bb8d1a69bf37fa54ca8c107ec270cf9ad6ac061265f2b`. Suite revision: `0.6.4-configuration-scopes`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 
 | Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [windows-final-20261005](results/windows-final-20261005/metadata.json) | Pass / 100.0/100 | Stale | [inbox-policy-codex-yolo-20261009](attempts/inbox-policy-codex-yolo-20261009/metadata.json): incomplete on an earlier candidate; Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
+| file-and-para-24 | Codex | windows-x86_64 | default | Yes | [configuration-scopes-para-portable-20261011](results/configuration-scopes-para-portable-20261011/metadata.json) | Pass / 99.09/100 | Current | Execute all 24 cases in a fresh Codex agent and export reviewed evidence. |
 | startup-and-discovery | Codex | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [native-061-codex-yolo-20261009](attempts/native-061-codex-yolo-20261009/metadata.json): unverified on an earlier candidate; Install the current package and probe H01-H03 with a native trace, including hook trust and startup delivery. |
 | startup-and-discovery | Claude Code | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [native-061-claude-code-20261009](attempts/native-061-claude-code-20261009/metadata.json): incomplete on an earlier candidate; Renew Claude authentication; install and invoke both skills in a fresh project. |
 | startup-and-discovery | Claude Cowork | windows-x86_64 | default | Yes | Not run | Score unavailable | No result | [final-v3-claude-cowork-startup-20261001](attempts/final-v3-claude-cowork-startup-20261001/metadata.json): incomplete on an earlier candidate; Upload the package and probe a fresh Cowork session. |
@@ -19,6 +19,6 @@ A missing or failing required row blocks release. A consistent report does not i
 | startup-and-discovery | Cursor | windows-x86_64 | default | No | Not run | Score unavailable | No result | Static package support via .cursor-plugin/plugin.json + skills/; probe marketplace/InstallPlugin cache install and H01-H03 before claiming runtime. Do not invent verified SessionStart foundation. |
 | startup-and-discovery | Grok Bot | windows-x86_64 | default | No | Not run | Score unavailable | No result | Same Cursor package. Static/package support only. No SessionStart hooks (foundation on-demand). Fallback UpdateState/workflows copy unverified; probe install and skill invocation before claiming runtime. |
 | startup-and-discovery | Muse | unknown | provisional | No | Not run | Score unavailable | No result | Identify the product and verify its loader and manifest before adding a required runtime row. |
-| writing-voice | Codex | windows-x86_64 | synthetic-full-plugin | Yes | Not run | Score unavailable | No result | [local-writing-voice-20261009](attempts/local-writing-voice-20261009/metadata.json): unverified on an earlier candidate; Not run: after lint/pack/archive validation, execute six synthetic performance scenarios and four natural activation controls with independent artifact review. Add an export verifier before certifying this new suite; subjective voice resemblance and native host delivery remain unverified. |
+| writing-voice | Codex | windows-x86_64 | synthetic-full-plugin | Yes | [configuration-scopes-voice-portable-20261011](results/configuration-scopes-voice-portable-20261011/metadata.json) | Pass / 96.42/100 | Current | Run existing six writing-voice scenarios, four activation controls and five configuration-scope scenarios under both installation routes with independent artifact review. Observable outcomes replay against trusted repository definitions; do not claim native startup delivery. |
 
 Release acceptance: **Fail — required evidence missing, stale, or failing**.

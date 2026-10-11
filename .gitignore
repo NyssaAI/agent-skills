@@ -9,3 +9,8 @@ __pycache__/
 .DS_Store
 Thumbs.db
 docs/
+
+# Private user/project plugin configuration in this checkout
+/.nyssa-ai/agent-skills/
+/.nyssaai/agent-skills/
+/.nyssa/agent-skills/

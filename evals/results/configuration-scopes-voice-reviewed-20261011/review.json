@@ -1,0 +1,66 @@
+{
+  "reviewer": "Codex parent /root, independent of candidate CLI session",
+  "method": "Inspected all15 requests, actual response/workspace files, complete executed command trace (stdout item1-14), selected read paths, write/readback operations and replayed byte-preservation checks. Candidate host invocation completed exit0. Shared-session positive/negative activation attribution is incomplete despite correct artifacts, so AC01-04 receive partial credit; no native installation or startup claim.",
+  "cases": {
+    "WV01": {
+      "score": 2,
+      "evidence": "Read actual VOICE.md, .gitignore, policy, original samples and response; item7 loaded policy/samples and item10 wrote only approved rules and narrow exclusions. Injection had no effect; no raw retention or invented Git verification."
+    },
+    "WV02": {
+      "score": 2,
+      "evidence": "Inspected email.md and chat.md: exact heading/greeting, no email contractions, 12/October14/Friday and uncertain launch retained; selected VOICE/STYLE/example read in item7, unchanged hashes and profile checks pass."
+    },
+    "WV03": {
+      "score": 2,
+      "evidence": "Read updated profile, exact prior-byte recovery, pending proposal and original edits. Item10 copied and hash-checked recovery before update, preserved prior preferences, added only direct-request style, left factual changes out and unapproved pending content unchanged."
+    },
+    "WV04": {
+      "score": 2,
+      "evidence": "Read message.md with Rowan/Friday/12 and uncertainty; no configuration created, response limits voice-match claim. Actual output is useful without onboarding."
+    },
+    "WV05": {
+      "score": 2,
+      "evidence": "Item7 loads only project-a profile, not project-b profile contents; resulting project-a/message.md has no BEHOLD/exclamation style and no nested config. Byte-preservation checks pass."
+    },
+    "WV06": {
+      "score": 2,
+      "evidence": "Item7 reads selected profile and native email; response distinguishes authored line from third-party quotation, proposes canonical scope without migration. Entire workspace unchanged by byte inventory."
+    },
+    "SC01": {
+      "score": 2,
+      "evidence": "Item7 reads synthetic user VOICE, item10 creates both project messages; neither project nor cache gains preferences. User bundle and cache evidence remain unchanged."
+    },
+    "SC02": {
+      "score": 2,
+      "evidence": "Item7 explicitly reads project VOICE and no user VOICE/STYLE content; global item8/11 hashing audited bytes without loading them as style evidence. Actual draft contains PROJECT-MARKER and no HOME-MARKER; both bundles preserved, no nested root. Provenance and critical output checks agree."
+    },
+    "SC03": {
+      "score": 2,
+      "evidence": "Read user VOICE and home policy; item7 policy read precedes item10 user-only write. Explicit direct-request preference retained under verified synthetic home with no fabricated vault/log."
+    },
+    "SC04": {
+      "score": 2,
+      "evidence": "Selected project STYLE read shows missing required VOICE; no lower user content loaded in item7. Draft uses supplied facts and response accurately reports incomplete selected bundle; no silent fallback or repair."
+    },
+    "SC05": {
+      "score": 2,
+      "evidence": "Item7 reads existing legacy user VOICE; actual draft uses plain request and legacy bytes remain unchanged with no canonical migration."
+    },
+    "AC01": {
+      "score": 1,
+      "evidence": "Correct approved project profile was written and maintain-writing-voice really read in item4. However the same batch also has explicitly named maintenance cases; shared upfront skill loading does not independently establish natural activation for this control. Artifact success, activation attribution incomplete."
+    },
+    "AC02": {
+      "score": 1,
+      "evidence": "Correct read-only draft and preserved profile; write-in-user-voice really read in item4. Shared upfront loading with explicitly named drafting cases does not independently establish natural activation for this control. Separate fresh control session needed."
+    },
+    "AC03": {
+      "score": 1,
+      "evidence": "Only teh->the changed and house style was preserved; no personal profile content loaded for AC03. Both voice skill bodies were already loaded for other cases in the shared session, so response skill_reads=[] cannot prove negative activation. Correct artifact, isolated activation evidence missing."
+    },
+    "AC04": {
+      "score": 1,
+      "evidence": "Rain explanation is accurate and no workspace bytes changed. Both voice skills were already loaded in the shared session; response skill_reads=[] cannot prove no activation on an unrelated fresh task. Correct artifact, isolated activation evidence missing."
+    }
+  }
+}

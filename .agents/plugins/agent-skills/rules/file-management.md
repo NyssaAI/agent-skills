@@ -26,13 +26,19 @@ interrupted operations. These foundation rules apply whether or not a skill is l
 
 ## Plugin configuration
 
-Keep plugin-owned configuration and persistent state under
-`<project-root>/.nyssa-ai/<plugin-name>/`, outside installation caches. Resolve
-the explicit project/workspace root, then the applicable repository root; for
-non-Git work use the established working root. A nested working directory is
-not a new root. Ask only when ambiguous; never silently select the home directory.
-Keep disposable work in the established `.temp/` scheme. Packages must exclude
-user configuration, persistent state, and scratch data.
+Keep plugin-owned configuration and persistent state outside installation caches.
+Read reusable personal preferences under `<user-home>/.nyssa-ai/<plugin-name>/`
+and project overrides under `<project-root>/.nyssa-ai/<plugin-name>/`, regardless
+of installation scope. Resolve verified home and established workspace roots
+independently; nested cwd and installed cache paths are not new roots. Use exact
+paths or accepted explicit pointers, never recursively scan home. Explicit task
+choices override saved preferences without saving. Invalid configuration reports
+a diagnostic. Existing `.nyssaai` and `.nyssa` locations remain compatibility
+aliases: explicit pointer, canonical, then legacy precedence within each scope;
+report conflicts without merging or deleting sources. Writes identify user or
+project scope; reuse accepted scope, otherwise default setup to established
+project or user scope when no project exists. Keep scratch in the established
+`.temp/` scheme. Packages exclude private configuration, state and scratch data.
 
 ## PARA foundation
 

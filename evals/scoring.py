@@ -16,6 +16,7 @@ from collections import defaultdict
 from datetime import date, datetime
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 from urllib.parse import unquote, urlsplit
@@ -178,7 +179,11 @@ def evaluate_check(assertion, workspace, original, response, original_directorie
     if operation == "body":
         _, body = read_note(workspace / assertion["path"])
         missing = [value for value in assertion["contains"] if value.casefold() not in body.casefold()]
-        return not missing, f"Required content absent from body: {missing}"
+        forbidden = [value for value in assertion.get("not_contains", []) if value.casefold() in body.casefold()]
+        evidence = f"Required content absent from body: {missing}"
+        if "not_contains" in assertion:
+            evidence += f"; Forbidden content present in body: {forbidden}"
+        return not missing and not forbidden, evidence
     if operation == "frontmatter":
         metadata, _ = read_note(workspace / assertion["path"])
         if metadata is None:
@@ -248,6 +253,22 @@ def validate_response(response, case_id):
 
 def score_run(candidate, suite, manifest, review=None):
     """Grade every scheduled case; missing artifacts are failures, never omitted denominators."""
+    weights = suite.get("dimension_weights", DIMENSION_WEIGHTS)
+    scheduled = {check["dimension"] for item in suite["cases"] for check in item["checks"]}
+    if (not isinstance(weights, dict) or not weights
+            or not set(weights).issubset(DIMENSION_WEIGHTS)
+            or not scheduled.issubset(weights)
+            or any(type(value) not in {int, float} or not math.isfinite(value) or value <= 0
+                   for value in weights.values())
+            or not math.isclose(sum(weights.values()), 100 - REVIEW_WEIGHT)):
+        raise ValueError("Dimension weights must cover every check and total 90 positive points")
+    critical_review_cases = suite.get("critical_review_cases", [])
+    scheduled_ids = {item["id"] for item in suite["cases"]}
+    if (not isinstance(critical_review_cases, list)
+            or any(not isinstance(case_id, str) for case_id in critical_review_cases)
+            or len(set(critical_review_cases)) != len(critical_review_cases)
+            or not set(critical_review_cases).issubset(scheduled_ids)):
+        raise ValueError("Critical review cases must be a list of unique known case IDs")
     totals = defaultdict(lambda: [0, 0])
     case_results, critical = [], []
     review_cases = review.get("cases", {}) if review else {}
@@ -285,6 +306,8 @@ def score_run(candidate, suite, manifest, review=None):
         reviewed = (type(annotation.get("score")) is int and annotation["score"] in {0, 1, 2}
                     and isinstance(annotation.get("evidence"), str) and bool(annotation["evidence"].strip()))
         valid_review = valid_review and reviewed
+        if item["id"] in critical_review_cases and (not reviewed or annotation["score"] != 2):
+            critical.append(f"{item['id']}: Required independent review must score 2 with evidence")
         case_results.append({"id": item["id"], "title": item["title"], "response_valid": valid,
                              "response_error": response_error, "response": response,
                              "checks_passed": sum(check["passed"] for check in checks), "checks_total": len(checks),
@@ -308,7 +331,7 @@ def score_run(candidate, suite, manifest, review=None):
     critical.extend(f"Evaluation boundary modified: {path}" for path in sorted(set(immutable_failures)))
     dimension_scores = {}
     automatic = 0.0
-    for dimension, weight in DIMENSION_WEIGHTS.items():
+    for dimension, weight in weights.items():
         passed, total = totals[dimension]
         earned = weight * passed / total if total else 0.0
         automatic += earned

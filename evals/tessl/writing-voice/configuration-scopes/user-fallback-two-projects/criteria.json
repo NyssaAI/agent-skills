@@ -1,0 +1,8 @@
+{
+  "criteria": [
+    {
+      "name": "scope behavior",
+      "description": "Both drafts use user guidance; no competing cache/nested roots; configuration bytes unchanged."
+    }
+  ]
+}

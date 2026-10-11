@@ -1,0 +1,2 @@
+# Preserve exported attempt bytes so raw evidence hashes survive checkout.
+** -text whitespace=cr-at-eol

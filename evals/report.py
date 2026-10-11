@@ -27,11 +27,11 @@ def read_json(path: Path) -> dict:
 def source_inventory() -> dict[str, str]:
     """Freeze the declared behavior/assembly/suite inputs, not evidence outputs."""
     paths = []
-    for top in ("skills", "rules", ".tessl-plugin", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals"):
+    for top in ("skills", "rules", ".tessl-plugin", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals", "test"):
         paths.extend((ROOT / top).rglob("*"))
     paths.extend(ROOT / name for name in ("plugin.json", "gemini-extension.json",
                                           "AGENTS.md", "CLAUDE.md", "GEMINI.md",
-                                          "README.md"))
+                                          "README.md", ".gitattributes", ".gitignore"))
     result = {}
     for path in sorted(set(paths)):
         relative = path.relative_to(ROOT)
@@ -103,6 +103,7 @@ def valid_completed(path: Path, data: dict) -> None:
     expected_cases = {
         "file-and-para-24": [f"C{i:02}" for i in range(1, 25)],
         "startup-and-discovery": ["H01", "H02", "H03"],
+        "writing-voice": [*[f"AC{i:02}" for i in range(1, 5)], *[f"SC{i:02}" for i in range(1, 6)], *[f"WV{i:02}" for i in range(1, 7)]],
     }.get(suite)
     if expected_cases is None or sorted(item.get("id") for item in data["case_outcomes"]) != expected_cases:
         raise ValueError(f"Result lacks complete case outcomes: {path}")
@@ -122,7 +123,7 @@ def valid_completed(path: Path, data: dict) -> None:
         raise ValueError(f"Result lacks independent review: {path}")
     if data["critical_failures"] and data["outcome"] == "Pass":
         raise ValueError(f"Critical failure cannot pass release: {path}")
-    if suite == "file-and-para-24":
+    if suite in ("file-and-para-24", "writing-voice"):
         # This suite ships a replay verifier that regrades the retained
         # candidate and checks every exported artifact hash.
         from run import verify as replay_export
@@ -150,7 +151,16 @@ def valid_completed(path: Path, data: dict) -> None:
         computed = round(sum(item["score"] for item in data["case_outcomes"]) / (2 * len(expected_cases)) * 100, 2)
         if computed != data["score"] or (data["outcome"] == "Pass") != (computed >= 85 and not data["critical_failures"]):
             raise ValueError(f"Case review does not reproduce score/outcome: {path}")
-        if data["suite_sha256"] != suite_sha256(suite):
+        revision = data.get("suite_revision")
+        matrix_revision = read_json(EVALS / "matrix.json")["suite_revision"]
+        expected_digest = suite_sha256(suite) if revision == matrix_revision else None
+        registry = EVALS / "verifiers/revisions.json"
+        if registry.exists():
+            historical = next((item for item in read_json(registry)["revisions"] if
+                               item["suite"] == suite and item["revision"] == revision), None)
+            if historical:
+                expected_digest = historical["suite_sha256"]
+        if expected_digest is None or data["suite_sha256"] != expected_digest:
             raise ValueError(f"Suite source hash mismatch: {path}")
     evidence_name = data.get("evidence", "")
     if Path(evidence_name).is_absolute() or ".." in Path(evidence_name).parts:
@@ -161,7 +171,7 @@ def valid_completed(path: Path, data: dict) -> None:
     actual = hashlib.sha256(evidence.read_bytes()).hexdigest()
     if actual != data.get("evidence_sha256"):
         raise ValueError(f"Result evidence hash mismatch: {path}")
-    if suite != "file-and-para-24":
+    if suite not in ("file-and-para-24", "writing-voice"):
         validate_behavioral_evidence(path, data, artifact, names)
     datetime.fromisoformat(data["completed_at"].replace("Z", "+00:00"))
 
@@ -267,7 +277,11 @@ def render() -> tuple[str, bool]:
              "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     ready = True
     for row in rows:
-        selected = latest([(p, d) for p, d in results if tuple(d["key"]) == key(row)])
+        matching = [(p, d) for p, d in results if tuple(d["key"]) == key(row)]
+        eligible = [(p, d) for p, d in matching if
+                    d.get("candidate_sha256") == current and
+                    d.get("suite_revision") == matrix["suite_revision"]]
+        selected = latest(eligible) or latest(matching)
         selected_attempt = latest([(p, d) for p, d in attempts if tuple(d["key"]) == key(row)])
         if selected:
             path, data = selected

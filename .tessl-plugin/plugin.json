@@ -1,6 +1,6 @@
 {
   "name": "nyssa-ai/agent-skills",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Private evaluation of NyssaAI file operations, PARA, and writing voice skills",
   "private": true,
   "skills": "./skills",

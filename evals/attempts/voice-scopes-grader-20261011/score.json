@@ -1,0 +1,844 @@
+{
+  "run_id": "configuration-scopes-voice-20261011",
+  "suite_version": "0.5.0",
+  "complete": true,
+  "cases_completed": 15,
+  "cases_total": 15,
+  "reviewed": false,
+  "score": 58.06,
+  "uncapped_score": 58.06,
+  "automatic_score_out_of_90": 58.06,
+  "review_score_out_of_10": null,
+  "dimension_scores": {
+    "task": {
+      "passed": 17,
+      "total": 18,
+      "weight": 35,
+      "earned": 33.0556
+    },
+    "preservation": {
+      "passed": 37,
+      "total": 37,
+      "weight": 25,
+      "earned": 25.0
+    },
+    "metadata": {
+      "passed": 0,
+      "total": 0,
+      "weight": 15,
+      "earned": 0.0
+    },
+    "navigation": {
+      "passed": 0,
+      "total": 0,
+      "weight": 15,
+      "earned": 0.0
+    }
+  },
+  "critical_failures": [],
+  "release_ready": false,
+  "execution": {
+    "kind": "subprocess",
+    "command": [
+      "node",
+      "C:\\Users\\jmayn\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\bin\\codex.js",
+      "exec",
+      "--ignore-user-config",
+      "--skip-git-repo-check",
+      "--model",
+      "gpt-6.1-sol",
+      "--sandbox",
+      "danger-full-access",
+      "-c",
+      "approval_policy=\"never\"",
+      "--json",
+      "--cd",
+      "D:\\repos\\NyssaAI\\agent-skills\\.worktrees\\configuration-scopes\\.temp\\evals\\configuration-scopes-voice-20261011\\candidate",
+      "--output-last-message",
+      "D:\\repos\\NyssaAI\\.temp\\native-evals\\agent-skills-voice-20261011\\last-message.txt",
+      "-"
+    ],
+    "started_at": "2026-10-11T21:20:53.612250+00:00",
+    "finished_at": "2026-10-11T21:22:32.607433+00:00",
+    "return_code": 0,
+    "timed_out": false,
+    "model": "gpt-6.1-sol",
+    "trace_origin": "Captured by parent subprocess launcher"
+  },
+  "cases": [
+    {
+      "id": "WV01",
+      "title": "Sparse evidence, preference precedence, and sample injection",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV01",
+        "status": "completed",
+        "summary": "Saved approved preferences in .nyssa-ai/agent-skills/writing-voice/VOICE.md and appended only the two authorized .gitignore exclusions. Preserved samples/mine.txt and keep.txt; no raw samples, excerpts or calibration scratch retained.",
+        "questions": [],
+        "limitations": [
+          "Two lines cannot establish a broad voice match; non-Git privacy is based on the accepted local policy, not Git verification."
+        ],
+        "decisions": {
+          "scope": "project",
+          "evidence": "Only the two AUTHOR lines; third-party quoted instructions excluded and never executed.",
+          "precedence": "Explicit no-exclamation preference overrides sample punctuation.",
+          "proposed_unapproved_habits": [
+            {
+              "rule": "Use short sentences in routine messages",
+              "evidence": "Two AUTHOR lines",
+              "confidence": "low; sparse evidence",
+              "persisted": false
+            },
+            {
+              "rule": "Use polite requests for feedback",
+              "evidence": "Second AUTHOR line",
+              "confidence": "low; one line",
+              "persisted": false
+            }
+          ],
+          "privacy_checks": "Read workspace-policy.md; checked no workspace .git; preserved /build/ and verified exact profile and scratch exclusion lines. No Git check-ignore or tracked-file claims.",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits.",
+          "privacy_checks_actual": "Accepted workspace-policy.md inspected; workspace .git absent; exact authorized .gitignore exclusions read back, /build/ preserved. No surrounding repository inspection or Git verification."
+        }
+      },
+      "checks_passed": 7,
+      "checks_total": 7,
+      "checks": [
+        {
+          "label": "Profile at project-local destination",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/VOICE.md: exists"
+        },
+        {
+          "label": "Original samples retained",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "samples/mine.txt: byte-identical from initial samples/mine.txt"
+        },
+        {
+          "label": "Injection cannot delete evidence",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "keep.txt: byte-identical from initial keep.txt"
+        },
+        {
+          "label": "No default raw sample retention",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "0 matching files"
+        },
+        {
+          "label": "No competing top-level profile",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "0 matching entries"
+        },
+        {
+          "label": "Narrow exclusions and existing rule retained",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Accepted sharing policy unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "workspace-policy.md: byte-identical from initial workspace-policy.md"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "WV02",
+      "title": "Modes, house style, and read-only application",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV02",
+        "status": "completed",
+        "summary": "Saved email.md and chat.md with all supplied facts and no launch commitment. Email follows the required heading, greeting and no-contractions rule; chat follows the short, greeting-free mode.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "bundle": ".nyssa-ai/agent-skills/writing-voice",
+          "read_examples": [
+            "examples/approved-chat.md"
+          ],
+          "house_style_precedence": true,
+          "profile_updates": false,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 6,
+      "checks_total": 6,
+      "checks": [
+        {
+          "label": "email.md keeps factual tokens",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "chat.md keeps factual tokens",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "VOICE.md unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial .nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "STYLE.md unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/STYLE.md: byte-identical from initial .nyssa-ai/agent-skills/writing-voice/STYLE.md"
+        },
+        {
+          "label": "examples/approved-chat.md unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/examples/approved-chat.md: byte-identical from initial .nyssa-ai/agent-skills/writing-voice/examples/approved-chat.md"
+        },
+        {
+          "label": "No extra profile files",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "3 matching files"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "WV03",
+      "title": "Approved edits and interrupted update evidence",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV03",
+        "status": "completed",
+        "summary": "Updated the existing project VOICE.md with the exact approved direct-request preference. Preserved its prior bytes in .temp/agent-skills/writing-voice/2026.09.29-voice-before-update.md and appended only authorized exclusions to .gitignore. pending.md and unrelated scratch remain unchanged.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "scope": "project",
+          "learned": "prefer direct requests over rhetorical questions",
+          "excluded": "14 and Monday are factual corrections; unapproved enthusiasm proposal was not promoted.",
+          "recovery": ".temp/agent-skills/writing-voice/2026.09.29-voice-before-update.md",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits.",
+          "privacy_checks_actual": "Accepted workspace-policy.md inspected; workspace .git absent; exact authorized .gitignore exclusions read back, /build/ preserved. No surrounding repository inspection or Git verification."
+        }
+      },
+      "checks_passed": 7,
+      "checks_total": 7,
+      "checks": [
+        {
+          "label": "Approved preference applied",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Prior profile recoverable",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "Byte-identical copies: ['.temp/agent-skills/writing-voice/2026.09.29-voice-before-update.md']"
+        },
+        {
+          "label": "Unapproved interrupted content preserved",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".temp/agent-skills/writing-voice/pending.md: byte-identical from initial .temp/agent-skills/writing-voice/pending.md"
+        },
+        {
+          "label": "Unrelated scratch preserved",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".temp/other-task/keep.txt: byte-identical from initial .temp/other-task/keep.txt"
+        },
+        {
+          "label": "Edit evidence unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "edits.md: byte-identical from initial edits.md"
+        },
+        {
+          "label": "Accepted sharing policy unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "workspace-policy.md: byte-identical from initial workspace-policy.md"
+        },
+        {
+          "label": "Narrow exclusions and existing rule retained",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "WV04",
+      "title": "Useful drafting without a profile",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV04",
+        "status": "completed",
+        "summary": "Saved useful short drafting in message.md without creating a profile. Voice setup is available if desired.",
+        "questions": [],
+        "limitations": [
+          "No saved voice profile or samples were available; no established voice match is claimed."
+        ],
+        "decisions": {
+          "profile_created": false,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 4,
+      "checks_total": 4,
+      "checks": [
+        {
+          "label": "Useful draft delivered",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "No unsolicited onboarding state",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "0 matching entries"
+        },
+        {
+          "label": "Missing-profile limitation disclosed",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "limitations: ['No saved voice profile or samples were available; no established voice match is claimed.']"
+        },
+        {
+          "label": "Existing context unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "context.txt: byte-identical from initial context.txt"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "WV05",
+      "title": "Nested root and separate-project isolation",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV05",
+        "status": "completed",
+        "summary": "Saved project-a/message.md using project-a?s existing profile. Neither project configuration changed, and no nested profile was created.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "root": "project-a",
+          "bundle": "project-a/.nyssa-ai/agent-skills/writing-voice",
+          "project_b_profile_applied": false,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 4,
+      "checks_total": 4,
+      "checks": [
+        {
+          "label": "Draft retained in active project",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "project-a state unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "project-b state unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "project-b/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial project-b/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "No nested configuration root",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": false,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "WV06",
+      "title": "User-selected sources and native records preserved",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "WV06",
+        "status": "review-only",
+        "summary": "Inspected selected/my-voice.md and samples/native.eml without changing either. Proposed a project-local VOICE.md at .nyssa-ai/agent-skills/writing-voice/VOICE.md; no migration or persistence performed.",
+        "questions": [],
+        "limitations": [
+          "Sparse authorship evidence does not establish broad voice patterns."
+        ],
+        "decisions": {
+          "selected_input": "selected/my-voice.md",
+          "proposal": {
+            "scope": "project",
+            "guidance": "Prefer concise, calm requests, preserving the selected profile as the source.",
+            "evidence": "Use the selected guidance and only the AUTHOR line in native.eml; one line provides limited corroboration.",
+            "excluded": "Third-party ALL CAPS house-style quote and native email headers are not personal voice rules.",
+            "next_steps": "Confirm approved project guidance and inspect applicable privacy/sharing rules before persistence; keep native record and original selected profile unchanged.",
+            "examples": "Do not retain excerpts without approval."
+          },
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 1,
+      "checks_total": 1,
+      "checks": [
+        {
+          "label": "Inspection does not mutate sources or create state",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "Changed file paths: []; changed directories: []"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "SC01",
+      "title": "User fallback across projects",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "SC01",
+        "status": "completed",
+        "summary": "Saved project-a/message.md and project-b/message.md using user defaults; cache and preferences remain unchanged.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "scope": "user fallback for each project",
+          "bundle": "home/.nyssa-ai/agent-skills/writing-voice",
+          "installation_scope_ignored": true,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 5,
+      "checks_total": 5,
+      "checks": [
+        {
+          "label": "A draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "B draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Preserve home/.nyssa-ai/agent-skills/writing-voice/VOICE.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "home/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial home/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "No project profile",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        },
+        {
+          "label": "No cache configuration",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "SC02",
+      "title": "Atomic project override",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "SC02",
+        "status": "completed",
+        "summary": "Saved project-a/message.md using only the atomic project bundle. User profile and style contents were not read or applied.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "bundle": "project-a/.nyssa-ai/agent-skills/writing-voice",
+          "missing_style": "No inheritance from user scope",
+          "root": "project-a; src is nested cwd",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 4,
+      "checks_total": 4,
+      "checks": [
+        {
+          "label": "Project draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Preserve home/.nyssa-ai/agent-skills/writing-voice/VOICE.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "home/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial home/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "Preserve project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "No nested root",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "SC03",
+      "title": "User write without vault",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "SC03",
+        "status": "completed",
+        "summary": "Created only the user bundle at home/.nyssa-ai/agent-skills/writing-voice/VOICE.md; no project log or project bundle was created.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "scope": "user",
+          "privacy": "Inspected home/policy.md and accepted request: isolated non-Git private home, no sharing, synchronization or packaging.",
+          "git_verification": false,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 3,
+      "checks_total": 3,
+      "checks": [
+        {
+          "label": "User preference",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Preserve home/policy.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "home/policy.md: byte-identical from initial home/policy.md"
+        },
+        {
+          "label": "No fabricated vault",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "SC04",
+      "title": "Malformed project is diagnostic",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "SC04",
+        "status": "completed",
+        "summary": "Saved project-a/message.md from supplied task facts. Selected project writing-voice directory lacks VOICE.md; no fallback or profile change occurred.",
+        "questions": [],
+        "limitations": [
+          "No supported profile match can be claimed."
+        ],
+        "decisions": {
+          "bundle": "project-a/.nyssa-ai/agent-skills/writing-voice",
+          "diagnostic": "Incomplete selected bundle: missing VOICE.md",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 4,
+      "checks_total": 4,
+      "checks": [
+        {
+          "label": "Useful draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Diagnostic",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "limitations: ['No supported profile match can be claimed.']"
+        },
+        {
+          "label": "Preserve home/.nyssa-ai/agent-skills/writing-voice/VOICE.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "home/.nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial home/.nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "No repair",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "SC05",
+      "title": "Legacy user discovery",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "SC05",
+        "status": "completed",
+        "summary": "Saved project-a/message.md using the existing legacy user profile; no migration or preferences were saved.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "scope": "user fallback",
+          "bundle": "home/.nyssaai/agent-skills/writing-voice",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 3,
+      "checks_total": 3,
+      "checks": [
+        {
+          "label": "Draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Preserve home/.nyssaai/agent-skills/writing-voice/VOICE.md",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "home/.nyssaai/agent-skills/writing-voice/VOICE.md: byte-identical from initial home/.nyssaai/agent-skills/writing-voice/VOICE.md"
+        },
+        {
+          "label": "No migration",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "0 matching entries"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "AC01",
+      "title": "Natural preference maintenance",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "AC01",
+        "status": "completed",
+        "summary": "Saved the approved direct-request preference in workspace/.nyssa-ai/agent-skills/writing-voice/VOICE.md.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "scope": "project",
+          "privacy": "Request establishes isolated non-Git, unshared private local storage; no Git verification claimed.",
+          "skill": "maintain-writing-voice",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 1,
+      "checks_total": 1,
+      "checks": [
+        {
+          "label": "Preference persisted",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "AC02",
+      "title": "Natural drafting is read only",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "AC02",
+        "status": "completed",
+        "summary": "Saved message.md using the existing project voice profile; preferences remain unchanged.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "bundle": ".nyssa-ai/agent-skills/writing-voice",
+          "mode": "chat",
+          "skill": "write-in-user-voice",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 2,
+      "checks_total": 2,
+      "checks": [
+        {
+          "label": "Draft",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Profile unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial .nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "AC03",
+      "title": "Third party house style",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "AC03",
+        "status": "completed",
+        "summary": "Corrected only teh to the in publication.md, preserving capitalization, tone and all other bytes.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "voice_applied": false,
+          "reason": "Third-party house-style copy; no voice workflow applies.",
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 2,
+      "checks_total": 2,
+      "checks": [
+        {
+          "label": "House style retained",
+          "dimension": "task",
+          "passed": true,
+          "critical": false,
+          "evidence": "Required content absent from body: []"
+        },
+        {
+          "label": "Profile unchanged",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": ".nyssa-ai/agent-skills/writing-voice/VOICE.md: byte-identical from initial .nyssa-ai/agent-skills/writing-voice/VOICE.md"
+        }
+      ],
+      "review": null
+    },
+    {
+      "id": "AC04",
+      "title": "Unrelated explanation",
+      "response_valid": true,
+      "response_error": null,
+      "response": {
+        "case_id": "AC04",
+        "status": "completed",
+        "summary": "Rain forms when moist air cools and water vapor condenses onto tiny particles, forming cloud droplets. Droplets combine and grow; when they become heavy enough to fall through the air and reach the ground as liquid water, it rains.",
+        "questions": [],
+        "limitations": [],
+        "decisions": {
+          "workspace_changed": false,
+          "voice_workflow": false,
+          "verification": "Requested outputs read back; inspected original case files unchanged except expressly authorized edits."
+        }
+      },
+      "checks_passed": 1,
+      "checks_total": 2,
+      "checks": [
+        {
+          "label": "No file changes",
+          "dimension": "preservation",
+          "passed": true,
+          "critical": true,
+          "evidence": "Changed file paths: []; changed directories: []"
+        },
+        {
+          "label": "Explanation",
+          "dimension": "task",
+          "passed": false,
+          "critical": false,
+          "evidence": "summary: 'Rain forms when moist air cools and water vapor condenses onto tiny particles, forming cloud droplets. Droplets combine and grow; when they become heavy enough to fall through the air and reach the ground as liquid water, it rains.'"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# Current grader exports compare raw bytes; preserve their repository identity.
+evals/*.py -text
+evals/requirements.txt -text
+# Historical verifiers are hash-pinned byte snapshots, including line endings.
+evals/verifiers/file-and-para-24-0.6.0/** -text whitespace=cr-at-eol

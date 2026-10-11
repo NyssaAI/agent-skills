@@ -1,0 +1,12 @@
+{
+  "after-files.json": "eb5e48bfdcfd27731a1768070b4405cbfb2f12151b7f2c2a3d944a98b862ab80",
+  "candidate.zip": "6997480371f7ce0e351736ce895fecef3a4713b697bb1168f627b2f3e33c062e",
+  "grader-files.json": "cc74d012ec030656a8159f04d2bb8e86435ada5805273219a7bc450acaf8f0eb",
+  "grader.zip": "98d6530e386c5248d05d4e64ca19fe409511c6212f1ffed6247e80f6a0dabcfe",
+  "manifest.json": "8fcbbd70ab2e4bfbc80a5faed80848b187de3a9fac2617b369b9cedfc7e91929",
+  "metadata.json": "59111cb86cfc71e347e0468694f29d25ac62575bc890f6464d6f516f2072c025",
+  "score.json": "5c06e88ecf3cb827c7acb2460c2a5ec9cc3868e11b2fcab3a1c0bc1f78ea9d40",
+  "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout.txt": "75b03f029ee63b563a35840418c71b7db5969427d9ccc908eb8b9e232f8c8f92",
+  "suite.json": "1bb7da8b5d21cf468829f7c7c317bed6734606f2ac00ae219ae4ff502c9ddce0"
+}

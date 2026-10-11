@@ -1,0 +1,15 @@
+{
+  "key": [
+    "writing-voice",
+    "Codex",
+    "windows-x86_64",
+    "synthetic-full-plugin"
+  ],
+  "state": "incomplete",
+  "started_at": "2026-10-11T21:20:53.612250+00:00",
+  "completed_at": "2026-10-11T21:22:32.607433+00:00",
+  "stage": "automatic-grading",
+  "diagnostic": "All 15 responses completed, no critical failures. Automatic score 58.06 exposed a grader defect: voice has no metadata/navigation dimensions, limiting maximum total to 70; AC04 incorrectly uses list-only response_nonempty for string summary. No independent review or release pass claimed.",
+  "next_check": "Fix explicit voice dimension weights and summary assertion, preserve this attempt, rerun a fresh candidate and obtain independent artifact review.",
+  "candidate_sha256": "7c771e28aaf34db98758aa081278f8787741cf1076ffde53b237e4a103e280cc"
+}

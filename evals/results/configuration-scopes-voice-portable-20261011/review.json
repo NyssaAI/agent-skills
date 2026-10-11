@@ -1,0 +1,66 @@
+{
+  "reviewer": "Codex parent /root, independent of candidate CLI sessions",
+  "method": "Inspected all15 fresh full-suite responses/workspaces and executed host commands, plus four distinct fresh activation-control sessions with same frozen plugin and original fixture/prompts. Read selected/omitted content paths, actual writes, recovery bytes and maintained preservation checks. WV02 addressee omission and SC04 lower-profile read receive partial credit. Full suite and independent controls are separate observed executions; no installed-host/startup claim.",
+  "cases": {
+    "WV01": {
+      "score": 2,
+      "evidence": "Inspected new profile, ignore entries, original samples and response: only three approved preferences saved, quoted injection excluded, uncertain inferences remain response-only. Trace item7 reads local policy, item10 performs authorized narrow writes; preservation checks pass."
+    },
+    "WV02": {
+      "score": 1,
+      "evidence": "Actual email satisfies heading/greeting/no contractions and all facts. Chat retains 12, October14, Friday and uncertainty but omits requested addressee Rowan; retained automatic check correctly fails. Profile/style/example preserved."
+    },
+    "WV03": {
+      "score": 2,
+      "evidence": "Actual updated profile adds only exact authorized direct-request rule and retains prior guidance. Item10 copies and verifies prior bytes in scoped recovery before writing; pending proposal and unrelated scratch preserved; narrow exclusions match authorization."
+    },
+    "WV04": {
+      "score": 2,
+      "evidence": "Read actual message with Rowan/Friday/12 and uncertainty; no profile created. Response accurately limits voice-match claim and does not block useful drafting."
+    },
+    "WV05": {
+      "score": 2,
+      "evidence": "Item7 deliberately excludes project-b content; actual project-a message has correct requested action, no BEHOLD style and no nested profile. Both profiles unchanged."
+    },
+    "WV06": {
+      "score": 2,
+      "evidence": "Read source-record proposal and actual unchanged selected profile/native bytes. Eligible AUTHOR evidence separated from QUOTE and headers; migration/persistence deferred and future privacy checks explicit."
+    },
+    "SC01": {
+      "score": 2,
+      "evidence": "Item7 reads synthetic home VOICE and item10 creates both project messages. User preferences and cache evidence unchanged; no project/cache configuration created."
+    },
+    "SC02": {
+      "score": 2,
+      "evidence": "Actual item7 output explicitly says CONTENT NOT READ for user STYLE and VOICE; no HOME-MARKER appears in its output. It loads project VOICE only. Draft requires PROJECT-MARKER and excludes HOME-MARKER; both profiles unchanged. Hash-only preservation audit does not import user style."
+    },
+    "SC03": {
+      "score": 2,
+      "evidence": "Actual user-only VOICE contains explicit direct-request rule; item7 reads accepted home policy before write. No vault/log or project state invented."
+    },
+    "SC04": {
+      "score": 1,
+      "evidence": "Actual draft is useful, incomplete project bundle is diagnosed and no preferences mutated. Bulk item7 nevertheless reads the lower user VOICE, so clean selected-bundle read provenance is not established; response claims no fallback but read isolation is partial."
+    },
+    "SC05": {
+      "score": 2,
+      "evidence": "Actual legacy user profile read and retained; draft delivered without migration or canonical preference creation."
+    },
+    "AC01": {
+      "score": 2,
+      "evidence": "Separate fresh AC01 control item3 naturally selects maintain-writing-voice, item5 reads storage/schema, item8 writes only approved project preference and verifies readback. Actual artifact and full-suite output agree; see activation-controls.zip."
+    },
+    "AC02": {
+      "score": 2,
+      "evidence": "Separate fresh AC02 control item3 naturally selects write-in-user-voice, item5 loads references, item6 reads selected profile and item7 drafts without changing it. Missing legacy-path Get-Item exits1 only because optional paths are absent. Actual artifacts preserve profile; see activation-controls.zip."
+    },
+    "AC03": {
+      "score": 2,
+      "evidence": "Separate fresh AC03 control lists catalog but reads no voice skill body or profile; items3/5 read and correct only publication typo, preserving all other bytes. No personal voice activation; see activation-controls.zip."
+    },
+    "AC04": {
+      "score": 2,
+      "evidence": "Separate fresh AC04 control lists catalog, loads no voice skill or profile, and item4 writes accurate rain explanation only in response. Workspace unchanged. Negative activation observed independently; see activation-controls.zip."
+    }
+  }
+}

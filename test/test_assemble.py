@@ -29,7 +29,7 @@ class AssemblyTests(unittest.TestCase):
             skill = root / "skills" / "sample"
             skill.mkdir(parents=True)
             (skill / "SKILL.md").write_text("public", encoding="utf-8")
-            for folder in (".nyssa-ai/agent-skills/writing-voice", ".temp", "__pycache__"):
+            for folder in (".nyssa-ai/agent-skills/writing-voice", ".nyssaai/agent-skills/writing-voice", ".nyssa/agent-skills/writing-voice", ".temp", "__pycache__"):
                 private = skill / folder / "private.md"
                 private.parent.mkdir(parents=True)
                 private.write_text("private", encoding="utf-8")

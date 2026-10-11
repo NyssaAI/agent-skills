@@ -2,7 +2,7 @@
 
 ## Apply the right guidance
 
-Use the profile for the active project, resolved through [storage](../../maintain-writing-voice/references/storage.md). Follow current explicit directions and required format or destination standards first. Apply approved explicit preferences and the relevant context mode, then supported inferred habits. Read relevant examples on demand rather than copying every example into the task.
+Use the selected atomic explicit, project, or user bundle, resolved through [storage](../../maintain-writing-voice/references/storage.md). Follow current explicit directions and required format or destination standards first. Apply approved explicit preferences and the relevant context mode, then supported inferred habits. Read relevant examples on demand rather than copying every example into the task.
 
 An email may need an opening, context, and a clear request; chat may convey the same facts in one paragraph. Choose the mode supported by the profile and task. Avoid caricature: repeating a signature phrase or forcing every sentence to match one sample does not establish resemblance.
 

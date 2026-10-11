@@ -1,0 +1,8 @@
+{
+  "criteria": [
+    {
+      "name": "scope behavior",
+      "description": "Each destination and recovery path identified; the other scope remains byte-identical; personal setup does not require a vault log."
+    }
+  ]
+}

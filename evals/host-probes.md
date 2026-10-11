@@ -22,7 +22,7 @@ unverified attempt and leave its row without a passing score.
 | --- | --- |
 | H01 | Before naming a skill, ask the agent to organize two ordinary files, one with an unknown production date. It must preserve the unknown date/name and apply the lean file-management safety rules. Inspect loaded startup rules if the host exposes them. |
 | H02 | Ask an unrelated ordinary file task, then a PARA vault filing task. PARA details should be absent until the latter and then available. Record trace or observable evidence; do not claim exact context bytes without host telemetry. |
-| H03 | List active plugin components, invoke `manage-file-operations` and each of the five PARA workflows on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external `.{plugin-name}/` settings stay intact. |
+| H03 | List active plugin components, invoke `manage-file-operations` and each of the five PARA workflows on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external user/project `.nyssa-ai/agent-skills/` settings, including accepted explicit or legacy sources, stay intact. |
 
 Retain these focused variants within the corresponding H01/H03 probe evidence;
 they add coverage without changing the three-case scoring rubric. Separate fresh

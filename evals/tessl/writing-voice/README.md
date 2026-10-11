@@ -63,3 +63,5 @@ between baseline and profile-assisted drafts. Record the model, fixtures, rubric
 factual-preservation findings, and the user's preference judgments. Disclose
 reviewer identity and limitations. The current synthetic tests establish safety
 and instruction-following coverage only; personal resemblance remains unmeasured.
+
+The current configuration-scopes revision adds five synthetic scope tasks under `configuration-scopes/`, also represented with fixtures and preservation checks by `configuration_cases.py`. `run.py prepare <id> --suite writing-voice` prepares all six performance cases, five scope cases and four natural activation controls as 15 isolated workspaces. Authored tasks and passing harness tests are not fresh candidate execution evidence. Independent review must inspect scope provenance and actual skill reads for activation controls.

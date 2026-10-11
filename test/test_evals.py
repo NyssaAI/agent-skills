@@ -45,7 +45,7 @@ sys.path.insert(0, str(REPOSITORY / "evals"))
 
 from cases import build_cases, build_writing_voice_cases, check, note
 from calibrate import calibrate, mutations
-from run import execute, inventory, prepare, read_json, safe_child, score, verify, write_json
+from run import execute, file_hash, inventory, prepare, read_json, safe_child, score, suite_definition, verify, write_json
 from scoring import evaluate_check, score_run
 
 
@@ -75,6 +75,15 @@ class OutcomeScoringTests(unittest.TestCase):
         self.assertTrue(self.evaluate(assertion, original))
         self.write("record.ics", "---\ntype: note\n---\nBEGIN:VCALENDAR\nEND:VCALENDAR\n")
         self.assertFalse(self.evaluate(assertion, original))
+
+    def test_custom_email_destination_preserves_native_record_without_redundant_archive(self):
+        case = next(item for item in build_cases() if item["id"] == "C05")
+        assertion = next(item for item in case["checks"] if item["label"] == "Native original preserved")
+        target = "Work/launch/evidence/approval.eml"
+        self.write(target, case["files"]["Capture/approval.eml"])
+        self.assertTrue(self.evaluate(assertion, case["files"]))
+        self.write(target, "Changed native message")
+        self.assertFalse(self.evaluate(assertion, case["files"]))
 
     def test_calendar_history_calibration_detects_lost_payload(self):
         mutation = next(item for item in mutations() if item['id'] == 'lost-calendar-history')
@@ -280,6 +289,23 @@ class OutcomeScoringTests(unittest.TestCase):
         self.assertEqual(result["score"], 100)
         self.assertTrue(result["release_ready"])
 
+    def test_voice_dimensions_can_earn_full_score_without_unrelated_file_metadata(self):
+        manifest, suite, response, review = self.sample_run()
+        suite["dimension_weights"] = {"task": 52.5, "preservation": 37.5}
+        suite["cases"][0]["checks"] = suite["cases"][0]["checks"][:2]
+        write_json(self.root / "cases/C01/response.json", response)
+        result = score_run(self.root, suite, manifest, review)
+        self.assertEqual(result["score"], 100)
+        self.assertTrue(result["release_ready"])
+
+    def test_custom_dimensions_cannot_omit_checks_or_reduce_the_score_denominator(self):
+        manifest, suite, response, review = self.sample_run()
+        write_json(self.root / "cases/C01/response.json", response)
+        for weights in ({"task": 90}, {"task": 35, "preservation": 25}, {"task": True}):
+            suite["dimension_weights"] = weights
+            with self.subTest(weights=weights), self.assertRaises(ValueError):
+                score_run(self.root, suite, manifest, review)
+
     def test_candidate_cannot_modify_the_packet(self):
         manifest, suite, response, review = self.sample_run()
         write_json(self.root / "cases/C01/response.json", response)
@@ -288,8 +314,89 @@ class OutcomeScoringTests(unittest.TestCase):
         self.assertFalse(result["release_ready"])
         self.assertIn("Evaluation boundary modified: PACKET.md", result["critical_failures"])
 
+    def test_required_independent_review_rejects_failed_partial_or_missing_annotations(self):
+        manifest, suite, response, review = self.sample_run()
+        suite["critical_review_cases"] = ["C01"]
+        write_json(self.root / "cases/C01/response.json", response)
+        for annotation in ({"score": 0, "evidence": "Wrong activation"},
+                           {"score": 1, "evidence": "Partial provenance"},
+                           {"score": 2, "evidence": " "}, {},
+                           {"score": True, "evidence": "Invalid score type"}):
+            with self.subTest(annotation=annotation):
+                review["cases"]["C01"] = annotation
+                result = score_run(self.root, suite, manifest, review)
+                self.assertEqual(result["automatic_score_out_of_90"], 90)
+                self.assertFalse(result["release_ready"])
+                self.assertTrue(any("C01: Required independent review" in row
+                                    for row in result["critical_failures"]))
+        result = score_run(self.root, suite, manifest)
+        self.assertFalse(result["release_ready"])
+        self.assertTrue(result["critical_failures"])
+
+    def test_required_independent_review_allows_full_review_and_preserves_default_scoring(self):
+        manifest, suite, response, review = self.sample_run()
+        write_json(self.root / "cases/C01/response.json", response)
+        suite["critical_review_cases"] = ["C01"]
+        self.assertTrue(score_run(self.root, suite, manifest, review)["release_ready"])
+        del suite["critical_review_cases"]
+        review["cases"]["C01"]["score"] = 0
+        result = score_run(self.root, suite, manifest, review)
+        self.assertEqual(result["score"], 90)
+        self.assertTrue(result["release_ready"])
+        self.assertFalse(result["critical_failures"])
+
+    def test_required_independent_review_ids_must_be_unique_known_case_ids(self):
+        manifest, suite, response, review = self.sample_run()
+        write_json(self.root / "cases/C01/response.json", response)
+        for ids in (["C01", "C01"], ["unknown"], "C01", None, [True], [[]]):
+            with self.subTest(ids=ids), self.assertRaises(ValueError):
+                suite["critical_review_cases"] = ids
+                score_run(self.root, suite, manifest, review)
+
+    def test_atomic_project_override_rejects_user_and_merged_drafts(self):
+        from configuration_cases import build_voice_scope_cases
+        item = next(item for item in build_voice_scope_cases() if item["id"] == "SC02")
+        manifest, _, response, review = self.sample_run()
+        case_root = self.root / "cases/SC02"
+        for relative, content in item["files"].items():
+            self.write("cases/SC02/workspace/" + relative, content)
+        manifest["case_ids"] = ["C01", "SC02"]
+        manifest["initial_files"] = inventory(self.root)
+        response["case_id"] = "SC02"
+        write_json(case_root / "response.json", response)
+        review["cases"] = {"SC02": {"score": 2, "evidence": "Verified project-only provenance"}}
+        suite = {"version": "test", "cases": [item],
+                 "dimension_weights": {"task": 52.5, "preservation": 37.5},
+                 "critical_review_cases": ["SC02"]}
+        user = item["files"]["home/.nyssa-ai/agent-skills/writing-voice/VOICE.md"]
+        project = item["files"]["project-a/.nyssa-ai/agent-skills/writing-voice/VOICE.md"]
+        self.assertNotEqual(user, project)
+        self.assertIn("HOME-MARKER", user)
+        self.assertIn("PROJECT-MARKER", project)
+        for signoff, accepted in (("PROJECT-MARKER", True), ("HOME-MARKER", False),
+                                  ("PROJECT-MARKER HOME-MARKER", False),
+                                  ("PROJECT-MARKER home-marker", False)):
+            with self.subTest(signoff=signoff):
+                self.write("cases/SC02/workspace/project-a/message.md",
+                           "Rowan, please review by Friday.\n" + signoff)
+                result = score_run(self.root, suite, manifest, review)
+                self.assertEqual(result["release_ready"], accepted)
+                self.assertEqual(bool(result["critical_failures"]), not accepted)
+
 
 class WritingVoiceScaffoldTests(unittest.TestCase):
+    def test_voice_suite_requires_full_activation_and_atomic_provenance_review(self):
+        self.assertEqual(suite_definition("writing-voice")["critical_review_cases"],
+                         ["SC02", "AC01", "AC02", "AC03", "AC04"])
+        self.assertNotIn("critical_review_cases", suite_definition("file-and-para-24"))
+
+    def test_unrelated_explanation_accepts_a_nonempty_string_summary(self):
+        from configuration_cases import build_voice_activation_cases
+        item = next(item for item in build_voice_activation_cases() if item["id"] == "AC04")
+        assertion = next(row for row in item["checks"] if row["label"] == "Explanation")
+        self.assertTrue(evaluate_check(assertion, REPOSITORY, {}, {"summary": "Rain forms from cooling moist air."})[0])
+        self.assertFalse(evaluate_check(assertion, REPOSITORY, {}, {"summary": " "})[0])
+
     def test_voice_corpus_does_not_extend_frozen_file_suite(self):
         self.assertEqual([item["id"] for item in build_cases()], [f"C{i:02}" for i in range(1, 25)])
         self.assertEqual([item["id"] for item in build_writing_voice_cases()],
@@ -397,6 +504,46 @@ class EvidenceExportTests(unittest.TestCase):
             (export / "score.json").write_text("{}", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "hashes"):
                 verify(export, self.root)
+
+    def test_unknown_historical_revision_rejects_before_execution(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            run_root = prepare(self.root, "unknown-revision")
+            export = self.root / "results/unknown"
+            score(run_root, export_path=export)
+            write_json(export / "metadata.json", {"key": ["file-and-para-24"],
+                       "suite_revision": "untrusted", "suite_sha256": file_hash(export / "suite.json")})
+            definitions = self.root / "evals/verifiers"
+            definitions.mkdir(parents=True)
+            write_json(definitions / "revisions.json", {"revisions": []})
+            hashes = inventory(export)
+            hashes.pop("artifact-hashes.json")
+            write_json(export / "artifact-hashes.json", hashes)
+            with self.assertRaisesRegex(ValueError, "Unknown trusted verifier"):
+                verify(export, self.root)
+
+    def test_voice_preparation_has_fresh_scope_fixtures_and_replay(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            root = prepare(self.root, "voice", "writing-voice")
+            suite = read_json(root / "control/suite.json")
+            self.assertEqual(len(suite["cases"]), 15)
+            self.assertTrue((root / "candidate/cases/SC01/workspace/home/.nyssa-ai/agent-skills/writing-voice/VOICE.md").is_file())
+            export = self.root / "results/voice"
+            score(root, export_path=export)
+            verify(export, self.root)
+
+    def test_historical_export_rejects_rehashed_untrusted_grader(self):
+        import shutil
+        import run
+        export = self.root / "rehashed-history"
+        shutil.copytree(REPOSITORY / "evals/results/windows-final-20261005", export)
+        files = read_json(export / "grader-files.json")
+        files["run.py"] = "0" * 64
+        write_json(export / "grader-files.json", files)
+        hashes = inventory(export)
+        hashes.pop("artifact-hashes.json")
+        write_json(export / "artifact-hashes.json", hashes)
+        with self.assertRaisesRegex(ValueError, "trusted revision"):
+            run.verify(export, REPOSITORY)
 
     def test_candidate_command_receives_packet_and_receipt(self):
         with contextlib.redirect_stdout(io.StringIO()):

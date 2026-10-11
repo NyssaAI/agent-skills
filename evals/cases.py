@@ -102,7 +102,7 @@ Update Work/launch/launch-index.md. Keep this native email format.""", {
         "Work/launch/launch-index.md": note("# Launch\n\nEvidence.", "project", extra="goal: Launch\n"),
     }, [
         check("Explicit destination respected", "task", "same_as", path="Work/launch/evidence/approval.eml", source="Capture/approval.eml"),
-        check("Native original preserved", "preservation", "preserved", True, source="Capture/approval.eml", glob="Capture/Originals/**/*"),
+        check("Native original preserved", "preservation", "same_as", True, source="Capture/approval.eml", path="Work/launch/evidence/approval.eml"),
         check("Custom root retained", "preservation", "root_entries", True, allowed=["Capture", "Work", "Operations", "Library", "History", ".temp", ".gitignore"]),
         check("Native record linked", "navigation", "links_to", source="Work/launch/launch-index.md", target="Work/launch/evidence/approval.eml"),
     ], directories=["Capture/Originals", "Work/launch", "Operations", "Library", "History"], entry_skill="import-vault-source-records"))

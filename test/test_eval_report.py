@@ -128,6 +128,29 @@ class ReportTests(unittest.TestCase):
         self.assertIn("Fail / 50/100", text)
         self.assertIn("Current", text)
 
+    def test_current_result_wins_over_later_historical_timestamp(self):
+        self.result("Pass")
+        current = self.evals / "results/run-1/metadata.json"
+        data = json.loads(current.read_text())
+        old = self.evals / "results/later-history"
+        old.mkdir()
+        historical = dict(data, suite_revision="old", completed_at="2026-10-30T10:00:00Z", outcome="Fail", score=0)
+        (old / "metadata.json").write_text(json.dumps(historical))
+        with patch.object(report, "valid_completed", return_value=None):
+            text, ready = report.render()
+        self.assertTrue(ready)
+        self.assertIn("[run-1]", text)
+        self.assertNotIn("[later-history]", text)
+
+    def test_candidate_hash_tracks_test_inputs(self):
+        test_root = self.root / "test"
+        test_root.mkdir()
+        test_file = test_root / "test_candidate.py"
+        test_file.write_text("before")
+        original = report.candidate_sha256()
+        test_file.write_text("after")
+        self.assertNotEqual(original, report.candidate_sha256())
+
     def test_tampered_evidence_is_rejected(self):
         evidence = self.result()
         evidence.write_text("tampered", encoding="utf-8")

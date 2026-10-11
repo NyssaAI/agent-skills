@@ -64,7 +64,18 @@ def safe_child(root, relative):
     return path
 
 
-def prepare(repository, run_id):
+def suite_definition(suite_name):
+    if suite_name == "writing-voice":
+        from configuration_cases import build_voice_cases, VOICE_DIMENSION_WEIGHTS, VOICE_CRITICAL_REVIEW_CASES
+        return {"version": SUITE_VERSION, "cases": build_voice_cases(),
+                "dimension_weights": VOICE_DIMENSION_WEIGHTS,
+                "critical_review_cases": VOICE_CRITICAL_REVIEW_CASES}
+    if suite_name == "file-and-para-24":
+        return {"version": SUITE_VERSION, "cases": build_cases()}
+    raise ValueError("Unknown preparation suite")
+
+
+def prepare(repository, run_id, suite_name="file-and-para-24"):
     """Create a fresh full-suite run, refusing reuse of an existing identifier."""
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,63}", run_id):
         raise ValueError("Run id must use lowercase letters, digits, and hyphens")
@@ -75,13 +86,14 @@ def prepare(repository, run_id):
     for relative in ["skills", "rules", "hooks", ".tessl-plugin", ".codex-plugin", ".claude-plugin", ".agents"]:
         source = repository / relative
         if source.exists():
-            shutil.copytree(source, plugin / relative)
+            shutil.copytree(source, plugin / relative, ignore=shutil.ignore_patterns(".nyssa-ai", ".nyssaai", ".nyssa", ".temp", "__pycache__"))
     for relative in ["plugin.json", "gemini-extension.json"]:
         source = repository / relative
         if source.exists():
             (plugin / relative).write_bytes(source.read_bytes())
-    cases = build_cases()
-    write_json(run_root / "control" / "suite.json", {"version": SUITE_VERSION, "cases": cases})
+    suite = suite_definition(suite_name)
+    cases = suite["cases"]
+    write_json(run_root / "control" / "suite.json", suite)
     response_contract = {
         "case_id": "Cxx", "status": "completed | needs-input | review-only",
         "summary": "What you actually did or found, with relevant paths and uncertainty.",
@@ -106,6 +118,8 @@ def prepare(repository, run_id):
             "references/intermediate-work.md for this temporary-storage task "
             "(resolve from the candidate root if necessary).\n\n"
         )
+        if item["entry_skill"] == "natural":
+            entry_guidance = "Discover the applicable skills from the frozen plugin/skills/ descriptions naturally; do not assume a named workflow. Record actual skill reads in the retained host trace.\n\n"
         (case_root / "request.md").write_text(
             f"# {item['id']}: {item['title']}\n\n"
             "For this task, today's date is 2026-09-29. All identities and records are synthetic. "
@@ -120,7 +134,7 @@ def prepare(repository, run_id):
             encoding="utf-8")
     packet = (
         "# Candidate execution packet\n\n"
-        "Execute all 24 independent requests under cases/C01 through cases/C24 using the frozen plugin/ skills. "
+        f"Execute all {len(cases)} independent requests under cases/ using the frozen plugin/ skills. "
         "Read each request.md and inspect its workspace before acting. These are real filesystem tasks; "
         "a proposed plan or claimed result alone is insufficient. Each case has its own workspace. "
         "Do not carry file state or case-specific facts between cases.\n\n"
@@ -138,7 +152,7 @@ def prepare(repository, run_id):
     (candidate / "PACKET.md").write_text(packet, encoding="utf-8")
     git = subprocess.run(["git", "rev-parse", "HEAD"], cwd=repository, capture_output=True, text=True)
     manifest = {
-        "suite_version": SUITE_VERSION, "run_id": run_id,
+        "suite_version": SUITE_VERSION, "suite": suite_name, "run_id": run_id,
         "prepared_at": datetime.now(timezone.utc).isoformat(),
         "source_commit": git.stdout.strip() if git.returncode == 0 else None,
         "suite_sha256": file_hash(run_root / "control" / "suite.json"),
@@ -250,6 +264,35 @@ def verify(export_path, repository):
         grader = root / "grader"
         grader.mkdir()
         grader_files = read_json(export_path / "grader-files.json")
+        metadata_path = export_path / "metadata.json"
+        metadata = read_json(metadata_path) if metadata_path.exists() else None
+        if metadata and file_hash(export_path / "suite.json") != metadata["suite_sha256"]:
+            raise ValueError("Frozen suite digest differs from revision identity")
+        definitions = read_json(Path(repository) / "evals/verifiers/revisions.json")["revisions"] if metadata else []
+        definition = next((item for item in definitions if
+                           item["suite"] == metadata["key"][0] and
+                           item["revision"] == metadata["suite_revision"] and
+                           item["suite_sha256"] == metadata["suite_sha256"]), None)
+        if metadata and definition is None:
+            matrix_path = Path(repository) / "evals/matrix.json"
+            if not matrix_path.exists():
+                raise ValueError("Unknown trusted verifier revision")
+            matrix = read_json(matrix_path)
+            suite_name = metadata["key"][0]
+            if metadata["suite_revision"] != matrix["suite_revision"]:
+                raise ValueError("Unknown trusted verifier revision")
+            frozen_suite = read_json(export_path / "suite.json")
+            if frozen_suite != suite_definition(suite_name):
+                raise ValueError("Frozen suite differs from trusted current definition")
+        if definition is None:
+            # Development exports use current repository-owned code, never receipt code.
+            current = Path(__file__).resolve().parent
+            definition = {"grader_files": {p.name: file_hash(p) for p in
+                          [*sorted(current.glob("*.py")), current / "requirements.txt"]},
+                          "grader_directory": "."}
+        if grader_files != definition["grader_files"]:
+            raise ValueError("Frozen grader differs from trusted revision")
+        trusted = (Path(repository) / "evals/verifiers" / definition["grader_directory"]) if metadata and definition["grader_directory"] != "." else Path(__file__).resolve().parent
         with zipfile.ZipFile(export_path / "grader.zip") as archive:
             if set(archive.namelist()) != set(grader_files):
                 raise ValueError("Frozen grader file inventory differs from export")
@@ -258,7 +301,10 @@ def verify(export_path, repository):
                 content = archive.read(member)
                 if hashlib.sha256(content).hexdigest() != grader_files[member]:
                     raise ValueError(f"Frozen grader hash mismatch: {member}")
-                destination.write_bytes(content)
+                trusted_content = (trusted / member).read_bytes()
+                if hashlib.sha256(trusted_content).hexdigest() != grader_files[member]:
+                    raise ValueError("Repository verifier hash mismatch")
+                destination.write_bytes(trusted_content)
         review = export_path / "review.json"
         command = [sys.executable, str(grader / "run.py"), "score", str(root)]
         if review.exists():
@@ -276,6 +322,7 @@ def main():
     commands.add_parser("validate")
     preparation = commands.add_parser("prepare")
     preparation.add_argument("run_id")
+    preparation.add_argument("--suite", choices=("file-and-para-24", "writing-voice"), default="file-and-para-24")
     execution = commands.add_parser("execute")
     execution.add_argument("run_root", type=Path)
     execution.add_argument("--command-json", required=True)
@@ -297,7 +344,7 @@ def main():
         print(json.dumps(result, indent=2))
         return 0 if result["passed"] else 1
     elif args.command == "prepare":
-        prepare(repository, args.run_id)
+        prepare(repository, args.run_id, args.suite)
     elif args.command == "execute":
         return execute(args.run_root, json.loads(args.command_json), args.timeout)
     elif args.command == "score":

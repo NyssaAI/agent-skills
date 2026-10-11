@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "suite_revision": "0.6.1-filing-history",
+  "suite_revision": "0.6.4-configuration-scopes",
   "rows": [
     {
       "suite": "file-and-para-24",
@@ -104,7 +104,7 @@
       "platform": "windows-x86_64",
       "config": "synthetic-full-plugin",
       "required": true,
-      "remaining": "Not run: after lint/pack/archive validation, execute six synthetic performance scenarios and four natural activation controls with independent artifact review. Add an export verifier before certifying this new suite; subjective voice resemblance and native host delivery remain unverified."
+      "remaining": "Run existing six writing-voice scenarios, four activation controls and five configuration-scope scenarios under both installation routes with independent artifact review. Observable outcomes replay against trusted repository definitions; do not claim native startup delivery."
     }
   ]
 }

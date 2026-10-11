@@ -1,6 +1,6 @@
 # NyssaAI Agent Skills
 
-Version: **0.6.3** (candidate; see [latest evaluation](evals/LATEST.md)).
+Version: **0.6.4** (candidate; see [latest evaluation](evals/LATEST.md)).
 Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
 
 Eight workflow skills share one maintained source tree, a brief
@@ -17,7 +17,7 @@ Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` 
 | [manage-vault-lifecycle](skills/manage-vault-lifecycle/SKILL.md) | Archive or reactivate vault items and intact project bundles, preserving history and lifecycle metadata. |
 | [import-vault-source-records](skills/import-vault-source-records/SKILL.md) | Ingest supplied email/calendar records, resolve versions and dates, and preserve native source evidence. |
 | [revise-vault-documents](skills/revise-vault-documents/SKILL.md) | Reconcile notes and propose or apply protected revisions |
-| [maintain-writing-voice](skills/maintain-writing-voice/SKILL.md) | Establish, inspect, and refine a project-local writing voice from authorized samples and preferences |
+| [maintain-writing-voice](skills/maintain-writing-voice/SKILL.md) | Establish, inspect, and refine a user or project writing voice from authorized samples and preferences |
 | [write-in-user-voice](skills/write-in-user-voice/SKILL.md) | Draft and revise material the user will send or publish as themselves, preserving meaning and task constraints |
 
 `para-vault` is retired. Its capabilities now live in the five focused vault
@@ -108,7 +108,7 @@ history belongs under the private, Git-ignored `docs/`.
 ## Project configuration and writing voice
 
 Plugin-owned configuration and persistent state belongs under
-`<project-root>/.nyssa-ai/<plugin-name>/`, outside installed code. Resolve the
+`<user-home>/.nyssa-ai/<plugin-name>/` or `<project-root>/.nyssa-ai/<plugin-name>/`, outside installed code. Resolve the
 explicit project/workspace root first, then the applicable repository root;
 for non-Git workspaces use the established working root. Nested directories
 share that root. Do not silently choose the home directory or create competing roots.
@@ -127,3 +127,5 @@ Sharing profiles requires an explicit decision. Packages exclude user configurat
 state, and scratch data. Ordinary drafting reads profiles without changing them.
 
 [MIT License](LICENSE) Â© 2026 NyssaAI.
+
+Writing voice selects one complete bundle: explicit selection, project override, then user fallback. VOICE, STYLE and examples never merge across scopes. Existing malformed bundles report a diagnostic. Both installation scopes read both preference scopes. New setup defaults to an established project, or user scope without a project; “for all projects” writes user scope. Ordinary drafts leave preferences unchanged. Legacy `.nyssaai` and `.nyssa` aliases remain discoverable without automatic migration. See [storage](skills/maintain-writing-voice/references/storage.md) for exact precedence, privacy and scoped writes.

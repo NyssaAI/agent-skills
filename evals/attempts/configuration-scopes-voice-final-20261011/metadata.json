@@ -1,0 +1,15 @@
+{
+  "key": [
+    "writing-voice",
+    "Codex",
+    "windows-x86_64",
+    "synthetic-full-plugin"
+  ],
+  "state": "incomplete",
+  "started_at": "2026-10-11T21:30:04.399446+00:00",
+  "completed_at": "2026-10-11T21:33:47.768359+00:00",
+  "stage": "automatic-grading",
+  "diagnostic": "All15 automatic checks passed; independent activation/artifact review pending. Candidate becomes historical after correcting unrelated C05 grader.",
+  "next_check": "Complete grader review and fresh final-candidate execution with independent artifact review.",
+  "candidate_sha256": "b0a14972d61b995c52f7310fe0b61b8b4c277dabf0d6fb9b46cf79e4821ae2ae"
+}

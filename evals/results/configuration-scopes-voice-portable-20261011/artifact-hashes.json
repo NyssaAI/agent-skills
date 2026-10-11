@@ -1,0 +1,17 @@
+{
+  "activation-controls.zip": "0ad9d35cfa9fd9a42065caadf7247c0fd11b8ad9c60c8fd6831639891db7c30e",
+  "after-files.json": "026e7c2e7e45de2fcf664785981c4a87e421c86492a36051c1b35611a3f668d5",
+  "candidate.zip": "1fa0ffe090eed4f7067de59bda23dab7bfd160cd5464bd2980d7e8a2d5bc7f33",
+  "frozen-evaluation.json": "fbb5c0341d1afcd7cfcecaf14f2cf9b37fbbabfdbf3b8caef30bf976324bcb25",
+  "grader-files.json": "8defe14ca33d75a1a6c2a46bd8a09ef61eed919b67461bc68753abbdea67cf92",
+  "grader.zip": "2fef2e08dd41614898a3906825460a99dfc0993bfdc095fbaf64048875d1975d",
+  "invocation.json": "4b0f1a86eb32cf6ed6652400318b79ac2b81a51be4aa5cb6984ca1621288b3ed",
+  "manifest.json": "6658e37761e157b0b0086f223a058f0c3444fa9c16fbb93884753245de2fed68",
+  "metadata.json": "5f538faa7734b2b0da70a46959fb7fcb65378b536e9d5720f3b9cf55585a0433",
+  "observations.json": "6170b0876454e4436846ed2d5c6c42c75802f496db36199f487195a28c038bcb",
+  "review.json": "1e43f4f2f62646d9dcea23dc34991fadca166ea7eea3b3944a2538acd5b5148d",
+  "score.json": "60d5814e3746cafa925f8f4a7b1a9032f9652f91b835c5e04976d6fb95bc7067",
+  "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout.txt": "c44c11e477540ea3e91673812cd74565d05215966acec5c987cacee0e76812bc",
+  "suite.json": "2eb489637a35e62e3a05267ab8fb16b9e60321e7f2ee915370d613411ae70d77"
+}

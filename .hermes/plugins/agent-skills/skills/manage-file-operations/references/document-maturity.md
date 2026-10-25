@@ -1,5 +1,8 @@
 # Templates and document maturity
 
+> [!IMPORTANT] Scope Directive
+> This reference defines document maturity inheritance for templates and derived documents. It does NOT define full YAML frontmatter schemas (owned by `para-vault/references/frontmatter-schemas.md`).
+
 Use `document-maturity` for a template's own maturity; do not add a separate
 `template-maturity` field. Supported values are `raw` (captured and unchecked),
 `draft` (incomplete or provisional), `reviewed` (checked for clarity, completeness

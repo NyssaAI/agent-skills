@@ -268,7 +268,7 @@ def verify(export_path, repository):
         metadata = read_json(metadata_path) if metadata_path.exists() else None
         if metadata and file_hash(export_path / "suite.json") != metadata["suite_sha256"]:
             raise ValueError("Frozen suite digest differs from revision identity")
-        definitions = read_json(Path(repository) / "evals/verifiers/revisions.json")["revisions"] if metadata else []
+        definitions = read_json(Path(repository) / "evals/suites/verifiers/revisions.json")["revisions"] if metadata else []
         definition = next((item for item in definitions if
                            item["suite"] == metadata["key"][0] and
                            item["revision"] == metadata["suite_revision"] and
@@ -292,7 +292,7 @@ def verify(export_path, repository):
                           "grader_directory": "."}
         if grader_files != definition["grader_files"]:
             raise ValueError("Frozen grader differs from trusted revision")
-        trusted = (Path(repository) / "evals/verifiers" / definition["grader_directory"]) if metadata and definition["grader_directory"] != "." else Path(__file__).resolve().parent
+        trusted = (Path(repository) / "evals/suites/verifiers" / definition["grader_directory"]) if metadata and definition["grader_directory"] != "." else Path(__file__).resolve().parent
         with zipfile.ZipFile(export_path / "grader.zip") as archive:
             if set(archive.namelist()) != set(grader_files):
                 raise ValueError("Frozen grader file inventory differs from export")

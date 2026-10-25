@@ -1,0 +1,14 @@
+- id: reject-filesystem-move-outside-vault
+  prompt: "Safely move files from downloads to temp folder and resolve any naming collisions."
+  expected_skill: manage-file-operations
+  type: out-of-scope
+
+- id: reject-writing-voice-update
+  prompt: "Update my writing voice profile based on these recent sent messages."
+  expected_skill: write-like-me
+  type: out-of-scope
+
+- id: reject-git-commit
+  prompt: "Create a git commit with a clear message summarizing our changes."
+  expected_skill: null
+  type: out-of-scope

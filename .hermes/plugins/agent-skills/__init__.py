@@ -13,9 +13,7 @@ VOICE_BEGIN = "<!-- agent-skills:writing-voice:begin -->"
 VOICE_END = "<!-- agent-skills:writing-voice:end -->"
 SKILL_HINT = (
     "Use skill_view to load the relevant agent-skills workflow: "
-    "manage-file-operations, file-para-content, maintain-vault-navigation, "
-    "manage-vault-lifecycle, import-vault-source-records, revise-vault-documents, "
-    "maintain-writing-voice, or write-in-user-voice."
+    "manage-file-operations, para-vault, or write-like-me."
 )
 
 
@@ -48,11 +46,6 @@ def foundation(session_info):
     return "\n\n".join(sections)
 
 
-def register(ctx):
-    ctx.register_system_prompt_section(
-        "agent-skills.file-management", foundation, position="after_memory", max_chars=6000
-    )
-    for skill in sorted(SKILLS.iterdir()):
-        entrypoint = skill / "SKILL.md"
-        if skill.is_dir() and entrypoint.is_file():
-            ctx.register_skill(skill.name, entrypoint)
+def register(agent):
+    """Hermes Agent plugin entry point."""
+    agent.register_context_provider("agent_skills_foundation", foundation)

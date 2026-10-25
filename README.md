@@ -3,7 +3,7 @@
 Version: **0.6.4** (candidate; see [latest evaluation](evals/LATEST.md)).
 Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
 
-Eight workflow skills share one maintained source tree, a brief
+Three foundational skills share one maintained source tree, a brief
 [startup foundation](skills/manage-file-operations/core.md), and a
 [writing voice convention](rules/writing-voice.md). Its PARA section
 applies only to recognized vaults; detailed guidance loads on demand.
@@ -12,13 +12,8 @@ Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` 
 | Skill | Workflow |
 | --- | --- |
 | [manage-file-operations](skills/manage-file-operations/SKILL.md) | Safely move, rename, copy, import, or archive existing content, resolve collisions, and resume interrupted operations. Its `core.md` owns the shared startup foundation; deferred conventions remain in its references. |
-| [file-para-content](skills/file-para-content/SKILL.md) | Classify and file vault content, process inbox captures, or create a project and its index |
-| [maintain-vault-navigation](skills/maintain-vault-navigation/SKILL.md) | Review and repair vault indexes, MOCs, registers, and links |
-| [manage-vault-lifecycle](skills/manage-vault-lifecycle/SKILL.md) | Archive or reactivate vault items and intact project bundles, preserving history and lifecycle metadata. |
-| [import-vault-source-records](skills/import-vault-source-records/SKILL.md) | Ingest supplied email/calendar records, resolve versions and dates, and preserve native source evidence. |
-| [revise-vault-documents](skills/revise-vault-documents/SKILL.md) | Reconcile notes and propose or apply protected revisions |
-| [maintain-writing-voice](skills/maintain-writing-voice/SKILL.md) | Establish, inspect, and refine a user or project writing voice from authorized samples and preferences |
-| [write-in-user-voice](skills/write-in-user-voice/SKILL.md) | Draft and revise material the user will send or publish as themselves, preserving meaning and task constraints |
+| [para-vault](skills/para-vault/SKILL.md) | Manage a PARA vault: classify and file captures, process inboxes, reconcile and revise documents, review navigation and links, archive or reactivate projects, and ingest email/calendar records. |
+| [write-like-me](skills/write-like-me/SKILL.md) | Draft or rewrite material in the user's authentic writing voice, and establish, inspect, calibrate, or update writing voice profiles. |
 
 `para-vault` is retired. Its capabilities now live in the five focused vault
 workflows above. Shared guidance stays with one owning skill and is linked by

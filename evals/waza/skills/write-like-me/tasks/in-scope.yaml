@@ -1,0 +1,19 @@
+- id: draft-email-in-voice
+  prompt: "Draft this email to the executive sponsor in my authentic voice and tone."
+  expected_skill: write-like-me
+  type: in-scope
+
+- id: rewrite-message-like-me
+  prompt: "Rewrite this status update message so it sounds like me before I post it to Slack."
+  expected_skill: write-like-me
+  type: in-scope
+
+- id: update-voice-profile
+  prompt: "Learn my writing style from these three blog posts and update my writing voice profile."
+  expected_skill: write-like-me
+  type: in-scope
+
+- id: inspect-writing-voice
+  prompt: "Inspect my writing voice profile and show me the active tone calibration and anti-patterns."
+  expected_skill: write-like-me
+  type: in-scope

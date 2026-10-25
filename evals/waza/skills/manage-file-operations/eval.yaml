@@ -1,0 +1,18 @@
+name: manage-file-operations-eval
+description: Fast local trigger checks for the manage-file-operations skill.
+skill: manage-file-operations
+schemaVersion: "1.4"
+version: "0.6.4"
+config:
+  trials_per_task: 1
+  timeout_seconds: 10
+  parallel: false
+  executor: mock
+  model: mock
+metrics:
+  - name: trigger_quality
+    weight: 1.0
+    threshold: 1.0
+    description: Does manage-file-operations trigger for safe filesystem requests without triggering on PARA classification or voice drafting?
+tasks:
+  - "tasks/*.yaml"

@@ -1,3 +1,0 @@
-interface:
-  display_name: "Manage Vault Lifecycle"
-  short_description: "Archive and reactivate vault content safely"

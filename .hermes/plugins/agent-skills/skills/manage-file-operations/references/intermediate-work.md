@@ -1,5 +1,8 @@
 # Intermediate work details
 
+> [!IMPORTANT] Scope Directive
+> This reference defines intermediate workspace conventions (`.temp/`), sync service exclusions (Git, Syncthing), and cleanup rules for disposable task artifacts. It does NOT define general move mechanics (owned by `safe-operations.md`).
+
 An AI working root, whether a project, folder, or other workspace, uses a
 `.temp/` directory for intermediate output. Create it at that root when needed
 if it does not exist. Keep scripts, exports, drafts, and other disposable work

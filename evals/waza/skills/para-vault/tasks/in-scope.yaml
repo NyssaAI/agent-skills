@@ -1,0 +1,24 @@
+- id: file-para-capture
+  prompt: "File this new capture note into my PARA vault under the active Project for product launch."
+  expected_skill: para-vault
+  type: in-scope
+
+- id: process-vault-inbox
+  prompt: "Please process my vault inbox and triage these 5 fleeting notes to their respective PARA locations."
+  expected_skill: para-vault
+  type: in-scope
+
+- id: archive-completed-project
+  prompt: "We finished the website redesign project. Can you archive this project in my PARA vault?"
+  expected_skill: para-vault
+  type: in-scope
+
+- id: check-vault-navigation
+  prompt: "Check vault navigation and repair any broken MOC links in 00-Index."
+  expected_skill: para-vault
+  type: in-scope
+
+- id: import-calendar-email-records
+  prompt: "Import calendar and email records into vault history under 04-Archive/2026-Q1."
+  expected_skill: para-vault
+  type: in-scope

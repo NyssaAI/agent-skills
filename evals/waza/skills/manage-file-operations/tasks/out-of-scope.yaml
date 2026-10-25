@@ -1,0 +1,14 @@
+- id: reject-para-vault-filing
+  prompt: "File this new capture note into my PARA vault under Resources/Programming."
+  expected_skill: para-vault
+  type: out-of-scope
+
+- id: reject-writing-voice-drafting
+  prompt: "Draft this email response to our client in my authentic voice and tone."
+  expected_skill: write-like-me
+  type: out-of-scope
+
+- id: reject-code-refactoring
+  prompt: "Refactor the authentication middleware in auth.ts to extract token verification into a helper function."
+  expected_skill: null
+  type: out-of-scope

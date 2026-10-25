@@ -1,0 +1,18 @@
+name: write-like-me-eval
+description: Fast local trigger checks for the write-like-me skill.
+skill: write-like-me
+schemaVersion: "1.4"
+version: "0.6.4"
+config:
+  trials_per_task: 1
+  timeout_seconds: 10
+  parallel: false
+  executor: mock
+  model: mock
+metrics:
+  - name: trigger_quality
+    weight: 1.0
+    threshold: 1.0
+    description: Does write-like-me trigger for first-person authentic drafting, style calibration, and voice profile inspection without capturing PARA filing or raw file moves?
+tasks:
+  - "tasks/*.yaml"

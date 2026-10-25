@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "revisions": [
+    {
+      "suite": "file-and-para-24",
+      "revision": "0.6.0",
+      "suite_sha256": "9d0cc4fe1382b49843a9bfacfad1ef0e4cf2b6479450f70e495ddf30583c1de3",
+      "grader_directory": "file-and-para-24-0.6.0",
+      "grader_files": {
+        "calibrate.py": "22bc166683aeea302867a461e2da786b934978e122e595dbac740782aed17bd4",
+        "cases.py": "466858e3a7e5cee5cf9d7733adbfd2e00ded40ceda7524cf9fa11ddc0911363c",
+        "plugin_checks.py": "761c5ef24d31f6472b9d32b3d49b27494dfbe38e797347296456d34e40133b4e",
+        "report.py": "c51fe4e651d59fd981d5ee3e037230c630a1ab15c3f380a1e2f463821b20507c",
+        "run.py": "15ee4ad135f07c94647f27b2eb26c080a8a96488db0bf0951b992d2ce3221827",
+        "scoring.py": "68a9e5184749fb36560daeaa74786f08cccfabc528182602a78dcd876c67fa69",
+        "requirements.txt": "913746461911d5bd20acae178b7688401865975615b9d0ae4ea16609ffde66f5"
+      }
+    },
+    {
+      "suite": "startup-and-discovery",
+      "revision": "0.6.1-filing-history",
+      "suite_sha256": "3b38b5525b8046ee8a589edb9b3b0d6f2d794e5948c5f7bf752c7423efdbbddd",
+      "case_ids": [
+        "H01",
+        "H02",
+        "H03"
+      ]
+    },
+    {
+      "suite": "file-and-para-24",
+      "revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "65eca8f79e145f20f0b13932feb3ae2d522fb7653c9f9f5441639ad19425e8d7",
+      "grader_directory": "configuration-scopes",
+      "grader_files": {
+        "calibrate.py": "ef356944e7fda7d4439d8a0d3a1c0aa0b33a694de8dffb90a6617f5a21c42d79",
+        "cases.py": "1f6423b60735a983f47aa47640f38f6f045e6599e7f1949d6b02c8c27d8f9672",
+        "configuration_cases.py": "215b2b50c0159a8b2d0583ec1f2b1a04edcaa49ddbe0a201f3e1f4fa19ce833c",
+        "plugin_checks.py": "9fffbeb4e07f189bdb93c31f4470298a1a6d89977189970215f630a8ffb7f1e0",
+        "report.py": "4bd43e5a65828fb9fd4a9b22653c591785d908237cd2abfd9cd958c4d1d8fbda",
+        "run.py": "77bfa975c5b15dffd935d33893ef69a2671c71309b9052187099de48ac87fe06",
+        "scoring.py": "5b8dd4c9653bfc451325e22edc1bb335aca183e93f552f8726068f88c99ddb24",
+        "requirements.txt": "a48a5612e5e16c2b88d215b5c947ef0a2fe0572b53d7646f652a49556004608b"
+      }
+    },
+    {
+      "suite": "writing-voice",
+      "revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "2eb489637a35e62e3a05267ab8fb16b9e60321e7f2ee915370d613411ae70d77",
+      "grader_directory": "configuration-scopes",
+      "grader_files": {
+        "calibrate.py": "ef356944e7fda7d4439d8a0d3a1c0aa0b33a694de8dffb90a6617f5a21c42d79",
+        "cases.py": "1f6423b60735a983f47aa47640f38f6f045e6599e7f1949d6b02c8c27d8f9672",
+        "configuration_cases.py": "215b2b50c0159a8b2d0583ec1f2b1a04edcaa49ddbe0a201f3e1f4fa19ce833c",
+        "plugin_checks.py": "9fffbeb4e07f189bdb93c31f4470298a1a6d89977189970215f630a8ffb7f1e0",
+        "report.py": "4bd43e5a65828fb9fd4a9b22653c591785d908237cd2abfd9cd958c4d1d8fbda",
+        "run.py": "77bfa975c5b15dffd935d33893ef69a2671c71309b9052187099de48ac87fe06",
+        "scoring.py": "5b8dd4c9653bfc451325e22edc1bb335aca183e93f552f8726068f88c99ddb24",
+        "requirements.txt": "a48a5612e5e16c2b88d215b5c947ef0a2fe0572b53d7646f652a49556004608b"
+      }
+    }
+  ]
+}

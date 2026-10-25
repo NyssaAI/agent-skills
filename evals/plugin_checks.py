@@ -14,11 +14,12 @@ def validate_plugin(repository):
     findings = []
     checks = 0
     skills = sorted((repository / "skills").glob("*/SKILL.md"))
-    required_voice_skills = {"maintain-writing-voice", "write-in-user-voice"}
+    skill_names = {path.parent.name for path in skills}
     checks += 1
-    missing_voice_skills = required_voice_skills - {path.parent.name for path in skills}
-    if missing_voice_skills:
-        findings.append(f"Missing writing voice skills: {sorted(missing_voice_skills)}")
+    has_consolidated_voice = "write-like-me" in skill_names
+    has_legacy_voice = {"maintain-writing-voice", "write-in-user-voice"}.issubset(skill_names)
+    if not (has_consolidated_voice or has_legacy_voice):
+        findings.append("Missing writing voice skills: expected 'write-like-me' or legacy pair")
     if not skills:
         findings.append("No skill entrypoints found")
     for path in skills:

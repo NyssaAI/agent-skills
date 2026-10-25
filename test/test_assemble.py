@@ -21,7 +21,7 @@ class AssemblyTests(unittest.TestCase):
     def test_voice_rule_reaches_both_generated_packages(self):
         for package in (assemble.expected_files(), assemble.hermes_expected_files()):
             self.assertIn("rules/writing-voice.md", package)
-            self.assertIn(b"write-in-user-voice", package["rules/writing-voice.md"])
+            self.assertIn(b"write-like-me", package["rules/writing-voice.md"])
 
     def test_private_state_and_scratch_cannot_enter_skill_package(self):
         with tempfile.TemporaryDirectory(dir=ROOT / ".temp") as directory:
@@ -69,7 +69,7 @@ class AssemblyTests(unittest.TestCase):
             (project / "AGENTS.md").write_text(assemble.startup_text(), encoding="utf-8")
             prompt = foundation({"cwd": str(nested)})
             self.assertNotIn(voice, prompt)
-            self.assertIn("write-in-user-voice", prompt)
+            self.assertIn("write-like-me", prompt)
 
     def test_generated_provenance_hash_is_stable_across_line_endings(self):
         lf = canonical_hash_content(b"one\ntwo\n")

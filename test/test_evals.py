@@ -512,7 +512,7 @@ class EvidenceExportTests(unittest.TestCase):
             score(run_root, export_path=export)
             write_json(export / "metadata.json", {"key": ["file-and-para-24"],
                        "suite_revision": "untrusted", "suite_sha256": file_hash(export / "suite.json")})
-            definitions = self.root / "evals/verifiers"
+            definitions = self.root / "evals/suites/verifiers"
             definitions.mkdir(parents=True)
             write_json(definitions / "revisions.json", {"revisions": []})
             hashes = inventory(export)

@@ -1,0 +1,14 @@
+- id: reject-para-vault-inbox
+  prompt: "Process vault inbox and move unclassified notes to appropriate Areas."
+  expected_skill: para-vault
+  type: out-of-scope
+
+- id: reject-rename-folder
+  prompt: "Safely rename folder projects/old-app to projects/legacy-app and fix broken symlinks."
+  expected_skill: manage-file-operations
+  type: out-of-scope
+
+- id: reject-posthog-survey
+  prompt: "Create a PostHog NPS survey targeting users who signed up in the last 7 days."
+  expected_skill: null
+  type: out-of-scope

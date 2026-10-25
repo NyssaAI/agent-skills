@@ -1,0 +1,14 @@
+- id: safe-move-files
+  prompt: "Can you safely move these raw report files into the archive folder and update any references?"
+  expected_skill: manage-file-operations
+  type: in-scope
+
+- id: rename-folder-collision
+  prompt: "I need to rename the old client folder, but there is already a folder with that name. Please resolve the destination collision non-destructively."
+  expected_skill: manage-file-operations
+  type: in-scope
+
+- id: resume-interrupted-operation
+  prompt: "Our directory copy process died halfway through. Can you resume the interrupted file operation and verify the integrity of the moved content?"
+  expected_skill: manage-file-operations
+  type: in-scope

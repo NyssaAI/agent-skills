@@ -1,5 +1,8 @@
 # Naming details
 
+> [!IMPORTANT] Scope Directive
+> This reference defines slug conventions, date-prefix rules (`YYYY.MM.DD-descriptive-slug`), and extension preservation standards for workspace files and folders. It does NOT define PARA vault folder hierarchies (owned by `para-vault/references/folder-conventions.md`).
+
 Use lowercase kebab-case slugs for new names unless the destination has an
 established convention. Preserve existing names and file extensions unless a
 rename is part of the task.

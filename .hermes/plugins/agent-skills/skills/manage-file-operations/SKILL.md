@@ -1,11 +1,18 @@
 ---
 name: manage-file-operations
-description: "Safely move, rename, copy, import, or archive files and folders within an existing organization. Use when changing file locations or names, resolving destination collisions, or resuming interrupted operations. Preserve content, repair affected references, and verify completion."
+description: >-
+  Use this skill when the user asks to "safely move files", "rename folder", "copy directory",
+  "archive files", "resolve destination collision", or "resume interrupted file operation".
+  Covers safe filesystem operations, reference repair, and non-destructive moves.
+  Do NOT use this skill for PARA vault classification (use `para-vault`) or drafting text (use `write-like-me`).
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # Manage File Operations
+
+> [!IMPORTANT] Scope Directive
+> This skill defines safe filesystem operations (move, rename, copy, import, archive), collision handling, reference repair, and recovery for existing workspace files and folders. It does NOT own PARA domain classification (delegated to `para-vault`) or writing voice emulation (delegated to `write-like-me`).
 
 Complete the requested operation while preserving content and navigation. Follow
 the user's instructions and applicable local conventions. If the host has not
@@ -19,11 +26,10 @@ Preserve names and extensions unless renaming is part of the request. When a
 requested name depends on dates or naming exceptions, read the existing
 [naming guidance](references/naming.md).
 
-For a recognized PARA vault, read [shared vault conventions](../file-para-content/references/vault-conventions.md)
-and, if placement is undecided, [classification](../file-para-content/references/classification.md).
-For vault moves, renames, and archives, apply the [navigation checklist](../maintain-vault-navigation/references/navigation.md#move-checklist).
-For archive/reactivation semantics, compose with [manage-vault-lifecycle](../manage-vault-lifecycle/SKILL.md).
-For email/calendar import semantics, compose with [import-vault-source-records](../import-vault-source-records/SKILL.md).
+For a recognized PARA vault, read [shared vault conventions](../para-vault/references/vault-conventions.md)
+and, if placement is undecided, [classification](../para-vault/references/classification.md).
+For vault moves, renames, and archives, apply the [navigation checklist](../para-vault/references/navigation.md#move-checklist).
+For vault lifecycle and import semantics, compose with [para-vault](../para-vault/SKILL.md).
 Do not impose PARA on other workspaces or load unrelated vault workflows.
 
 ## 2. Inspect identity and existing work
@@ -76,3 +82,13 @@ State the completed operations and final locations, including any collision
 renames or reuse of existing items. Identify unresolved content or reference
 issues and retained recovery copies that need attention. Report only the
 verification actually performed.
+
+---
+
+## Verification
+
+Before reporting completion of any file operation task:
+- [ ] Verify destination files exist, are readable, and match expected contents or source hashes.
+- [ ] For moves and renames, confirm that source items are only removed after destination verification succeeds.
+- [ ] Confirm all affected relative links, wikilinks, and parent index files have been repaired.
+- [ ] Confirm no unrelated files or directories were modified or removed.

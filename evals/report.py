@@ -154,7 +154,7 @@ def valid_completed(path: Path, data: dict) -> None:
         revision = data.get("suite_revision")
         matrix_revision = read_json(EVALS / "matrix.json")["suite_revision"]
         expected_digest = suite_sha256(suite) if revision == matrix_revision else None
-        registry = EVALS / "verifiers/revisions.json"
+        registry = EVALS / "suites/verifiers/revisions.json"
         if registry.exists():
             historical = next((item for item in read_json(registry)["revisions"] if
                                item["suite"] == suite and item["revision"] == revision), None)

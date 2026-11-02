@@ -2,5 +2,5 @@
   "format": "antigravity-plugin",
   "source": "scripts/assemble.py",
   "source_sha256": "17d28d8956a743da0c364ddcb8c30b83368890ee605421f97756b3d9d9c2b6a1",
-  "version": "0.7.0"
+  "version": "0.7.1"
 }

@@ -1,7 +1,7 @@
 # Latest plugin evaluation
 
 Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.
-Candidate SHA-256: `bfd6903a620f2b24937cfab688df012b0928f90ca7fe2b5f6e5d62784c62151f`. Suite revision: `0.6.4-configuration-scopes`.
+Candidate SHA-256: `9ad3889f442db6428c2dd1f2051a02be5fc5ae75122a3e05b780cb5767d74dc5`. Suite revision: `0.6.4-configuration-scopes`.
 
 A missing or failing required row blocks release. A consistent report does not imply release readiness.
 

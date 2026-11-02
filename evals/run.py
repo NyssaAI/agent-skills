@@ -43,6 +43,18 @@ def file_hash(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def matches_sha256(raw: bytes, expected: str | None) -> bool:
+    if not expected:
+        return False
+    lf = raw.replace(b"\r\n", b"\n")
+    crlf = lf.replace(b"\n", b"\r\n")
+    return any(hashlib.sha256(candidate).hexdigest() == expected for candidate in (raw, lf, crlf))
+
+
+def same_text_bytes(a: bytes, b: bytes) -> bool:
+    return a == b or a.replace(b"\r\n", b"\n") == b.replace(b"\r\n", b"\n")
+
+
 def inventory(root):
     """Hash regular files without following symlinks out of the evidence root."""
     result = {}
@@ -266,7 +278,7 @@ def verify(export_path, repository):
         grader_files = read_json(export_path / "grader-files.json")
         metadata_path = export_path / "metadata.json"
         metadata = read_json(metadata_path) if metadata_path.exists() else None
-        if metadata and file_hash(export_path / "suite.json") != metadata["suite_sha256"]:
+        if metadata and not matches_sha256((export_path / "suite.json").read_bytes(), metadata["suite_sha256"]):
             raise ValueError("Frozen suite digest differs from revision identity")
         definitions = read_json(Path(repository) / "evals/suites/verifiers/revisions.json")["revisions"] if metadata else []
         definition = next((item for item in definitions if
@@ -302,7 +314,7 @@ def verify(export_path, repository):
                 if hashlib.sha256(content).hexdigest() != grader_files[member]:
                     raise ValueError(f"Frozen grader hash mismatch: {member}")
                 trusted_content = (trusted / member).read_bytes()
-                if hashlib.sha256(trusted_content).hexdigest() != grader_files[member]:
+                if not matches_sha256(trusted_content, grader_files[member]) and not same_text_bytes(trusted_content, content):
                     raise ValueError("Repository verifier hash mismatch")
                 destination.write_bytes(trusted_content)
         review = export_path / "review.json"

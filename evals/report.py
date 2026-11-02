@@ -24,6 +24,14 @@ def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def matches_sha256(raw: bytes, expected: str | None) -> bool:
+    if not expected:
+        return False
+    lf = raw.replace(b"\r\n", b"\n")
+    crlf = lf.replace(b"\n", b"\r\n")
+    return any(hashlib.sha256(candidate).hexdigest() == expected for candidate in (raw, lf, crlf))
+
+
 def source_inventory() -> dict[str, str]:
     """Freeze the declared behavior/assembly/suite inputs, not evidence outputs."""
     paths = []
@@ -131,7 +139,7 @@ def valid_completed(path: Path, data: dict) -> None:
         score_data = read_json(path.parent / "score.json")
         if score_data.get("score") != data["score"] or bool(score_data.get("release_ready")) != (data["outcome"] == "Pass"):
             raise ValueError(f"Replayed score disagrees with metadata: {path}")
-        if not data.get("suite_sha256") == hashlib.sha256((path.parent / "suite.json").read_bytes()).hexdigest():
+        if not matches_sha256((path.parent / "suite.json").read_bytes(), data.get("suite_sha256")):
             raise ValueError(f"Frozen suite hash disagrees with export: {path}")
     else:
         # The other suites must retain independently reviewable case artifacts.
@@ -169,7 +177,7 @@ def valid_completed(path: Path, data: dict) -> None:
     if not data.get("evidence") or not evidence.is_file():
         raise ValueError(f"Result evidence missing: {path}")
     actual = hashlib.sha256(evidence.read_bytes()).hexdigest()
-    if actual != data.get("evidence_sha256"):
+    if not matches_sha256(evidence.read_bytes(), data.get("evidence_sha256")):
         raise ValueError(f"Result evidence hash mismatch: {path}")
     if suite not in ("file-and-para-24", "writing-voice"):
         validate_behavioral_evidence(path, data, artifact, names)

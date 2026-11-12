@@ -1,0 +1,47 @@
+# Agent Skills Ubiquitous Language Glossary
+
+> [!IMPORTANT] Scope Directive
+> Authoritative bounded-context lexicon for `agent-skills` across foundational file operations (`manage-file-operations`), PARA knowledge & work-record vault management (`para-vault`, aligned to `daily-tasks`), and authentic writing voice emulation (`write-like-me`). All skills, workflows, references, rules, `harness-adapter` manifests, tests, and evaluations in this repository MUST use these canonical terms and reject banned or retired synonyms.
+
+---
+
+## 1. Canonical 5-Root Taxonomy & Configuration Architecture
+
+| Canonical Term | Code / JSON / Path Symbol | Banned / Retired Synonyms | Definition & Ownership Boundary |
+| :--- | :--- | :--- | :--- |
+| **`user_home`** | `user_home` / `userHome` (`~`) | `<user-home>`, `config_dir` (when referring to `~`) | User OS home directory (`~`). Owns `~/.nyssa-ai/config-manifest.json`, user-level `NyssaAI.Configuration` namespace files (`~/.nyssa-ai/<app>/<namespace>.json`), and fallback `Writing Voice Profile` bundles (`~/.nyssa-ai/agent-skills/writing-voice/`). **Configuration Precedence #1** for `NyssaAI.Configuration`. |
+| **`repo_root`** | `repo_root` / `repoRoot` | `project_root`, `<project-root>`, `<target-repo>`, `targetRoot` | Git software repository root (e.g., `/srv/repos/NyssaAI/agent-skills`). Owns `AGENTS.md`, tracked `docs/GLOSSARY.md`, single root `.temp/`, and repo-scoped configuration (`<repo_root>/.nyssa-ai/<plugin>/`). **Configuration Precedence #2** for `NyssaAI.Configuration`; overrides `user_home` when resolving an atomic `Writing Voice Profile` bundle for work inside that repository. Never hosts self-loaded `.agents/`, `.hermes/`, or `artifacts/` trees. |
+| **`vault_root`** | `vault_root` / `vaultRoot` | `vault root`, `Workspace` / `workspace_root` (when referring to a vault), `VaultRepo`, `ProjectWorkspace`, `RepoDir` | User or shared PARA knowledge and work-record vault (e.g., `/srv/vaults/<vault>`). Default work-record mappings align with `daily-tasks`: `1-projects/` (`projectsRoot`) and `2-areas/daily-plans/` (`dailyPlansRelative`). Contains **zero** `.nyssa-ai/` configuration, secrets, or machine-local runtime state; only `vault_root/.temp/` is permitted for disposable scratch. |
+| **`runtime_root`** | `runtime_root` / `runtimeRoot` | `workspace_root`, `working workspace root`, `agent persona workspace`, `state_root`, `${PLUGIN_DATA}` | Active agent or process runtime execution and mutable state directory, resolved in order: (1) `--runtime-root` $\rightarrow$ (2) `NYSSA_RUNTIME_ROOT` $\rightarrow$ (3) agent persona `cwd` when containing `SOUL.md` + `IDENTITY.md` (`/srv/agent-work/<harness>/<agent>`) $\rightarrow$ (4) `NyssaAI.Configuration` `runtimeRoot` or default `~/.nyssa-ai/<plugin>/runtime/` (`user_home`) / `<repo_root>/.nyssa-ai/<plugin>/runtime/` (`repo_root`, gitignored via `.nyssa-ai/*/runtime/`). Owns mutable operational state and runtime `.temp/` scratch. |
+| **`plugin_root`** | `plugin_root` / `pluginRoot` / `PLUGIN_ROOT` | `bundle` | Read-only installed or source plugin directory (`plugin.json`, `skills/`, `rules/`, `hooks/`, `harness-adapters/`, `scripts/`). Never receives user configuration, `.nyssa-ai/` runtime writes, or `.temp/` scratch output. |
+
+> [!NOTE] Configuration Directory Invariant
+> `NyssaAI.Configuration` resolves settings strictly through `.nyssa-ai/` in order **`user_home` $\rightarrow$ `repo_root`**. Legacy `.nyssaai/` and `.nyssa/` directory aliases are retired and never read as fallback configuration roots or written.
+
+---
+
+## 2. Plugin Architecture, Topology & Harness Integration
+
+| Canonical Term | Code / Path Representation | Banned / Retired Synonyms | Definition & Ownership Boundary |
+| :--- | :--- | :--- | :--- |
+| **`Sibling Facade Skills`** | `skills/para-vault/SKILL.md`, `skills/write-like-me/SKILL.md` (+ peer `skills/manage-file-operations/SKILL.md`) | — | Architectural topology in which peer domain facades (`para-vault` and `write-like-me`) each own progressive `workflows/*.md` and `references/*.md` alongside foundational peer skills (`manage-file-operations`). |
+| **`harness-adapter`** | `harness-adapters/<harness>/`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.tessl-plugin/plugin.json`, `gemini-extension.json`, `hooks/hooks.json`, `rules/*.md` | `Host Adapter`, `Host Harness`, `Runtime Shim`, `adapters/` | Host-facing descriptors, UI metadata (`harness-adapters/codex/<skill>/openai.yaml`), and registration glue (`harness-adapters/hermes/plugin.py`) that allow an AI harness to discover and load the plugin. Unrelated to Hexagonal/Clean Architecture infrastructure adapters. Staged distribution bundles are emitted to `<repo_root>/.temp/dist/` (or `--output-dir`), never `.agents/` or `.hermes/` inside `repo_root`. |
+
+---
+
+## 3. PARA Vault, Work Records (`daily-tasks` Aligned) & Personal Domain
+
+| Canonical Term | Schema / Path Representation | Banned / Retired Synonyms | Definition & Ownership Boundary |
+| :--- | :--- | :--- | :--- |
+| **`PARA Category`** | `1-projects/` (`Projects`), `2-areas/` (`Areas`), `3-resources/` (`Resources`), `4-archives/` (`Archives`) | — | One of the four operational ownership categories in a `vault_root`, evaluated in strict order (`Projects` $\rightarrow$ `Areas` $\rightarrow$ `Resources` $\rightarrow$ `Archives`), supplemented by `0-inbox/` for unprocessed captures. |
+| **`RecordKind`** | `type`: `project` \| `milestone` \| `task` \| `blocker` \| `daily-plan` | `ItemType`, `_RecordType`, `*Type` | Discriminator identifying structured `daily-tasks` work records inside `vault_root`. Work records are governed by `state` rather than requiring `document-maturity`, while knowledge notes use `type: note` or `type: moc`. |
+| **`Project`** | `1-projects/YYYY.MM.DD-<slug>/project-index.md` (or existing `1-projects/<slug>/`); `type: project`, `state` (`ProjectState`: `not-started` \| `in-progress` \| `completed` \| `cancelled`) | `Initiative`, `Epic`, writing `project-state` | Active finite outcome-oriented effort with a completion point inside `vault_root/1-projects/`. |
+| **`Milestone`** | `1-projects/<project>/mN-<slug>/mN-<slug>.md`; `type: milestone`, `state` (`MilestoneState`: `not-started` \| `in-progress` \| `completed` \| `cancelled`) | `Sprint`, `Phase`, writing `milestone-state` | Concrete checkpoint directory and record inside a `Project`, grouping milestone tasks and embedding a `## Definition of Done` checklist. |
+| **`Task`** | `1-projects/<project>/<milestone>/tN-<slug>.md` (or `1-projects/<project>/tN-<slug>.md`); `type: task`, `state` (`TaskState`: `not-started` \| `in-progress` \| `completed` \| `cancelled`) | `Todo`, `Ticket`, `Issue`, writing `task-state` | Accepted unit of work inside a `Project` or `Milestone` governed by `state` (`TaskState`) and `## Definition of Done` checklist items (`DodItem`). Legacy `task-state` is retired and never written. |
+| **`External Blocker`** | `1-projects/<project>/blockers/bN-<slug>.md`; `type: blocker`, `state` (`BlockerState`: `open` \| `resolved`) | `Impediment`, `DependencyIssue`, writing `blocker-state` | Condition outside direct execution control blocking one or more tasks or milestones in a `Project`, recording impact and observable resolution criteria. |
+| **`Daily Plan`** | `2-areas/daily-plans/YYYY.MM.DD-daily-plan.md`; `type: daily-plan` | `Schedule`, `TimeboxPlan`, `Agenda`, `Reschedule` | User's explicit selection of accepted tasks for a local calendar date (`My work`, `Delegated work`, `Follow-up work`), tracking rollover via Carried Selection (`↺`) and never time-fitting durations. |
+| **`Definition of Done (DoD)`** | `## Definition of Done` checklist (`- [ ] ... <!-- id: UUID -->`) | `Acceptance criteria file`, `DoD document` | Observable acceptance criteria embedded directly inside `Task` and `Milestone` Markdown records with stable item IDs, preserved intact during vault reconciliation and moves. |
+| **`Document Maturity`** | `document-maturity`: `raw` \| `draft` \| `reviewed` \| `established` | `status` (for maturity), `template-maturity`, `developing`, `refining` | Review and reliability lifecycle stage for prose knowledge notes, MOCs, rules, and templates (`2-areas/` non-plan notes and `3-resources/`). Independent of `canonical` authority (*Canonical* is permitted) and not required on `daily-tasks` `RecordKind` work records governed by `state`. |
+| **`Inbox Capture`** | `0-inbox/<name>` (`filing-hint`, `context`, `source`) | — | Unprocessed capture staged in `vault_root/0-inbox/` awaiting classification or missing filing context; routed to a single working home without creating an automatic `0-inbox/archive/` duplicate. |
+| **`Source Record`** | `.eml`, `.ics`, or provenance-bearing capture (`workflows/import-records.md`) | — | Observed external communication or calendar invitation snapshot whose native bytes, identifiers (`Message-ID`, `UID`, `SEQUENCE`, `DTSTAMP`), and timestamps are preserved unchanged. |
+| **`Writing Voice Profile`** | `<user_home>/.nyssa-ai/agent-skills/writing-voice/` or `<repo_root>/.nyssa-ai/agent-skills/writing-voice/` (`VOICE.md`, optional `STYLE.md`, optional `examples/`) | — | Scoped, human-readable atomic voice bundle managed by `write-like-me`. Ordinary drafting reads the selected bundle without mutating it; profile writes occur only on explicit user setup or approved learning requests. |

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "suite_revision": "0.6.4-configuration-scopes",
+  "suite_revision": "0.7.3-ul-vault-alignment",
   "rows": [
     {
       "suite": "file-and-para-24",
@@ -72,7 +72,7 @@
       "platform": "windows-x86_64",
       "config": "default",
       "required": true,
-      "remaining": "Enable the generated native project plugin, then probe startup foundation and namespaced skill invocation in a fresh Hermes session."
+      "remaining": "Install the staged .temp/dist/hermes/ bundle into an isolated target workspace, enable native project plugins, and probe startup foundation and namespaced skill invocation in a fresh Hermes session."
     },
     {
       "suite": "startup-and-discovery",

@@ -1,1 +1,0 @@
-# Launch plan`nThis is an active Nyssa product launch project.

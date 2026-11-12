@@ -1,16 +1,26 @@
-# Prerequisites
+# Prerequisites & caches
 node_modules/
 __pycache__/
+.pytest_cache/
+*.log
+.DS_Store
+Thumbs.db
+
+# Single root scratch directory
 .temp/
 # Public synthetic interrupted-update fixtures; actual scratch remains ignored.
 !evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/
 !evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/**
-*.log
-.DS_Store
-Thumbs.db
-docs/
 
-# Private user/project plugin configuration in this checkout
+# Never assemble or self-load host plugin trees or legacy artifacts inside repo_root
+.agents/
+.hermes/
+artifacts/
+
+# Raw evaluation run bundles live under .temp/evals/; durable summaries live in evals/reports/ and evals/LATEST.md
+evals/results/
+evals/attempts/
+
+# Mutable runtime state and repo-local plugin configuration
+.nyssa-ai/*/runtime/
 /.nyssa-ai/agent-skills/
-/.nyssaai/agent-skills/
-/.nyssa/agent-skills/

@@ -1,7 +1,7 @@
 # File-management foundation
 
 > [!IMPORTANT] Scope Directive
-> This foundation defines workspace file management invariants, naming standards, temporary workspace rules (`.temp/`), plugin configuration scopes, and PARA vault placement basics. It does NOT define voice profile emulation (owned by `writing-voice.md`).
+> This foundation defines file management invariants, naming standards, single-root `.temp/` scratch rules, `NyssaAI.Configuration` root precedence (`user_home`, `repo_root`, `runtime_root`, `vault_root`, `plugin_root`), and PARA vault placement basics. It does NOT define voice profile emulation (owned by `writing-voice.md`).
 
 ## File Operations & Naming
 
@@ -16,24 +16,27 @@
 - **Do Not** delete retained content without explicit user authorization; archive within the existing scheme instead.
 - **Do** use `manage-file-operations` to safely move, rename, copy, import, archive, resolve collisions, or resume interrupted operations.
 
-## Temporary Workspace & Scratch
+## Temporary Scratch (`.temp/`)
 
-- **Do** isolate disposable task output, intermediate artifacts, and scratch files under `.temp/` at the working workspace root.
+- **Do** isolate disposable task output, intermediate work, and staged build outputs under a single `.temp/` directory at `repo_root`, `runtime_root`, or `vault_root`.
 - **Do** preserve existing, unrelated temporary work residing in `.temp/`.
-- **Do Not** place disposable scratch or intermediate work in tracked delivery folders.
+- **Do Not** place disposable scratch in tracked delivery folders, `artifacts/`, or `plugin_root`.
 
-## Plugin Configuration & Scopes
+## Canonical Roots & Plugin Configuration (`NyssaAI.Configuration`)
 
-- **Do** store plugin-owned configuration and persistent state outside installation caches.
-- **Do** read personal preferences from `<user-home>/.nyssa-ai/<plugin-name>/` and project overrides from `<project-root>/.nyssa-ai/<plugin-name>/`.
-- **Do** resolve user home and project roots independently using exact paths; do not recursively scan user home.
-- **Do** respect configuration aliases (`.nyssaai`, `.nyssa`) using explicit pointer, canonical, then legacy precedence; report conflicts without merging or deleting sources.
+- **Do** keep `plugin_root` strictly read-only; never write user configuration, mutable runtime state, or `.temp/` scratch inside `plugin_root`.
+- **Do** resolve `NyssaAI.Configuration` settings and namespaces via `.nyssa-ai/` in order **`user_home` (`~/.nyssa-ai/<plugin>/`) $\rightarrow$ `repo_root` (`<repo_root>/.nyssa-ai/<plugin>/`)**.
+- **Do** resolve `runtime_root` for mutable operational state in order: `--runtime-root` $\rightarrow$ `NYSSA_RUNTIME_ROOT` $\rightarrow$ agent persona `cwd` containing `SOUL.md` + `IDENTITY.md` $\rightarrow$ `~/.nyssa-ai/<plugin>/runtime/` (`user_home`) or `<repo_root>/.nyssa-ai/<plugin>/runtime/` (`repo_root`).
+- **Do** resolve `user_home` and `repo_root` independently using exact paths; do not recursively scan `user_home` or treat nested subdirectories as new roots.
 - **Do** apply explicit task instructions as runtime overrides without persisting them to saved configuration.
+- **Do Not** read or write retired legacy `.nyssaai/` or `.nyssa/` configuration directories.
+- **Do Not** place `.nyssa-ai/` configuration, secrets, or machine-local runtime state inside `vault_root` (only `vault_root/.temp/` is permitted for scratch).
 - **Do Not** include private configuration, credentials, or scratch files in published packages.
 
-## PARA Foundation Basics
+## PARA Vault & Work-Record Basics
 
-- **Do** apply PARA guidelines exclusively within recognized PARA vaults; follow local conventions before catalog defaults.
-- **Do** assign each vault item exactly one current working home based strictly on current operational use.
-- **Do** use `para-vault` whenever filing captures, organizing inboxes, revising notes, archiving projects, or ingesting vault records.
-- **Do Not** classify PARA items by age, format, document maturity, or source authority.
+- **Do** apply PARA guidelines exclusively within a recognized `vault_root`; follow local conventions before catalog defaults.
+- **Do** assign each item in `vault_root` exactly one current working home (`PARA Category`: `1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`) based strictly on current operational use.
+- **Do** align `1-projects/` and `2-areas/daily-plans/` with `daily-tasks` structured work records (`RecordKind`: `project`, `milestone`, `task`, `blocker`, `daily-plan`) governed by `state` rather than `task-state`.
+- **Do** use `para-vault` whenever filing `Inbox Capture` items, organizing vaults, reconciling notes, archiving projects, or importing `Source Record` payloads.
+- **Do Not** classify PARA items by age, format, `document-maturity`, or `canonical` authority.

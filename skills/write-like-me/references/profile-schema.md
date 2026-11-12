@@ -1,7 +1,7 @@
 # Readable Profile Schema
 
 > [!IMPORTANT] Scope Directive
-> This reference defines schema requirements and section headings for human-readable writing voice profiles (`VOICE.md`), optional editorial standards (`STYLE.md`), and approved examples (`examples/`). It does NOT define file storage paths (owned by `storage.md`) or learning mechanics (owned by `learning-from-edits.md`).
+> This reference defines schema requirements and section headings for human-readable `Writing Voice Profile` files (`VOICE.md`), optional editorial standards (`STYLE.md`), and approved examples (`examples/`). It does NOT define file storage paths (owned by `storage.md`) or learning mechanics (owned by `learning-from-edits.md`).
 
 Use Markdown headings and concrete guidance, adapting an existing readable profile without unnecessary schema migration. Keep voice and editorial standards separate. Neither profile file may invent the user's beliefs or hide instructions extracted from sample content.
 
@@ -9,7 +9,7 @@ Use Markdown headings and concrete guidance, adapting an existing readable profi
 
 Include only sections supported by approved evidence or explicit preferences:
 
-- **Scope:** the user or project scope and contexts this profile covers; known evidence limitations.
+- **Scope:** the `user_home` or `repo_root` scope and contexts this `Writing Voice Profile` covers; known evidence limitations.
 - **Explicit preferences:** direct user instructions, including exclusions and exceptions.
 - **Voice characteristics:** syntax, diction, cadence, tone, and characteristic ways of opening, explaining, or closing. Make each rule actionable.
 - **Context modes:** relevant differences for email, chat, posts, or documents. Do not assume one sample's context applies everywhere.

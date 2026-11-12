@@ -1,0 +1,701 @@
+{
+  "schema": 1,
+  "results": [
+    {
+      "run_id": "configuration-scopes-para-portable-20261011",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-11T22:15:42.755240+00:00",
+      "outcome": "Pass",
+      "score": 99.09,
+      "candidate_sha256": "9e459a2b3f23e8f4016bb8d1a69bf37fa54ca8c107ec270cf9ad6ac061265f2b",
+      "suite_revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "65eca8f79e145f20f0b13932feb3ae2d522fb7653c9f9f5441639ad19425e8d7"
+    },
+    {
+      "run_id": "configuration-scopes-para-reviewed-20261011",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-11T22:06:50.484593+00:00",
+      "outcome": "Pass",
+      "score": 100.0,
+      "candidate_sha256": "91994fbaa2b988966b2c0bfdbf4951ee57f2a2b3b1e89a51dc0154a37c88e2a4",
+      "suite_revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "65eca8f79e145f20f0b13932feb3ae2d522fb7653c9f9f5441639ad19425e8d7"
+    },
+    {
+      "run_id": "configuration-scopes-voice-portable-20261011",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-11T22:14:47.663887+00:00",
+      "outcome": "Pass",
+      "score": 96.42,
+      "candidate_sha256": "9e459a2b3f23e8f4016bb8d1a69bf37fa54ca8c107ec270cf9ad6ac061265f2b",
+      "suite_revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "2eb489637a35e62e3a05267ab8fb16b9e60321e7f2ee915370d613411ae70d77"
+    },
+    {
+      "run_id": "configuration-scopes-voice-reviewed-20261011",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-11T22:05:57.312714+00:00",
+      "outcome": "Fail",
+      "score": 59,
+      "candidate_sha256": "91994fbaa2b988966b2c0bfdbf4951ee57f2a2b3b1e89a51dc0154a37c88e2a4",
+      "suite_revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "2eb489637a35e62e3a05267ab8fb16b9e60321e7f2ee915370d613411ae70d77"
+    },
+    {
+      "run_id": "configuration-scopes-voice-reviewed-20261011-controls",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-11T22:09:08.391345+00:00",
+      "outcome": "Pass",
+      "score": 100.0,
+      "candidate_sha256": "91994fbaa2b988966b2c0bfdbf4951ee57f2a2b3b1e89a51dc0154a37c88e2a4",
+      "suite_revision": "0.6.4-configuration-scopes",
+      "suite_sha256": "2eb489637a35e62e3a05267ab8fb16b9e60321e7f2ee915370d613411ae70d77"
+    },
+    {
+      "run_id": "windows-final-20261005",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "completed",
+      "verified": true,
+      "completed_at": "2026-10-05T20:29:03Z",
+      "outcome": "Pass",
+      "score": 100.0,
+      "candidate_sha256": "438dfd8fae84b8e7e166095d5ecb54d883c24205f5afcb33d86067f3ba7564ba",
+      "suite_revision": "0.6.0",
+      "suite_sha256": "9d0cc4fe1382b49843a9bfacfad1ef0e4cf2b6479450f70e495ddf30583c1de3"
+    }
+  ],
+  "attempts": [
+    {
+      "run_id": "configuration-scopes-para-final-20261011",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-11T21:30:14.570508+00:00",
+      "completed_at": "2026-10-11T21:33:17.414326+00:00",
+      "stage": "automatic-grading",
+      "diagnostic": "All24 responses complete; C05 critical preservation assertion requires redundant inbox archive, contradicting frozen skill source-record policy. Original output retained before grader correction; no pass claimed.",
+      "next_check": "Complete grader review and fresh final-candidate execution with independent artifact review.",
+      "candidate_sha256": "b0a14972d61b995c52f7310fe0b61b8b4c277dabf0d6fb9b46cf79e4821ae2ae"
+    },
+    {
+      "run_id": "configuration-scopes-voice-final-20261011",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-11T21:30:04.399446+00:00",
+      "completed_at": "2026-10-11T21:33:47.768359+00:00",
+      "stage": "automatic-grading",
+      "diagnostic": "All15 automatic checks passed; independent activation/artifact review pending. Candidate becomes historical after correcting unrelated C05 grader.",
+      "next_check": "Complete grader review and fresh final-candidate execution with independent artifact review.",
+      "candidate_sha256": "b0a14972d61b995c52f7310fe0b61b8b4c277dabf0d6fb9b46cf79e4821ae2ae"
+    },
+    {
+      "run_id": "final-agy-2-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity 2.0",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.962193+00:00",
+      "completed_at": "2026-09-29T21:07:22.962196+00:00",
+      "stage": "host UI/session unavailable; no behavioral case started",
+      "diagnostic": "No separate Antigravity 2.0 UI session surface was available in this evaluation harness. Antigravity CLI denial does not establish Antigravity 2.0 behavior.",
+      "next_check": "Open a fresh Antigravity 2.0 workspace with the exact assembled 0.2.0 artifact, inspect plugin loading, and execute H01-H03 with host-session evidence.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-agy-cli-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity CLI",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-09-29T21:05:43.454023+00:00",
+      "completed_at": "2026-09-29T21:05:55.751779+00:00",
+      "stage": "isolated assembled-package startup probe; no response after headless command denial",
+      "diagnostic": "Antigravity CLI 1.2.13 returned response='' and denied_actions=[{action: command, display_name: RunCommand}]. stderr reported headless command permission auto-denial. No plugin discovery or H01-H03 behavior was established.",
+      "next_check": "In an interactive Antigravity CLI project session, inspect .agents/plugins/agent-skills discovery and run H01-H03 with a permitted read-only command rule, then retain independently observable session evidence.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-agy-ide-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity IDE",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.962336+00:00",
+      "completed_at": "2026-09-29T21:07:22.962338+00:00",
+      "stage": "host UI/session unavailable; no behavioral case started",
+      "diagnostic": "No separate Antigravity IDE UI session surface was available in this evaluation harness. Antigravity CLI denial does not establish Antigravity IDE behavior.",
+      "next_check": "Open a fresh Antigravity IDE workspace with the exact assembled 0.2.0 artifact, inspect plugin loading, and execute H01-H03 with host-session evidence.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-claude-code-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Claude Code",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.961171+00:00",
+      "completed_at": "2026-09-29T21:07:22.961174+00:00",
+      "stage": "availability/authentication inventory; no agent case started",
+      "diagnostic": "claude.exe 2.1.265 is installed; claude auth status returned loggedIn:false, authMethod:none, exit 1. No fresh plugin session can authenticate locally.",
+      "next_check": "Renew Claude Code authentication, install the 0.2.0 package in an isolated project, and execute H01-H03 with exported session evidence.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-claude-cowork-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Claude Cowork",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.962014+00:00",
+      "completed_at": "2026-09-29T21:07:22.962018+00:00",
+      "stage": "host UI unavailable; upload not attempted",
+      "diagnostic": "No Claude Cowork upload/session UI is exposed in this CLI evaluation environment, so no package upload or fresh Cowork session was performed.",
+      "next_check": "Open Claude Cowork UI, upload the exact 0.2.0 package, run H01-H03 in fresh sessions, and export observable host evidence.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-codex-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-09-29T21:01:11.717939+00:00",
+      "completed_at": "2026-09-29T21:05:09.649086+00:00",
+      "stage": "H01 executed; H02 resumed but aborted on shell initialization; H03 discovery executed; no complete H01-H03 attested run",
+      "diagnostic": "Installed 0.2.0 skill discovery worked, but H01 reported core.md was not loaded at startup. H02 shell setup refresh failed before local read or filing; browser file URL was blocked. H03 found no plugin-specific named agents registered. No trusted host attestation verifier exists for startup Pass.",
+      "next_check": "Repair/startup-deliver canonical core to unrelated Codex projects and confirm native named-agent route or remove that claim; rerun H01-H03 in fresh installed sessions after the update, verify settings isolation, and add trusted host attestation before accepting Pass.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-hermes-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Hermes Agent",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.968090+00:00",
+      "completed_at": "2026-09-29T21:07:22.968095+00:00",
+      "stage": "executable availability inventory; no behavioral case started",
+      "diagnostic": "hermes executable was absent from PATH; no installed runtime session or package probe could start.",
+      "next_check": "Implement and enable the Hermes project adapter, install Hermes Agent, and execute H01-H03 in a fresh session.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-openclaw-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "OpenClaw",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:07:22.965221+00:00",
+      "completed_at": "2026-09-29T21:07:22.965233+00:00",
+      "stage": "executable availability inventory; no behavioral case started",
+      "diagnostic": "openclaw executable was absent from PATH; no installed runtime session or package probe could start.",
+      "next_check": "Install OpenClaw CLI, install the exact compatible bundle, inspect detected skills, and execute H01-H03 in a fresh session.",
+      "candidate_sha256": "d76895edfb81e4571257ffb54803164c85a421facf41afd10daaeaea64af5aa0"
+    },
+    {
+      "run_id": "final-v2-agy-2-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity 2.0",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.842704+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No independent Antigravity 2.0 workspace session was available for installed-project H01-H03.",
+      "next_check": "Open an Antigravity 2.0 workspace with the assembled package and run H01-H03.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-agy-cli-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity CLI",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.838162+00:00",
+      "stage": "Assembled-package probe returned a response, but inherited parent-repository context",
+      "diagnostic": "Antigravity CLI 1.2.13, with the assembled package copied to .temp/agy-final-v2 and command permissions enabled, described file-management and skills. Every cited source path pointed to the parent NyssaAI repository rather than the isolated copy, even with a nested .git boundary; this does not establish isolated package discovery or startup. H01-H03 were not completed.",
+      "next_check": "Run from a truly isolated Antigravity project whose parent context cannot supply this repository instructions, then inspect project plugin discovery and H01-H03 with a native trace.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-agy-ide-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity IDE",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.842909+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No independent Antigravity IDE workspace session was available for installed-project H01-H03.",
+      "next_check": "Open an Antigravity IDE workspace with the assembled package and run H01-H03.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-claude-code-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Claude Code",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.837640+00:00",
+      "stage": "Authentication check; no installed session",
+      "diagnostic": "claude auth status --json returned loggedIn:false and authMethod:none. No authenticated installed-plugin H01-H03 session can start.",
+      "next_check": "Renew Claude Code authentication, install the package, and retain fresh H01-H03 host evidence.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-claude-cowork-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Claude Cowork",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.837935+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No Claude Cowork UI session or package upload path was available to this evaluator.",
+      "next_check": "Open an authenticated Claude Cowork session, upload the package, and run H01-H03.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-codex-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.837367+00:00",
+      "stage": "Lead-observed installed local marketplace probe; H01 context question answered without tools",
+      "diagnostic": "Lead reports a fresh isolated Codex CLI 0.155.1 session with trusted hooks enabled discovered skills but did not receive the bundled SessionStart file-management foundation. A separate project .codex/hooks.json control printed a unique marker and was seen in model context. No raw session event log was retained, so this attribution remains unverified; H02-H03 and update isolation did not complete.",
+      "next_check": "Rerun installed-package H01-H03 with a durable native host trace; determine why the bundled hook is not activated, then add trusted host-export verification before any startup Pass.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-hermes-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "Hermes Agent",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.843222+00:00",
+      "stage": "Executable availability inventory; no case started",
+      "diagnostic": "Get-Command hermes returned no executable. Native project adapter activation and H01-H03 could not start.",
+      "next_check": "Implement and enable the Hermes project adapter, install Hermes Agent, and run H01-H03.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v2-openclaw-startup-20260929",
+      "key": [
+        "startup-and-discovery",
+        "OpenClaw",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-09-29T21:31:57.837304+00:00",
+      "completed_at": "2026-09-29T21:31:57.843067+00:00",
+      "stage": "Executable availability inventory; no case started",
+      "diagnostic": "Get-Command openclaw returned no executable. Compatible-bundle installation and H01-H03 could not start.",
+      "next_check": "Install OpenClaw, install this compatible bundle, inspect detected skills, and run H01-H03.",
+      "candidate_sha256": "d8295290f0ebad03a6bbb95b9166818e5b467225ce6857bb252a3bc2646c13a9"
+    },
+    {
+      "run_id": "final-v3-agy-2-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity 2.0",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No independent Antigravity 2.0 workspace session was available for installed-project H01-H03.",
+      "next_check": "Open an Antigravity 2.0 workspace with the assembled package and run H01-H03.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-agy-cli-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity CLI",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "Assembled-package probe returned a response, but inherited parent-repository context",
+      "diagnostic": "Antigravity CLI 1.2.13, with the assembled package copied to .temp/agy-final-v2 and command permissions enabled, described file-management and skills. Every cited source path pointed to the parent NyssaAI repository rather than the isolated copy, even with a nested .git boundary; this does not establish isolated package discovery or startup. H01-H03 were not completed.",
+      "next_check": "Run from a truly isolated Antigravity project whose parent context cannot supply this repository instructions, then inspect project plugin discovery and H01-H03 with a native trace.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-agy-ide-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity IDE",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No independent Antigravity IDE workspace session was available for installed-project H01-H03.",
+      "next_check": "Open an Antigravity IDE workspace with the assembled package and run H01-H03.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-claude-code-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Claude Code",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "Authentication check; no installed session",
+      "diagnostic": "claude auth status --json returned loggedIn:false and authMethod:none. No authenticated installed-plugin H01-H03 session can start.",
+      "next_check": "Renew Claude Code authentication, install the package, and retain fresh H01-H03 host evidence.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-claude-cowork-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Claude Cowork",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "UI/session availability inventory; no case started",
+      "diagnostic": "No Claude Cowork UI session or package upload path was available to this evaluator.",
+      "next_check": "Open an authenticated Claude Cowork session, upload the package, and run H01-H03.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-codex-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "Lead-observed installed local marketplace probe; H01 context question answered without tools",
+      "diagnostic": "Lead reports a fresh isolated Codex CLI 0.155.1 session with trusted hooks enabled discovered skills but did not receive the bundled SessionStart file-management foundation. A separate project .codex/hooks.json control printed a unique marker and was seen in model context. No raw session event log was retained, so this attribution remains unverified; H02-H03 and update isolation did not complete.",
+      "next_check": "Rerun installed-package H01-H03 with a durable native host trace; determine why the bundled hook is not activated, then add trusted host-export verification before any startup Pass.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-hermes-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "Hermes Agent",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "Executable availability inventory; no case started",
+      "diagnostic": "Get-Command hermes returned no executable. Native project adapter activation and H01-H03 could not start.",
+      "next_check": "Implement and enable the Hermes project adapter, install Hermes Agent, and run H01-H03.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "final-v3-openclaw-startup-20261001",
+      "key": [
+        "startup-and-discovery",
+        "OpenClaw",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-01T15:46:00.000000+00:00",
+      "completed_at": "2026-10-01T15:46:05.000000+00:00",
+      "stage": "Executable availability inventory; no case started",
+      "diagnostic": "Get-Command openclaw returned no executable. Compatible-bundle installation and H01-H03 could not start.",
+      "next_check": "Install OpenClaw, install this compatible bundle, inspect detected skills, and run H01-H03.",
+      "candidate_sha256": "33963b665d1bc28d9a7ca4ed0dcaf61eb85ea0f248f2ff2beb64628eed3e5895"
+    },
+    {
+      "run_id": "inbox-policy-codex-yolo-20261009",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T16:26:11.206701+00:00",
+      "completed_at": "2026-10-09T16:34:02.876081+00:00",
+      "stage": "Five targeted requests executed with artifact checks; fresh C23 retry passed",
+      "diagnostic": "New single-home filing, retained source snapshots, duplicate invitation reuse, and source-link-only navigation passed targeted artifact checks. Initial C23 naming miss was corrected and retested on fresh fixtures. This is incomplete full-suite evidence, not a release acceptance score.",
+      "next_check": "Execute the complete 24-case suite on the final candidate in a fresh agent, export actual artifacts, and obtain independent scored review. Complete separate native startup/discovery evidence.",
+      "candidate_sha256": "c24b2e29ab6464785f30afde99bec21c7cde7b0b9e2b272d049765254ced8d32"
+    },
+    {
+      "run_id": "local-writing-voice-20261009",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "unverified",
+      "started_at": "2026-10-09T18:57:00Z",
+      "completed_at": "2026-10-09T19:03:38Z",
+      "stage": "local behavior, review, native marketplace installation and update-isolation checks complete; startup hook unresolved",
+      "diagnostic": "45 unit tests, 266 package checks, 29/29 artifacts, 60/60 synthetic performance and 4/4 activation passed. Native isolated installation discovered eight skills; update preserved profiles, examples, scratch and unrelated plugin sentinel. Fresh Codex CLI 0.161.0 sessions did not receive full startup foundation, and diagnostic hook process never executed. Release acceptance remains unverified.",
+      "next_check": "Resolve native plugin startup-hook delivery (or explicitly establish a supported host mechanism), then rerun clean startup probes and independent release export verification.",
+      "candidate_sha256": "41377881fed57f9bdc8faa1eb1e2b5aef1836b2e7d263133d0ff255befa8b9af"
+    },
+    {
+      "run_id": "native-061-agy-cli-20261009",
+      "key": [
+        "startup-and-discovery",
+        "Antigravity CLI",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T15:25:18.761952+00:00",
+      "completed_at": "2026-10-09T15:25:18.761952+00:00",
+      "stage": "Sandboxed native invocation reached authentication prompt",
+      "diagnostic": "agy executable is installed. A sandboxed isolated-project print invocation could not access keyring, reported not authenticated, attempted OAuth, and exited without model output. Network DNS was also unavailable. This does not establish authentication state outside the sandbox. No package installation or H01-H03 completed.",
+      "next_check": "Run an authorized host invocation with working keyring/network; complete login if required, install the assembled project plugin and run H01-H03.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "native-061-claude-code-20261009",
+      "key": [
+        "startup-and-discovery",
+        "Claude Code",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T15:25:18.761952+00:00",
+      "completed_at": "2026-10-09T15:25:18.761952+00:00",
+      "stage": "Authentication prerequisite check",
+      "diagnostic": "claude auth status reports loggedIn=false, authMethod=none. No native test started.",
+      "next_check": "Authenticate Claude Code, then install 0.6.1 with the supported plugin flow and run H01-H03.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "native-061-codex-20261009",
+      "key": [
+        "startup-and-discovery",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T15:25:18.761952+00:00",
+      "completed_at": "2026-10-09T15:25:18.761952+00:00",
+      "stage": "H01 attempted twice; no filesystem action completed",
+      "diagnostic": "Codex CLI 0.161.0 installed agent-skills@nyssaai 0.6.1 through marketplace upgrade/add. Both shared-daemon and --no-daemon fresh workspace-write sessions failed all shell and Node filesystem tools with helper_unknown_error: setup refresh had errors. codex doctor confirms elevated Windows sandbox provisioning recorded a structured failure. The Tessl reference observed in startup exists in global ~/.codex/AGENTS.md; repository contamination is not established. No H01 artifacts changed. H02-H03 and hook trust/delivery variants remain unrun.",
+      "next_check": "Repair Windows sandbox provisioning, then rerun isolated H01-H03 and focused variants with trusted host session exports.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "native-061-codex-yolo-20261009",
+      "key": [
+        "startup-and-discovery",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "unverified",
+      "started_at": "2026-10-09T16:12:40.235825+00:00",
+      "completed_at": "2026-10-09T16:19:50.741761+00:00",
+      "stage": "H01-H03 workflow tasks and direct-creation/template variants completed; selected artifacts checked",
+      "diagnostic": "YOLO sessions completed without Windows sandbox failures. All selected artifact checks passed. All six installed 0.6.1 workflows were read and exercised. H01 reported no automatic foundation at startup, then read core.md on demand. Collision and template-maturity variants succeeded. Full startup acceptance remains unverified for the explicit gaps in evidence.json.",
+      "next_check": "Verify trusted SessionStart delivery and separate anchor variants, test package update isolation, and obtain independent review plus trusted native export verification.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "native-061-hermes-20261009",
+      "key": [
+        "startup-and-discovery",
+        "Hermes Agent",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T15:25:18.761952+00:00",
+      "completed_at": "2026-10-09T15:25:18.761952+00:00",
+      "stage": "Executable prerequisite check",
+      "diagnostic": "Get-Command hermes returned no executable on PATH. No native test started.",
+      "next_check": "Install or supply Hermes, enable HERMES_ENABLE_PROJECT_PLUGINS and the generated native plugin, then run H01-H03.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "native-061-openclaw-20261009",
+      "key": [
+        "startup-and-discovery",
+        "OpenClaw",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-09T15:25:18.761952+00:00",
+      "completed_at": "2026-10-09T15:25:18.761952+00:00",
+      "stage": "Executable prerequisite check",
+      "diagnostic": "Get-Command openclaw returned no executable on PATH. No native test started.",
+      "next_check": "Install or supply the OpenClaw executable, then install the compatible bundle and run H01-H03.",
+      "candidate_sha256": "86284326b0340f8ae535dcd51c0181ee8412ee880becafba12ebfff9bee20816"
+    },
+    {
+      "run_id": "template-maturity-final-local-20261006",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-07T00:25:50.421023+00:00",
+      "completed_at": "2026-10-07T00:27:03.597665+00:00",
+      "stage": "All requested local component checks passed; native behavioral cases not executed",
+      "diagnostic": "Fresh final local component validation of the reviewed registry repair passed assembly, 60 packaging/reference checks, and 33 unit tests. The earlier failed attempt is retained unchanged. No fresh behavioral cases, model score, or installed-host activation evidence was produced. Historical 24-case evidence remains stale.",
+      "next_check": "Execute all 24 cases in an isolated fresh Codex agent, obtain independent artifact review, and export verified evidence for this candidate; separately complete required native startup/discovery rows before all-host release acceptance.",
+      "candidate_sha256": "978bb628ac7dc4037c6c67827282bb2195535b9c52fb0de8c7423b5122d8cead"
+    },
+    {
+      "run_id": "template-maturity-local-20261006",
+      "key": [
+        "file-and-para-24",
+        "Codex",
+        "windows-x86_64",
+        "default"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-07T00:23:28.309172+00:00",
+      "completed_at": "2026-10-07T00:25:03.460636+00:00",
+      "stage": "Locally runnable component checks completed; packaging validation failed; no fresh behavioral cases executed",
+      "diagnostic": "The reviewed frozen candidate failed local packaging validation: .agents/plugins.json declared 0.5.0 while root plugin.json declared 0.6.0. The builder subsequently repaired that registry after evaluation; this attempt remains evidence for the original candidate only. Assembly and 33 unit tests passed. The report was consistent and correctly marked the earlier 24-case score stale. No current-candidate model score was awarded.",
+      "next_check": "Adversarially review the registry version repair, then freshly evaluate the repaired candidate. Native behavior still requires all 24 cases in an isolated fresh Codex agent and independent artifact review before a current score.",
+      "candidate_sha256": "df11eabad9efd541ffae31de8628850318ecf52df1f617c277ae1565f99a26ad"
+    },
+    {
+      "run_id": "voice-scopes-grader-20261011",
+      "key": [
+        "writing-voice",
+        "Codex",
+        "windows-x86_64",
+        "synthetic-full-plugin"
+      ],
+      "state": "incomplete",
+      "started_at": "2026-10-11T21:20:53.612250+00:00",
+      "completed_at": "2026-10-11T21:22:32.607433+00:00",
+      "stage": "automatic-grading",
+      "diagnostic": "All 15 responses completed, no critical failures. Automatic score 58.06 exposed a grader defect: voice has no metadata/navigation dimensions, limiting maximum total to 70; AC04 incorrectly uses list-only response_nonempty for string summary. No independent review or release pass claimed.",
+      "next_check": "Fix explicit voice dimension weights and summary assertion, preserve this attempt, rerun a fresh candidate and obtain independent artifact review.",
+      "candidate_sha256": "7c771e28aaf34db98758aa081278f8787741cf1076ffde53b237e4a103e280cc"
+    }
+  ]
+}

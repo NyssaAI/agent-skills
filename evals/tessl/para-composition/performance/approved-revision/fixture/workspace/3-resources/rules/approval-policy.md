@@ -4,7 +4,7 @@ created: 2026-09-20
 status: established
 canonical: true
 tags: [policy]
-task-state: completed
+state: completed
 ---
 
 # Approval policy

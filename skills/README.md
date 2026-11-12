@@ -1,19 +1,20 @@
 # Skills Directory
 
-This directory contains individual agent skills for the NyssaAI ecosystem.
+This directory contains the canonical agent skills for `agent-skills` inside `repo_root` (see [`../docs/GLOSSARY.md`](../docs/GLOSSARY.md) for authoritative Ubiquitous Language).
 
 ## Skill Structure
 
-Each skill lives in its own subdirectory named after the skill:
+Each skill lives in its own subdirectory named after the skill. Multi-workflow domains (`para-vault`, `write-like-me`) are structured as **Sibling Facade Skills** alongside peer `manage-file-operations`:
 
-```
+```text
 skills/
 └── <skill-name>/
-    ├── SKILL.md          # Primary instruction file (required)
-    ├── scripts/          # Optional helper scripts executed by the agent
-    ├── references/       # Optional detailed documentation loaded on-demand
-    └── examples/         # Optional reference implementations or patterns
+    ├── SKILL.md          # Primary entrypoint & triage facade (required)
+    ├── workflows/        # Focused action runbooks for Sibling Facade Skills
+    └── references/       # Detailed schemas, checklists, and rules loaded on-demand
 ```
+
+Host-specific `harness-adapter` metadata (such as Codex UI `harness-adapters/codex/<skill-name>/openai.yaml` and Hermes `harness-adapters/hermes/plugin.py`) lives under [`../harness-adapters/`](../harness-adapters/), never inside `skills/<skill-name>/agents/`.
 
 ## Anatomy of a `SKILL.md`
 

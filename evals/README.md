@@ -1,192 +1,46 @@
-# Plugin evaluation CLI
+# Plugin Evaluation CLI
 
-The scored suite exercises the five PARA workflows and `manage-file-operations` through
-24 isolated user tasks. A run means one independent candidate executes **all
-24 cases**, producing real workspace artifacts and one JSON response per case.
-New-note checks require `document-maturity`. C17 exercises explicitly authorized
-legacy-field migration while preserving operational state and accepted history;
-C18 checks legacy reading, conflicting fields, and rejection of operational
-`status` values as maturity without mutating the source notes.
-The additional required suites below have their own case scopes;
-the [latest report](LATEST.md) identifies completed runs and remaining gaps.
-Link checks decode valid UTF-8 and replace malformed bytes while reporting the
-affected file in check evidence. A malformed byte in surrounding prose no
-longer hides an otherwise valid navigation link.
+The scored suites exercise the three canonical `agent-skills` skills (`manage-file-operations`, `para-vault`, and `write-like-me`) across isolated synthetic tasks:
 
-Use `run.py` to prepare, execute, score, export, and verify runs. The [scorer](scoring.py) and [coverage matrix](matrix.json) define the public scoring and required targets.
+- **`file-and-para-24`** (`C01`–`C24`): 24 isolated user tasks exercising `para-vault` (`workflows/file.md`, `workflows/reconcile.md`, `workflows/archive.md`, `workflows/navigate.md`, `workflows/import-records.md`) and `manage-file-operations`. Structured `daily-tasks` work records (`RecordKind`: `project`, `milestone`, `task`, `blocker`, `daily-plan`) use `state` (`ProjectState`, `MilestoneState`, `TaskState`, `BlockerState`) and `1-projects/YYYY.MM.DD-<slug>/project-index.md` (`C02`, `C04`, `C12`, `C13`, `C14`), whereas knowledge/resource notes use `document-maturity` (`C03`, `C16`, `C17`, `C18`). `C17` exercises explicitly authorized legacy `status` $\rightarrow$ `document-maturity` migration while preserving `state` and accepted history; `C18` checks legacy reading, conflicting fields, and rejection of operational `status` values as maturity without mutating source notes.
+- **`startup-and-discovery`** (`H01`–`H03`): Fresh-host startup foundation, progressive disclosure, and `harness-adapter` bundle discovery probes ([host-probes.md](host-probes.md)).
+- **`writing-voice`** (`WV01`–`WV06`, `SC01`–`SC05`, `AC01`–`AC04`): 15-case synthetic `write-like-me` suite covering `Writing Voice Profile` safety, modes, approved learning, missing profiles, `user_home` vs `repo_root` `.nyssa-ai/` isolation, retired `.nyssaai` rejection (`SC05`), and positive/negative activation controls.
 
-Suite version 0.5.0 routes filing cases to `file-para-content`, source records to
-`import-vault-source-records`, lifecycle changes to `manage-vault-lifecycle`,
-revisions/authority to `revise-vault-documents`, and navigation review to
-`maintain-vault-navigation`. C12 uses `manage-file-operations` with vault navigation
-guidance; C22 reads the retained temporary-storage guidance directly.
-Historical reports retain their original skill names and do not evaluate this split.
-The [Tessl composition sample](tessl/para-composition/README.md) exercises five
-representative cases plus an unrelated-writing activation control. Its private
-results are retained locally under `docs/tessl/`; this sample does not replace
-the full 24-case suite or host-runtime verification.
+## Directory Layout
 
-The [source-record boundary scenarios](tessl/source-record-boundaries/README.md)
-extend that sample with direct imports and duplicate inbox captures, including
-reuse of an already-preserved original. The
-[calendar routing investigation](tessl/calendar-routing/README.md) tests equivalent
-request phrasings and a writing-only control separately from artifact scoring.
+- `evals/cases.py`, `evals/configuration_cases.py`, `evals/scoring.py`, `evals/run.py`, `evals/calibrate.py`, `evals/plugin_checks.py`, `evals/report.py` — evaluation harness and validators.
+- `evals/verifiers/` — hash-pinned historical verifier snapshots (`revisions.json`, `file-and-para-24-0.6.0/`, `configuration-scopes/`) used to replay historical exports without executing untrusted receipt code.
+- `evals/tessl/` — Tessl scenario definitions (`para-composition/`, `source-record-boundaries/`, `calendar-routing/`, `writing-voice/`).
+- `evals/reports/` — tracked durable evaluation reports and verified receipt ledger (`evidence-ledger.json`).
+- `evals/LATEST.md` — tracked generated summary table verified by `python3 evals/report.py check`.
+- `<repo_root>/.temp/evals/` — gitignored local workspace for prepared runs (`.temp/evals/<run-id>/`), raw scored exports (`.temp/evals/results/<run-id>/`), and incomplete/unverified attempt receipts (`.temp/evals/attempts/<run-id>/`).
 
-## Suite catalog and coverage
+## Commands
 
-| Suite | Cases and purpose | Entry and observable success | Reproduction |
-| --- | --- | --- | --- |
-| `file-and-para-24` | C01â€“C24: PARA filing, native evidence, naming, dates, links, archive, collision, and safety | Direct invocation of the case-specific workflow; graded workspace artifacts and case responses | `python evals/run.py prepare <run-id>`, execute a fresh agent on its packet, `score --review ... --export evals/results/<run-id>`, then `verify` |
-| `startup-and-discovery` | H01 foundation before routing; H02 PARA selected only for vault work; H03 package discovery, skill invocation, and update isolation | Fresh target-host session; inspect loaded rules and actual selected behavior, host registration, and package bytes | Follow the per-host probe protocol in [host probes](host-probes.md) |
-| `writing-voice` | WV01â€“WV06: synthetic profile safety, modes, approved learning, missing profile, root isolation, and source preservation; four activation controls | Full-plugin natural activation and independently reviewed artifacts; installation/update coverage uses the H03 variant | Follow the [writing voice scaffold](tessl/writing-voice/README.md); local behavioral checks passed; native startup-hook delivery remains unresolved |
+From `<repo_root>`:
 
-The machine-readable [coverage matrix](matrix.json) defines each required
-suite, harness, OS/architecture, and configuration row. Muse is provisional and
-explicitly non-required pending a verified loader. Cursor and Grok Bot rows are
-non-required static/package-support entries (shared `.cursor-plugin` shim; Grok
-Bot has no SessionStart); do not treat them as verified runtime. The matrix currently
-records Windows x86-64 as the available development platform; macOS/Linux
-binary behavior is inapplicable because this package bundles no binary. This
-does not imply other platforms are runtime verified.
-
-`evals/results/<run-id>/metadata.json` identifies a completed Pass or Fail
-run, UTC completion, exact row key, candidate, frozen suite, and artifact
-hashes, host/version/platform/configuration/model, case outcomes, scoring
-method, independent reviewer/method, and critical failures. It links a hashed
-evidence file and inspectable artifact ZIP. For C01â€“C24, `report.py check`
-replays the suite's export verifier and compares the recomputed score. For
-H01â€“H03, it checks every case's reviewed artifact bytes in the ZIP,
-recomputes the score, and requires a host invocation trace. The latter is
-reviewable evidence, not cryptographic proof of a host session; independent
-review must verify its provenance before setting `verified: true`. A bare
-`verified` flag and text file cannot qualify. Completed failures remain results.
-`evals/attempts/<run-id>/metadata.json` records an incomplete, aborted, or
-unverified run with the same key, UTC start/end, candidate hash, last stage,
-redacted diagnostic, and exact next check. Raw or bulky logs may stay in
-`.temp/`; the durable receipt must explain the failure without them. Missing
-attempts and scores are shown as `Not run`.
-
-The report currently refuses a `Pass` for `startup-and-discovery`. The host
-probe artifacts and reviewer fields can be written by a submitter, and no
-trusted host-export verifier is available for those rows yet. Keep a genuine
-run's evidence and review receipt, but record it as unverified until that
-verifier can establish provenance; a self-authored ZIP cannot certify release.
-
-After adding evidence, run `python evals/report.py generate` and inspect the
-diff. `python evals/report.py check` is non-mutating and fails when the report
-disagrees with the matrix or evidence; `python evals/report.py release` is the
-separate release gate and fails on any required missing, stale, or failing row.
-`python evals/report.py hash` prints the content hash of the declared candidate
-inventory (skills, scripts, host manifests and generated artifact, startup
-anchors, eval source and rubric). Evidence outputs, review receipts, and
-`.temp/` are excluded. These commands must run after the final adversarial
-review; an independent reviewer owns the final scored run.
-
-## Historical evidence after extraction
-
-Builder suites and their receipts moved to the private `NyssaAI/plugin-builder`
-repository. Older startup attempt receipts still refer to that repository's
-`evals/results/final-builder-20260929/frozen-evaluation.json`; those historical
-receipts remain unchanged. The three former file-and-PARA exports embedded the
-builder skill, so their complete, unmodified result directories are preserved in
-that private repository under `history/agent-skills-evals/`. They are historical
-evidence, not evidence for the current six-skill package. Earlier public Git
-history also retains the extracted content.
-
-## Set up
-
-Requires Python 3.11 or later and PyYAML. From the repository root on Windows:
-
-```powershell
-python -m venv .temp/eval-venv
-.temp/eval-venv/Scripts/python.exe -m pip install -r evals/requirements.txt
-.temp/eval-venv/Scripts/python.exe evals/run.py validate
-.temp/eval-venv/Scripts/python.exe -m unittest discover -s test -v
+```bash
+python3 scripts/assemble.py write
+python3 scripts/assemble.py check
+python3 evals/run.py validate
+python3 evals/report.py check
+pytest test/unit test/use_case
 ```
 
-On macOS/Linux, use `.temp/eval-venv/bin/python` in place of the Windows Python path. The harness itself uses portable Python paths. Runtime/model installation and authentication are supplied by the host, not this plugin.
+### Prepare, Execute, Score, and Verify a Run
 
-## Prepare a fresh run
-
-```powershell
-.temp/eval-venv/Scripts/python.exe evals/run.py prepare run-01
+```bash
+python3 evals/run.py prepare run-01
+python3 evals/run.py prepare voice-01 --suite writing-voice
+python3 evals/run.py execute .temp/evals/run-01 --command-json '["candidate-runner", "--workspace", "{candidate}", "--prompt-stdin"]' --timeout 1800
+python3 evals/run.py review-template .temp/evals/run-01 --output .temp/evals/run-01/control/review.json
+python3 evals/run.py score .temp/evals/run-01 --review .temp/evals/run-01/control/review.json --export .temp/evals/results/run-01
+python3 evals/run.py verify .temp/evals/results/run-01
+python3 evals/calibrate.py .temp/evals/run-01 --output .temp/eval-calibration.json
 ```
 
-Preparation creates `.temp/evals/run-01/` and refuses to reuse an existing run id. It copies the plugin and creates all fixtures from `cases.py`. The prepared `control/suite.json` freezes the prompts, fixtures, assertions, and suite version; the manifest records its hash, the source commit, and all initial plugin/file hashes. Files in the worktree are snapshotted, so hashes identify the actual evaluated version even when it differs from the commit.
+After adding or updating raw evidence under `.temp/evals/results/` or `.temp/evals/attempts/`, run `python3 evals/report.py generate` to refresh `evals/reports/evidence-ledger.json` and `evals/LATEST.md`, then verify with `python3 evals/report.py check`. `python3 evals/report.py release` requires live `.temp/evals/results/` artifacts and fails on any missing, stale, or failing required row in [`matrix.json`](matrix.json).
 
-The candidate receives **only** `.temp/evals/run-01/candidate/PACKET.md` and access to that candidate directory. It must not see `control/`, `cases.py`, `scoring.py`, completed results, or the reviewer rubric. A read-only plugin snapshot plus a writable per-case workspace is the preferred host configuration. The packet is an instruction boundary; the Python harness does not establish an OS sandbox.
+## Revision Integrity & Security Invariants
 
-All cases supply synthetic records and a fixed date of September 29, 2026. Each workspace is a separate user environment. The candidate starts with the indicated skill and follows its references. These are explicit-invocation behavior tests, not automatic skill-discovery tests.
-
-## Execute with a fresh agent
-
-Give a fresh agent this instruction, replacing the run path:
-
-> Read `.temp/evals/run-01/candidate/PACKET.md` and execute all its requests using the frozen plugin. Read only the candidate directory and host tools needed to operate it. Write only case workspaces and their response.json files. Do not read grading materials, delegate, contact external services, or modify the plugin/requests. Record missing-input questions instead of waiting. Report the case ids completed and runtime limitations.
-
-Record the actual host, model/version if exposed, start/end time, execution receipt, and context/isolation policy under `control/manifest.json` â†’ `execution`. Do not invent unavailable model identifiers, seeds, tokens, or tool transcripts. Put a textual host receipt in `control/execution-notes.md` when the host cannot export its transcript. Case responses are not a substitute for filesystem artifacts.
-
-For a CLI candidate, `execute` accepts a JSON argument array, uses no shell, passes PACKET.md on stdin, and captures stdout/stderr:
-
-```powershell
-.temp/eval-venv/Scripts/python.exe evals/run.py execute .temp/evals/run-01 --command-json '["candidate-runner", "--workspace", "{candidate}", "--prompt-stdin"]' --timeout 1800
-```
-
-`candidate-runner` is a placeholder for your installed host adapter, not a bundled executable. `{candidate}` and `{packet}` are replaced only when they occupy an entire argument. The adapter must obey the packet, expose filesystem tools, and emit the requested response files; ordinary text generation alone is insufficient. Use the host's supported model and sandbox settings. Never put credentials in command arguments, which are retained in the execution receipt.
-
-## Review and score
-
-```powershell
-.temp/eval-venv/Scripts/python.exe evals/run.py score .temp/evals/run-01
-.temp/eval-venv/Scripts/python.exe evals/run.py review-template .temp/evals/run-01 --output .temp/evals/run-01/control/review.json
-```
-
-The first command produces a **provisional** score with no human-review credit. Fill every case's `score` (0, 1, or 2) and `evidence` in the review template, plus `reviewer` and `method`. Read actual responses and artifacts; do not assign scores solely from the candidate's claims. The reviewer can be a human or a disclosed independent reviewing agent. Never label agent review as human review.
-
-```powershell
-.temp/eval-venv/Scripts/python.exe evals/run.py score .temp/evals/run-01 --review .temp/evals/run-01/control/review.json --export evals/results/run-01
-.temp/eval-venv/Scripts/python.exe evals/run.py verify evals/results/run-01
-```
-
-Exports refuse an existing directory and retain the frozen suite, manifest, per-check scores/evidence, review, candidate ZIP (skills, requests, responses, final artifacts), a grader source ZIP, and hashes. `verify` checks artifact integrity, safely extracts into `.temp/`, and recomputes the score exactly. Hashes detect accidental changes; they are not a signed attestation. The grader snapshot preserves the scoring implementation if the harness later changes.
-
-For repeated trials, prepare and execute a fresh run each time. Never copy responses between runs, repair failed candidate artifacts before scoring, or count rescoring as a new run. Keep the same plugin/corpus hashes when comparing repeated runs. Changes to prompts, fixtures, or expected outcomes require a new suite version and fresh runs.
-
-## Check scorer sensitivity
-
-```powershell
-.temp/eval-venv/Scripts/python.exe evals/calibrate.py .temp/evals/run-01 --output .temp/eval-calibration.json
-```
-
-Calibration copies a completed run into disposable workspaces and injects 12 known faults. It checks that the intended assertions fail and critical gates activate. Calibration results are **not model runs**. Some mutations expect the concrete artifacts in this corpus; a missing precondition is an error rather than a claimed detection.
-
-## Maintainer surfaces
-
-| File | Responsibility |
-|---|---|
-| `cases.py` | User requests, raw fixtures, and declarative expected outcomes |
-| `scoring.py` | Outcome assertions, link resolution, scoring, and release gates |
-| `run.py` | Preparation, candidate invocation, receipts, exports, replay |
-| `plugin_checks.py` | Local skill/manifest/reference validation |
-| `calibrate.py` | Known-fault scorer calibration |
-| `../test/test_evals.py` | Harness behavior and evidence replay tests |
-
-Add assertions about observable outcomes, not exact prose or a particular tool sequence. Use exact bytes for native or protected evidence, parsed fields for metadata, and resolved paths for navigation. Reserve critical gates for preservation, unauthorized changes, or misleading current state. Keep fixtures synthetic and avoid personal vault data in durable exports.
-
-## Revision integrity and configuration scope coverage
-
-Historical file/PARA exports select `suites/verifiers/revisions.json` by exact suite, revision and frozen-suite digest. Retained repository-owned grader definitions are checked against their allowlisted hashes before replay. The exported grader ZIP is checked but never executed. Unknown revisions and altered graders fail. Development exports without completed metadata replay current repository-owned grading code. Historical valid results remain visible; only the current candidate and current suite revision qualify for release, even when a historical timestamp is later.
-
-Configuration scope tasks under `tessl/writing-voice/configuration-scopes/` require fresh synthetic homes/workspaces and independent artifact review for both installation routes. They are authored scenarios, not execution evidence. Existing startup Pass rejection stays in force: structured submitter-authored traces cannot prove native startup delivery. No trusted native host-export attestation adapter is currently available. Writing-voice exports now replay observable outcomes against repository-owned performance, scope and activation definitions. Required fresh execution and independent review remain missing; no personal voice resemblance or native startup delivery is certified. Required file/PARA evidence must be rerun on the final candidate. These exact limitations block publication; report consistency cannot remove them.
-
-Prepare the 15-case voice suite with `python evals/run.py prepare <new-run-id> --suite writing-voice`. It contains WV01-WV06, SC01-SC05, and AC01-AC04. Execute using an actual host, retain its invocation/trace, then use the same review/score/export commands as the file suite. Independent review must inspect actual activation skill reads and atomic profile provenance, not merely token presence. Current completed receipt identities must use matrix revision and the exact frozen suite digest; current verification compares the entire frozen suite against trusted repository definitions. Exported grading Python is never executed.
-
-Voice assertions cover task outcomes and preservation, weighted at 52.5 and 37.5 points; independent review supplies the remaining 10. File/PARA retains its four original dimensions. Explicit suite weights must cover every scheduled assertion and total 90 positive points, so missing dimensions cannot silently lower the denominator. Unrelated-explanation controls accept a nonempty string summary.
-
-The voice suite requires independent review scores of **2 with nonempty evidence** for SC02 and AC01-AC04. A failed, partial, or missing review is a critical failure that blocks release even when all automatic checks pass. Review the retained host trace for correct positive and negative skill activation and for SC02's project-only bundle provenance, including absence of lower-layer reads. Evidence text alone does not prove those behaviors. The frozen suite declares these mandatory case IDs; the scorer rejects duplicate, unknown, or malformed critical-review lists. File/PARA has no added critical-review requirement.
-
-SC02's user and project profiles have distinct HOME-MARKER and PROJECT-MARKER signoff preferences. Its critical draft-body assertion requires the project marker and rejects the user marker, including a merged draft. These observable checks supplement the trace review of atomic source selection.
-
-### Native startup recovery
-
-This environment has `codex-cli 0.162.1` and `Claude Code 2.1.265`; executable absence is not the current finding. Version/help inspection was performed, not authentication or a native startup evaluation. Codex command-event JSON and Claude `--plugin-dir`/stream output can retain workflow observations but do not by themselves attest which foundation/startup context the host delivered. Recovery requires a repository-owned adapter for each supported native export format that independently verifies the loaded installed-package identity, fresh session identity, foundation/discovery delivery and H01-H03 artifact/event bindings, plus independent session/artifact review. Until such trusted observable proof exists, startup Pass remains rejected for every host. No authentication failure is claimed from these version checks.
+Historical exports select `evals/verifiers/revisions.json` by exact `(suite, suite_revision, suite_sha256)` tuple and verify pinned SHA-256 hashes before replaying repository-owned grader snapshots. Exported `grader.zip` archives are hash-checked for integrity and never executed. `startup-and-discovery` rows continue to reject self-certified `Pass` claims until a trusted native host-session attestation verifier is available.

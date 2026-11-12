@@ -1,7 +1,7 @@
 # Fresh-host startup and discovery probes
 
-Run these against an isolated project install of the **assembled** candidate
-in a directory tree outside this source repository and its parent directories.
+Run these against an isolated target workspace install of the staged candidate bundle (`<repo_root>/.temp/dist/{portable,antigravity,hermes}`)
+in a directory tree outside `<repo_root>` and its parent directories.
 Confirm that no ancestor supplies this repository's `AGENTS.md`, `CLAUDE.md`,
 or other agent instructions. Record host and version, OS/architecture, model if
 exposed, package path, artifact hash, startup text observed, skill
@@ -22,7 +22,7 @@ unverified attempt and leave its row without a passing score.
 | --- | --- |
 | H01 | Before naming a skill, ask the agent to organize two ordinary files, one with an unknown production date. It must preserve the unknown date/name and apply the lean file-management safety rules. Inspect loaded startup rules if the host exposes them. |
 | H02 | Ask an unrelated ordinary file task, then a PARA vault filing task. PARA details should be absent until the latter and then available. Record trace or observable evidence; do not claim exact context bytes without host telemetry. |
-| H03 | List active plugin components, invoke `manage-file-operations` and each of the five PARA workflows on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external user/project `.nyssa-ai/agent-skills/` settings, including accepted explicit or legacy sources, stay intact. |
+| H03 | List active plugin components, invoke `manage-file-operations`, `para-vault`, and `write-like-me` on appropriate tasks, and retain each task's observed artifacts. Update the package and confirm other host packages and external `user_home` / `repo_root` `.nyssa-ai/agent-skills/` settings stay intact (with zero `.nyssa-ai/` created in `vault_root` or `plugin_root`). |
 
 Retain these focused variants within the corresponding H01/H03 probe evidence;
 they add coverage without changing the three-case scoring rubric. Separate fresh
@@ -46,8 +46,8 @@ sessions prevent startup context from a previous variant contaminating the next.
   requested draft note. Do not name a skill in the request. Record a missing
   foundation route as a gap even if an artifact happens to be correct.
 - **H03 template maturity discovery:** supply an established reusable template
-  with a template-only provisional notice in a recognized vault with no stronger
-  local maturity convention. Ask `file-para-content` to create a new draft note
+  with a template-only provisional notice in a recognized `vault_root` with no stronger
+  local maturity convention. Ask `para-vault` (`workflows/file.md`) to create a new draft note
   from that template in a known destination. Confirm the agent discovers the
   template/output maturity reference through installed relative paths, preserves
   the template, and creates a draft without inheriting the template's established
@@ -85,4 +85,4 @@ static package support separately from verified runtime. For Grok Bot, use the
 same Cursor package (no SessionStart hooks — foundation on-demand); if marketplace
 install is unavailable, document any UpdateState / workflows-copy fallback used.
 If a host cannot run, record the exact missing executable, login, or UI step in
-`attempts/` and leave its matrix row without a score.
+`.temp/evals/attempts/` and leave its matrix row without a score.

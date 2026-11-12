@@ -10,7 +10,7 @@ description: >-
 # Write Like Me
 
 > [!IMPORTANT] Scope Directive
-> This is the unified facade and orchestrator for authentic user writing voice emulation and profile maintenance. It routes between runtime drafting and administrative voice profile management. It owns voice emulation, style calibration, and learning from approved edits. It does NOT own filing drafted notes into a PARA vault (delegated to `para-vault`) or raw filesystem mechanics (delegated to `manage-file-operations`).
+> This is the unified **Sibling Facade Skill** and orchestrator for authentic user **Writing Voice Profile** emulation and profile maintenance. It routes between runtime drafting and administrative `Writing Voice Profile` management. It owns voice emulation, style calibration, and learning from approved edits. It does NOT own filing drafted notes into a PARA vault at `vault_root` (delegated to `para-vault`) or raw filesystem mechanics (delegated to `manage-file-operations`).
 
 ---
 
@@ -30,7 +30,7 @@ Match the user's intent to the appropriate workflow:
 1. **Facts & Intent Preservation**: Emulating voice never authorizes changing supplied facts, commitments, constraints, or uncertainty levels.
 2. **Drafting Reads; Maintenance Writes**: Ordinary drafting reads profile files and leaves their bytes unchanged. Profile updates occur only when explicitly requested or when draft corrections are approved for learning.
 3. **Evidence-Backed Calibration**: Base tone guidelines strictly on authentic user samples, never on agent hallucinations or third-party boilerplate.
-4. **Scope Precedence**: Resolve configurations in canonical order: explicit pointer $\rightarrow$ project override (`.nyssa-ai/agent-skills/writing-voice/`) $\rightarrow$ user fallback (`~/.nyssa-ai/agent-skills/writing-voice/`).
+4. **Scope Precedence**: Follow `NyssaAI.Configuration` canonical `.nyssa-ai/` discovery across `user_home` (`~/.nyssa-ai/`) and `repo_root` (`<repo_root>/.nyssa-ai/`). For atomic `Writing Voice Profile` bundle selection, resolve in canonical order: explicit pointer $\rightarrow$ `repo_root` override (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`) $\rightarrow$ `user_home` fallback (`~/.nyssa-ai/agent-skills/writing-voice/`). Never read or write legacy `.nyssaai` or `.nyssa` directories, and never store `.nyssa-ai/` inside `vault_root` or `plugin_root`.
 
 ---
 
@@ -38,6 +38,6 @@ Match the user's intent to the appropriate workflow:
 
 Before reporting completion of any writing voice task:
 - [ ] For drafting tasks, confirm facts and meaning match the source request, with personal tone applied without altering commitments.
-- [ ] For profile updates, verify modified files are saved in the authorized user or project scope.
+- [ ] For profile updates, verify modified files are saved in the authorized `user_home` (`~/.nyssa-ai/agent-skills/writing-voice/`) or `repo_root` (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`) scope (never inside `vault_root` or `plugin_root`).
 - [ ] Confirm no private scratch or confidential sample text leaks into persistent public outputs.
 - [ ] Confirm `VOICE.md` and `STYLE.md` conform to the profile schema in [`references/profile-schema.md`](references/profile-schema.md).

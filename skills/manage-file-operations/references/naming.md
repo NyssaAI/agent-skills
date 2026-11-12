@@ -1,7 +1,7 @@
 # Naming details
 
 > [!IMPORTANT] Scope Directive
-> This reference defines slug conventions, date-prefix rules (`YYYY.MM.DD-descriptive-slug`), and extension preservation standards for workspace files and folders. It does NOT define PARA vault folder hierarchies (owned by `para-vault/references/folder-conventions.md`).
+> This reference defines slug conventions, date-prefix rules (`YYYY.MM.DD-descriptive-slug`), and extension preservation standards for files and folders across `repo_root`, `runtime_root`, and `vault_root`. It does NOT define PARA vault folder hierarchies (owned by `para-vault/references/folder-conventions.md`).
 
 Use lowercase kebab-case slugs for new names unless the destination has an
 established convention. Preserve existing names and file extensions unless a
@@ -9,9 +9,12 @@ rename is part of the task.
 
 For time-bound work or records, use `YYYY.MM.DD-descriptive-slug` as the file
 stem or folder name. The default date is when the document was produced or the
-folder was created. A project folder uses the project's creation date; an
-executed contract uses its signing date, and a published report uses its
-publication date. Keep the prefix stable through later edits or deadline changes.
+folder was created. A `Project` folder in `vault_root/1-projects/` uses the
+project's creation date (`YYYY.MM.DD-<slug>/project-index.md`), a `Daily Plan`
+in `vault_root/2-areas/daily-plans/` uses the planned calendar date
+(`YYYY.MM.DD-daily-plan.md`), an executed contract uses its signing date, and a
+published report uses its publication date. Keep the prefix stable through later
+edits or target-date changes.
 
 Preserve an existing document's original production date when copying,
 downloading, or importing it; those operations do not create a new document. A

@@ -15,7 +15,7 @@
     {
       "name": "bounded-migration",
       "max_score": 2,
-      "description": "The specifically authorized legacy status field is replaced by document-maturity while task-state and other unrelated operational fields and evidence are preserved."
+      "description": "The specifically authorized legacy status field is replaced by document-maturity while state and other unrelated operational fields and evidence are preserved."
     }
   ]
 }

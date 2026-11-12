@@ -13,7 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 EVALS = ROOT / "evals"
-EXCLUDED = {".temp", ".git", "__pycache__", "results", "attempts"}
+EXCLUDED = {".temp", ".git", "__pycache__", ".pytest_cache", "results", "attempts", "reports", ".nyssa-ai"}
 PUBLIC_SCRATCH_FIXTURES = {
     "evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/agent-skills/writing-voice/pending.md",
     "evals/tessl/writing-voice/performance/approved-edits-interrupted-update/fixture/workspace/.temp/other-task/keep.txt",
@@ -22,6 +22,11 @@ PUBLIC_SCRATCH_FIXTURES = {
 
 def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def write_json(path: Path, value: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def matches_sha256(raw: bytes, expected: str | None) -> bool:
@@ -35,22 +40,52 @@ def matches_sha256(raw: bytes, expected: str | None) -> bool:
 def source_inventory() -> dict[str, str]:
     """Freeze the declared behavior/assembly/suite inputs, not evidence outputs."""
     paths = []
-    for top in ("skills", "rules", ".tessl-plugin", "scripts", "adapters", "hooks", ".agents", ".claude-plugin", ".codex-plugin", ".cursor-plugin", ".hermes", ".github", "evals", "test"):
-        paths.extend((ROOT / top).rglob("*"))
-    paths.extend(ROOT / name for name in ("plugin.json", "gemini-extension.json",
-                                          "AGENTS.md", "CLAUDE.md", "GEMINI.md",
-                                          "README.md", ".gitattributes", ".gitignore"))
+    for top in (
+        "skills",
+        "rules",
+        ".tessl-plugin",
+        "scripts",
+        "harness-adapters",
+        "hooks",
+        ".claude-plugin",
+        ".codex-plugin",
+        ".cursor-plugin",
+        ".github",
+        "docs",
+        "evals",
+        "test",
+    ):
+        base = ROOT / top
+        if base.exists():
+            paths.extend(base.rglob("*"))
+    paths.extend(
+        ROOT / name
+        for name in (
+            "plugin.json",
+            "gemini-extension.json",
+            "tessl.json",
+            "AGENTS.md",
+            "CLAUDE.md",
+            "GEMINI.md",
+            "README.md",
+            "LICENSE",
+            ".gitattributes",
+            ".gitignore",
+        )
+    )
     result = {}
     for path in sorted(set(paths)):
+        if not path.exists():
+            continue
         relative = path.relative_to(ROOT)
-        if not path.is_file() or (relative.as_posix() not in PUBLIC_SCRATCH_FIXTURES and
-                                 any(part in EXCLUDED for part in relative.parts)):
+        if not path.is_file() or (
+            relative.as_posix() not in PUBLIC_SCRATCH_FIXTURES
+            and any(part in EXCLUDED for part in relative.parts)
+        ):
             continue
         if path.name == "LATEST.md" or path.is_symlink():
             continue
         content = path.read_bytes()
-        # Git may check text out as CRLF on Windows and LF on Linux. Hash the
-        # same canonical text while preserving binary inputs byte-for-byte.
         try:
             content.decode("utf-8")
         except UnicodeDecodeError:
@@ -58,7 +93,7 @@ def source_inventory() -> dict[str, str]:
         else:
             if b"\0" not in content:
                 content = content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
-        result[path.relative_to(ROOT).as_posix()] = hashlib.sha256(content).hexdigest()
+        result[relative.as_posix()] = hashlib.sha256(content).hexdigest()
     return result
 
 
@@ -71,8 +106,16 @@ def key(row: dict) -> tuple[str, str, str, str]:
     return tuple(row[name] for name in ("suite", "harness", "platform", "config"))
 
 
+def evidence_root() -> Path:
+    return ROOT / ".temp" / "evals"
+
+
+def ledger_path() -> Path:
+    return EVALS / "reports" / "evidence-ledger.json"
+
+
 def records(kind: str, matrix_keys: set[tuple[str, str, str, str]]) -> list[tuple[Path, dict]]:
-    root = EVALS / kind
+    root = evidence_root() / kind
     output = []
     if root.exists():
         for path in sorted(root.glob("*/metadata.json")):
@@ -94,9 +137,18 @@ def valid_completed(path: Path, data: dict) -> None:
         raise ValueError(f"Result has no real scored outcome: {path}")
     if not 0 <= data["score"] <= 100:
         raise ValueError(f"Result score out of range: {path}")
-    for field in ("host_version", "model", "artifact", "artifact_sha256",
-                  "suite_sha256", "scoring_method", "reviewer", "review_method",
-                  "critical_failures", "case_outcomes"):
+    for field in (
+        "host_version",
+        "model",
+        "artifact",
+        "artifact_sha256",
+        "suite_sha256",
+        "scoring_method",
+        "reviewer",
+        "review_method",
+        "critical_failures",
+        "case_outcomes",
+    ):
         if field not in data or data[field] in (None, ""):
             raise ValueError(f"Result lacks {field}: {path}")
     if data.get("host") != data["key"][1] or data.get("platform") != data["key"][2] or data.get("config") != data["key"][3]:
@@ -104,8 +156,6 @@ def valid_completed(path: Path, data: dict) -> None:
     if not isinstance(data["critical_failures"], list) or not isinstance(data["case_outcomes"], list):
         raise ValueError(f"Result case or failure record has wrong shape: {path}")
     suite = data["key"][0]
-    # Startup claims currently have no trusted host-export verifier. Retain
-    # completed failures, but do not let submitter-authored files certify a Pass.
     if suite == "startup-and-discovery" and data["outcome"] == "Pass":
         raise ValueError(f"Startup Pass requires a trusted host attestation verifier: {path}")
     expected_cases = {
@@ -132,8 +182,6 @@ def valid_completed(path: Path, data: dict) -> None:
     if data["critical_failures"] and data["outcome"] == "Pass":
         raise ValueError(f"Critical failure cannot pass release: {path}")
     if suite in ("file-and-para-24", "writing-voice"):
-        # This suite ships a replay verifier that regrades the retained
-        # candidate and checks every exported artifact hash.
         from run import verify as replay_export
         replay_export(path.parent, ROOT)
         score_data = read_json(path.parent / "score.json")
@@ -142,8 +190,6 @@ def valid_completed(path: Path, data: dict) -> None:
         if not matches_sha256((path.parent / "suite.json").read_bytes(), data.get("suite_sha256")):
             raise ValueError(f"Frozen suite hash disagrees with export: {path}")
     else:
-        # The other suites must retain independently reviewable case artifacts.
-        # A bare score claim or a one-word evidence file cannot be accepted.
         if data["scoring_method"] != "independent-case-review-v1":
             raise ValueError(f"Unsupported scoring method: {path}")
         for item in data["case_outcomes"]:
@@ -162,10 +208,12 @@ def valid_completed(path: Path, data: dict) -> None:
         revision = data.get("suite_revision")
         matrix_revision = read_json(EVALS / "matrix.json")["suite_revision"]
         expected_digest = suite_sha256(suite) if revision == matrix_revision else None
-        registry = EVALS / "suites/verifiers/revisions.json"
+        registry = EVALS / "verifiers/revisions.json"
         if registry.exists():
-            historical = next((item for item in read_json(registry)["revisions"] if
-                               item["suite"] == suite and item["revision"] == revision), None)
+            historical = next(
+                (item for item in read_json(registry)["revisions"] if item["suite"] == suite and item["revision"] == revision),
+                None,
+            )
             if historical:
                 expected_digest = historical["suite_sha256"]
         if expected_digest is None or data["suite_sha256"] != expected_digest:
@@ -176,7 +224,6 @@ def valid_completed(path: Path, data: dict) -> None:
     evidence = path.parent / evidence_name
     if not data.get("evidence") or not evidence.is_file():
         raise ValueError(f"Result evidence missing: {path}")
-    actual = hashlib.sha256(evidence.read_bytes()).hexdigest()
     if not matches_sha256(evidence.read_bytes(), data.get("evidence_sha256")):
         raise ValueError(f"Result evidence hash mismatch: {path}")
     if suite not in ("file-and-para-24", "writing-voice"):
@@ -191,15 +238,24 @@ def validate_behavioral_evidence(path: Path, data: dict, artifact: Path, names: 
         raise ValueError(f"Result lacks host invocation trace: {path}")
     trace = read_json(trace_path)
     invocations = trace.get("invocations")
-    if (trace.get("host") != data["host"] or not isinstance(invocations, list)
-            or not invocations or not all(isinstance(item, dict) and (item.get("tool") or item.get("tool_name"))
-                                          and (item.get("returned_task_name") or item.get("returned_agent_id")
-                                               or item.get("checks_passed")) for item in invocations)):
+    if (
+        trace.get("host") != data["host"]
+        or not isinstance(invocations, list)
+        or not invocations
+        or not all(
+            isinstance(item, dict)
+            and (item.get("tool") or item.get("tool_name"))
+            and (item.get("returned_task_name") or item.get("returned_agent_id") or item.get("checks_passed"))
+            for item in invocations
+        )
+    ):
         raise ValueError(f"Result has no structured host invocation evidence: {path}")
     evidence = read_json(path.parent / data["evidence"])
-    if (evidence.get("reviewer") != data["reviewer"] or
-            evidence.get("reviewer_independent") is not True or
-            evidence.get("case_outcomes") != data["case_outcomes"]):
+    if (
+        evidence.get("reviewer") != data["reviewer"]
+        or evidence.get("reviewer_independent") is not True
+        or evidence.get("case_outcomes") != data["case_outcomes"]
+    ):
         raise ValueError(f"Independent review receipt disagrees with result: {path}")
     with zipfile.ZipFile(artifact) as archive:
         required = {f"candidate/{case}/request.md" for case in ("H01", "H02", "H03")}
@@ -209,10 +265,13 @@ def validate_behavioral_evidence(path: Path, data: dict, artifact: Path, names: 
             raise ValueError(f"Host probe lacks request/response artifacts: {path}")
         raw_log = archive.read("review/host-session.jsonl")
         events = [json.loads(line) for line in raw_log.splitlines() if line.strip()]
-        if (not events or any(not isinstance(event, dict) or
-                              event.get("host") != data["host"] or
-                              not event.get("session_id") or not event.get("event_id")
-                              for event in events)):
+        if not events or any(
+            not isinstance(event, dict)
+            or event.get("host") != data["host"]
+            or not event.get("session_id")
+            or not event.get("event_id")
+            for event in events
+        ):
             raise ValueError(f"Host probe lacks structured session events: {path}")
         event_ids = {event["event_id"] for event in events}
         if len(event_ids) != len(events):
@@ -220,20 +279,26 @@ def validate_behavioral_evidence(path: Path, data: dict, artifact: Path, names: 
         for case in ("H01", "H02", "H03"):
             response = read_json_from_zip(archive, f"candidate/{case}/response.json")
             observations = response.get("observations", {})
-            if (response.get("case_id") != case or
-                    not isinstance(observations, dict) or
-                    not response.get("session_event_ids") or
-                    not set(response["session_event_ids"]).issubset(event_ids)):
+            if (
+                response.get("case_id") != case
+                or not isinstance(observations, dict)
+                or not response.get("session_event_ids")
+                or not set(response["session_event_ids"]).issubset(event_ids)
+            ):
                 raise ValueError(f"Host probe {case} lacks observed session evidence: {path}")
         review = read_json_from_zip(archive, "review/independent-review.json")
-        if (review.get("reviewer") != data["reviewer"] or
-                review.get("case_outcomes") != data["case_outcomes"] or
-                review.get("host_session_sha256") != hashlib.sha256(raw_log).hexdigest() or
-                not review.get("reviewer_observed_session") or
-                review.get("reviewer_agent_id") == review.get("candidate_agent_id")):
+        if (
+            review.get("reviewer") != data["reviewer"]
+            or review.get("case_outcomes") != data["case_outcomes"]
+            or review.get("host_session_sha256") != hashlib.sha256(raw_log).hexdigest()
+            or not review.get("reviewer_observed_session")
+            or review.get("reviewer_agent_id") == review.get("candidate_agent_id")
+        ):
             raise ValueError(f"Host probe lacks attributable independent review: {path}")
-        if (not data.get("assembled_artifact_inventory_sha256") or
-                trace.get("assembled_artifact_inventory_sha256") != data["assembled_artifact_inventory_sha256"]):
+        if (
+            not data.get("assembled_artifact_inventory_sha256")
+            or trace.get("assembled_artifact_inventory_sha256") != data["assembled_artifact_inventory_sha256"]
+        ):
             raise ValueError(f"Host probe lacks installed package identity: {path}")
 
 
@@ -264,57 +329,142 @@ def valid_attempt(path: Path, data: dict) -> None:
     datetime.fromisoformat(data["completed_at"].replace("Z", "+00:00"))
 
 
-def render() -> tuple[str, bool]:
+def _load_evidence(matrix_keys: set[tuple[str, str, str, str]]) -> tuple[list[tuple[Path, dict]], list[tuple[Path, dict]], bool]:
+    raw_root = evidence_root()
+    if (raw_root / "results").exists() or (raw_root / "attempts").exists():
+        results = records("results", matrix_keys)
+        attempts = records("attempts", matrix_keys)
+        for path, data in results:
+            valid_completed(path, data)
+        for path, data in attempts:
+            valid_attempt(path, data)
+        return results, attempts, True
+
+    ledger = ledger_path()
+    if ledger.is_file():
+        payload = read_json(ledger)
+        results = []
+        for entry in payload.get("results", []):
+            row_key = tuple(entry.get("key", []))
+            if row_key not in matrix_keys:
+                raise ValueError(f"Undeclared evaluation row in ledger: {entry.get('run_id')}")
+            if row_key[0] == "startup-and-discovery" and entry.get("outcome") == "Pass":
+                raise ValueError("Startup Pass requires a trusted host attestation verifier")
+            fake_path = raw_root / "results" / entry["run_id"] / "metadata.json"
+            results.append((fake_path, entry))
+        attempts = []
+        for entry in payload.get("attempts", []):
+            row_key = tuple(entry.get("key", []))
+            if row_key not in matrix_keys:
+                raise ValueError(f"Undeclared attempt row in ledger: {entry.get('run_id')}")
+            fake_path = raw_root / "attempts" / entry["run_id"] / "metadata.json"
+            valid_attempt(fake_path, entry)
+            attempts.append((fake_path, entry))
+        return results, attempts, False
+
+    return [], [], False
+
+
+def _build_ledger_payload(results: list[tuple[Path, dict]], attempts: list[tuple[Path, dict]]) -> dict:
+    return {
+        "schema": 1,
+        "results": [
+            {
+                "run_id": path.parent.name,
+                "key": data["key"],
+                "state": data["state"],
+                "verified": data["verified"],
+                "completed_at": data["completed_at"],
+                "outcome": data["outcome"],
+                "score": data["score"],
+                "candidate_sha256": data.get("candidate_sha256"),
+                "suite_revision": data.get("suite_revision"),
+                "suite_sha256": data.get("suite_sha256"),
+            }
+            for path, data in sorted(results, key=lambda item: item[0].parent.name)
+        ],
+        "attempts": [
+            {
+                "run_id": path.parent.name,
+                "key": data["key"],
+                "state": data["state"],
+                "started_at": data["started_at"],
+                "completed_at": data["completed_at"],
+                "stage": data["stage"],
+                "diagnostic": data["diagnostic"],
+                "next_check": data["next_check"],
+                "candidate_sha256": data["candidate_sha256"],
+            }
+            for path, data in sorted(attempts, key=lambda item: item[0].parent.name)
+        ],
+    }
+
+
+def render_with_ledger() -> tuple[str, bool, dict | None]:
     matrix = read_json(EVALS / "matrix.json")
     rows = matrix["rows"]
     if len({key(row) for row in rows}) != len(rows):
         raise ValueError("Coverage matrix contains duplicate keys")
     matrix_keys = {key(row) for row in rows}
-    results = records("results", matrix_keys)
-    attempts = records("attempts", matrix_keys)
-    for path, data in results:
-        valid_completed(path, data)
-    for path, data in attempts:
-        valid_attempt(path, data)
+    results, attempts, from_raw = _load_evidence(matrix_keys)
+    ledger_payload = _build_ledger_payload(results, attempts) if from_raw else None
     current = candidate_sha256()
-    lines = ["# Latest plugin evaluation", "",
-             "Generated from `matrix.json`, verified `results/`, and `attempts/` by `python evals/report.py generate`.",
-             f"Candidate SHA-256: `{current}`. Suite revision: `{matrix['suite_revision']}`.", "",
-             "A missing or failing required row blocks release. A consistent report does not imply release readiness.", "",
-             "| Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |",
-             "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    lines = [
+        "# Latest plugin evaluation",
+        "",
+        "Generated from `matrix.json`, verified `.temp/evals/results/`, `.temp/evals/attempts/`, and `reports/` by `python evals/report.py generate`.",
+        f"Candidate SHA-256: `{current}`. Suite revision: `{matrix['suite_revision']}`.",
+        "",
+        "A missing or failing required row blocks release. A consistent report does not imply release readiness.",
+        "",
+        "| Suite | Harness | Platform | Configuration | Required | Latest completed result | Outcome / score | Freshness | Newer attempt / next check |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
     ready = True
     for row in rows:
         matching = [(p, d) for p, d in results if tuple(d["key"]) == key(row)]
-        eligible = [(p, d) for p, d in matching if
-                    d.get("candidate_sha256") == current and
-                    d.get("suite_revision") == matrix["suite_revision"]]
+        eligible = [
+            (p, d)
+            for p, d in matching
+            if d.get("candidate_sha256") == current and d.get("suite_revision") == matrix["suite_revision"]
+        ]
         selected = latest(eligible) or latest(matching)
         selected_attempt = latest([(p, d) for p, d in attempts if tuple(d["key"]) == key(row)])
         if selected:
             path, data = selected
-            result_link = f"[{path.parent.name}](results/{path.parent.name}/metadata.json)"
+            result_link = f"[{path.parent.name}](../.temp/evals/results/{path.parent.name}/metadata.json)"
             outcome = f"{data['outcome']} / {data['score']}/100"
-            freshness = "Current" if (data.get("candidate_sha256") == current and
-                                      data.get("suite_revision") == matrix["suite_revision"]) else "Stale"
+            freshness = (
+                "Current"
+                if (data.get("candidate_sha256") == current and data.get("suite_revision") == matrix["suite_revision"])
+                else "Stale"
+            )
         else:
             result_link, outcome, freshness = "Not run", "Score unavailable", "No result"
             data = None
         attempt_text = row["remaining"]
         if selected_attempt and (not selected or selected_attempt[1]["completed_at"] > selected[1]["completed_at"]):
             path, attempt = selected_attempt
-            attempt_link = f"[{path.parent.name}](attempts/{path.parent.name}/metadata.json)"
+            attempt_link = f"[{path.parent.name}](../.temp/evals/attempts/{path.parent.name}/metadata.json)"
             if attempt["candidate_sha256"] == current:
                 attempt_text = f"{attempt_link}: {attempt['state']}; {attempt['next_check']}"
             else:
                 attempt_text = f"{attempt_link}: {attempt['state']} on an earlier candidate; {row['remaining']}"
         if row["required"] and (not data or data["outcome"] != "Pass" or freshness != "Current"):
             ready = False
-        cells = [*key(row), "Yes" if row["required"] else "No", result_link,
-                 outcome, freshness, attempt_text]
+        cells = [*key(row), "Yes" if row["required"] else "No", result_link, outcome, freshness, attempt_text]
         lines.append("| " + " | ".join(str(c).replace("|", "\\|").replace("\n", " ") for c in cells) + " |")
-    lines += ["", f"Release acceptance: **{'Pass' if ready else 'Fail — required evidence missing, stale, or failing'}**.", ""]
-    return "\n".join(lines), ready
+    lines += [
+        "",
+        f"Release acceptance: **{'Pass' if ready else 'Fail — required evidence missing, stale, or failing'}**.",
+        "",
+    ]
+    return "\n".join(lines), ready, ledger_payload
+
+
+def render() -> tuple[str, bool]:
+    report_text, ready, _ = render_with_ledger()
+    return report_text, ready
 
 
 def main() -> int:
@@ -324,18 +474,24 @@ def main() -> int:
     if args.command == "hash":
         print(candidate_sha256())
         return 0
-    report, ready = render()
+    report_text, ready, ledger_payload = render_with_ledger()
     path = EVALS / "LATEST.md"
     if args.command == "generate":
-        path.write_text(report, encoding="utf-8")
+        if ledger_payload is not None:
+            write_json(ledger_path(), ledger_payload)
+        path.write_text(report_text, encoding="utf-8")
         print(path)
         return 0
-    if not path.exists() or path.read_text(encoding="utf-8") != report:
+    if not path.exists() or path.read_text(encoding="utf-8") != report_text:
         print("LATEST.md differs from evidence; run generate and inspect the diff", file=sys.stderr)
         return 1
-    if args.command == "release" and not ready:
-        print("Release acceptance failed: required rows lack current passing evidence", file=sys.stderr)
-        return 1
+    if args.command == "release":
+        if ledger_payload is None:
+            print("Release acceptance failed: raw .temp/evals/results artifacts required for release verification", file=sys.stderr)
+            return 1
+        if not ready:
+            print("Release acceptance failed: required rows lack current passing evidence", file=sys.stderr)
+            return 1
     print("Report consistent" + ("; release ready" if ready else "; release incomplete"))
     return 0
 

@@ -1,11 +1,11 @@
 # Safe File Operations
 
 > [!IMPORTANT] Scope Directive
-> This reference defines identity verification, collision disambiguation, and recovery procedures for interrupted file operations. It does NOT define PARA vault folder hierarchies (owned by `para-vault/references/folder-conventions.md`).
+> This reference defines identity verification, collision disambiguation, and recovery procedures for interrupted file operations across `repo_root`, `runtime_root`, and `vault_root`. It does NOT define PARA vault folder hierarchies (owned by `para-vault/references/folder-conventions.md`).
 
 ## Identity and collisions
 
-Before a write or move, inspect the source and destination. Match a returning item by its reliable identifier or content and provenance; a matching name alone does not prove identity. Reuse an existing identical item instead of creating a duplicate. Preserve both items when identity or differences remain uncertain.
+Before a write or move, inspect the source and destination. Match a returning item by its reliable identifier (such as UUID `id`, `Message-ID`, `UID`, or `Source-ID`) or content and provenance; a matching name alone does not prove identity. Reuse an existing identical item instead of creating a duplicate. Preserve both items when identity or differences remain uncertain.
 
 Never overwrite an unrelated item. For distinct items that need the same name, append `-2`, `-3`, and so on before the extension, using the first unused name. Apply the suffix to a folder name when folders collide. Keep an established item's name stable on later imports or revisions; a retry of the same operation is not a new collision.
 

@@ -1,7 +1,0 @@
-{
-  "redacted_auth_status": {
-    "loggedIn": false,
-    "authMethod": "none",
-    "apiProvider": "firstParty"
-  }
-}

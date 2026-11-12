@@ -1,126 +1,77 @@
 # NyssaAI Agent Skills
 
-Version: **0.6.4** (candidate; see [latest evaluation](evals/LATEST.md)).
-Private Tessl evaluations cover representative PARA workflows; prior full-suite and host results predate this split.
+Version: **0.7.3** (see [authoritative glossary](docs/GLOSSARY.md) and [latest evaluation](evals/LATEST.md)).
 
-Three foundational skills share one maintained source tree, a brief
-[startup foundation](skills/manage-file-operations/core.md), and a
-[writing voice convention](rules/writing-voice.md). Its PARA section
-applies only to recognized vaults; detailed guidance loads on demand.
-Plugin-builder is maintained separately in the private `NyssaAI/plugin-builder` repository.
+Three canonical skills share one maintained source tree at `repo_root`, a concise [startup foundation](skills/manage-file-operations/core.md), and a [writing voice convention](rules/writing-voice.md). The PARA section applies exclusively to recognized PARA vaults (`vault_root`); detailed runbooks and references load on demand.
 
-| Skill | Workflow |
-| --- | --- |
-| [manage-file-operations](skills/manage-file-operations/SKILL.md) | Safely move, rename, copy, import, or archive existing content, resolve collisions, and resume interrupted operations. Its `core.md` owns the shared startup foundation; deferred conventions remain in its references. |
-| [para-vault](skills/para-vault/SKILL.md) | Manage a PARA vault: classify and file captures, process inboxes, reconcile and revise documents, review navigation and links, archive or reactivate projects, and ingest email/calendar records. |
-| [write-like-me](skills/write-like-me/SKILL.md) | Draft or rewrite material in the user's authentic writing voice, and establish, inspect, calibrate, or update writing voice profiles. |
-
-`para-vault` is retired. Its capabilities now live in the five focused vault
-workflows above. Shared guidance stays with one owning skill and is linked by
-consumers; reading a reference does not require activating its owner's workflow.
-Existing startup hooks/rules deliver the foundation. When it is absent from context,
-`manage-file-operations` and the shared vault conventions load the same core
-on demand without activating an additional workflow. Tessl loads the generated
-`rules/file-management.md` declared in `.tessl-plugin/plugin.json`; its source
-is the same `skills/manage-file-operations/core.md`. The canonical
-`rules/writing-voice.md` is also delivered by the existing startup hook, managed
-project anchor, Antigravity rules, Tessl rules, and Hermes prompt section. This adds no commands,
-MCP dependencies, or background automation. The workflows compose with
-`manage-file-operations` for actual file transfers and recovery.
-
-`manage-file-operations` replaces the retired `file-management` skill. It covers
-moves, renames, copies, imports, archives, and interrupted-operation recovery.
-The startup foundation remains shared. Existing [file and folder naming](skills/manage-file-operations/references/naming.md),
-[temporary storage](skills/manage-file-operations/references/intermediate-work.md),
-and [document maturity](skills/manage-file-operations/references/document-maturity.md)
-guidance loads from the relevant workflow references when naming, temporary work,
-or template/output maturity decisions require it; these are not new skills.
-
-## Inbox filing and source retention
-
-Inbox filing keeps one working copy at its resolved PARA home; it no longer
-creates an automatic archive under Inbox. Substantive rewrites preserve
-recoverable history, using the existing archive when a snapshot is needed.
-Existing historical copies are preserved until an explicit cleanup is requested.
-Email and calendar services govern live source state. Prefer source references;
-retain a local snapshot only for requested retention, evidence, offline access,
-or an otherwise unavailable source. See the [source retention rule](skills/file-para-content/references/folder-conventions.md#source-record-destinations).
-
-## Document maturity compatibility
-
-New PARA notes use `document-maturity` instead of `status`. Work-state fields
-such as `task-state` remain independent. Existing accepted legacy maturity values
-are readable without changing notes; migrating existing notes requires explicit
-user authorization. Conflicting fields are reported rather than overwritten.
-See the [migration rule](skills/revise-vault-documents/references/frontmatter-schemas.md#legacy-metadata-compatibility).
-
-## Package and activation
-
-The canonical content lives under `skills/`. The root `plugin.json`,
-`.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, and
-`.cursor-plugin/plugin.json` identify portable and host packages. The Cursor
-shim also covers Grok Bot (same packaging; no SessionStart hooks). `scripts/assemble.py write` builds the project Antigravity
-plugin at `.agents/plugins/agent-skills/`, the Hermes plugin at
-`.hermes/plugins/agent-skills/`, and the managed foundation
-in `AGENTS.md`; the generated Antigravity rules and `hooks/hooks.json` deliver
-the same foundation and writing convention to supported plugin sessions. Codex requires users to trust the
-installed hook before it runs. `scripts/assemble.py check` verifies exact source equality
-without modifying files. `CLAUDE.md` imports the root anchor for a project that
-loads it. A plugin installed into an unrelated project does not automatically
-bring that project's startup anchor with it; startup delivery depends on the
-host's hook or rule activation.
-
-Hosts without startup delivery can load writing guidance through the relevant
-skill. Native host acceptance of the new writing workflows remains unverified;
-existing file-workflow results do not establish voice accuracy or activation.
-
-| Host | Package route | Activation evidence |
+| Skill | Pattern | Scope & Workflows |
 | --- | --- | --- |
-| Antigravity CLI / 2.0 / IDE | The generated `.agents/plugins/agent-skills/` is the [documented workspace plugin location](https://antigravity.google/docs/plugins). | Native discovery and fresh-session behavior remain to be tested per surface. `gemini-extension.json` is Gemini CLI metadata, not an Antigravity plugin manifest. |
-| Codex | The root and `.codex-plugin` manifests plus `skills/` form the [portable package source](https://developers.openai.com/plugins/build/plugins). | An arbitrary clone does not register a plugin. Use a supported plugin catalog/install flow and verify the skills appear in a new session. |
-| Claude Code | `.claude-plugin/plugin.json` declares the shared skills. Use the [Claude plugin manager](https://code.claude.com/docs/en/plugins-reference) or local `--plugin-dir` for development. | Manifest validation passes; this machine's expired OAuth prevents a fresh agent invocation. A project's root `CLAUDE.md` must be installed separately for startup rules. |
-| Claude Cowork | The Claude package may be uploaded through its supported plugin flow. | Upload and runtime behavior have not been verified here. |
-| OpenClaw | Install this package as a [compatible bundle](https://docs.openclaw.ai/plugins/bundles) with `openclaw plugins install <package-path>`, then inspect the detected format and loaded skills. | Bundle installation, startup guidance, and skill invocation remain unverified here. A native runtime adapter is unnecessary for these Markdown skills. |
-| Hermes Agent | The generated `.hermes/plugins/agent-skills/` provides a [native project plugin](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins) with the shared skills and startup foundation. | Enable project plugins with `HERMES_ENABLE_PROJECT_PLUGINS=true`, then enable this plugin. Fresh-session behavior remains unverified. |
-| Cursor | `.cursor-plugin/plugin.json` plus root `skills/` form the [Cursor plugin package](https://cursor.com/docs/reference/plugins). Install via marketplace / InstallPlugin into the plugin cache. | Static package support only so far; fresh-session and skill-invocation runtime remain unverified here. |
-| Grok Bot | Same Cursor package (`.cursor-plugin/plugin.json` + `skills/`). Fallback: UpdateState / workflows copy when marketplace install is unavailable. | Static/package support only. **No SessionStart hooks** â€” foundation is on-demand, not hook-injected. Runtime install and invocation remain unverified here. |
-| Muse | Only a proposed JSON-executable shim contract is known. | Loader, manifest, and installation are unverified; no support claim. |
+| [manage-file-operations](skills/manage-file-operations/SKILL.md) | Peer Skill | Safely move, rename, copy, import, or archive existing content, resolve destination collisions, and resume interrupted operations across `repo_root`, `vault_root`, and `runtime_root`. Its `core.md` owns the shared startup foundation. |
+| [para-vault](skills/para-vault/SKILL.md) | Sibling Facade Skill | Manage a PARA vault (`vault_root`) aligned with `daily-tasks` work records: classify and file `Inbox Capture` items (`workflows/file.md`), reconcile and revise notes without flattening work records (`workflows/reconcile.md`), archive or reactivate projects (`workflows/archive.md`), maintain navigation (`workflows/navigate.md`), and import `Source Record` snapshots (`workflows/import-records.md`). |
+| [write-like-me](skills/write-like-me/SKILL.md) | Sibling Facade Skill | Draft or rewrite communications in the user's authentic voice (`workflows/draft.md`) and establish, inspect, calibrate, or update scoped `Writing Voice Profile` bundles (`workflows/maintain.md`). |
 
-The exact per-host status and missing tests are in the
-[coverage matrix](evals/matrix.json) and [latest evaluation](evals/LATEST.md).
-Placement, manifest parsing, and skill
-invocation are separate checks. Do not infer runtime support from a shared
-`SKILL.md` alone.
+## Canonical 5-Root Ubiquitous Language
 
-## Development and evaluation
+See [`docs/GLOSSARY.md`](docs/GLOSSARY.md) for full definitions:
 
-Run `python scripts/assemble.py write` after changing any skill, then
-`python scripts/assemble.py check`. The [eval catalog](evals/README.md)
-contains the behavioral cases, run commands, retained result format, and
-latest-score checks. Temporary work belongs under `.temp/`; retained review
-history belongs under the private, Git-ignored `docs/`.
+- **`user_home` (`~`)**: Account-level `.nyssa-ai/` configuration (`~/.nyssa-ai/agent-skills/writing-voice/`).
+- **`repo_root`**: Git repository root containing tracked source (`skills/`, `rules/`, `hooks/`, `harness-adapters/`, `docs/`, `scripts/`, `test/`, `evals/`) and optional repository-scoped `.nyssa-ai/` overrides (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`). Never self-loads `.agents/`, `.hermes/`, or `artifacts/`.
+- **`vault_root`**: Shared Markdown PARA vault (`0-inbox/`, `1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`). Zero `.nyssa-ai/` config or runtime files are ever stored inside `vault_root` (only disposable scratch at `vault_root/.temp/`).
+- **`runtime_root`**: Autonomous agent persona working directory (`--runtime-root` $\rightarrow$ `NYSSA_RUNTIME_ROOT` $\rightarrow$ persona `cwd` with `SOUL.md` + `IDENTITY.md` $\rightarrow$ `~/.nyssa-ai/<plugin>/runtime/` or `<repo_root>/.nyssa-ai/<plugin>/runtime/`).
+- **`plugin_root`**: Installed read-only plugin bundle root (`CLAUDE_PLUGIN_ROOT`, `CURSOR_PLUGIN_ROOT`, etc.).
 
-## Project configuration and writing voice
+## `para-vault` and `daily-tasks` Vault Alignment
 
-Plugin-owned configuration and persistent state belongs under
-`<user-home>/.nyssa-ai/<plugin-name>/` or `<project-root>/.nyssa-ai/<plugin-name>/`, outside installed code. Resolve the
-explicit project/workspace root first, then the applicable repository root;
-for non-Git workspaces use the established working root. Nested directories
-share that root. Do not silently choose the home directory or create competing roots.
+`para-vault` shares `vault_root` cleanly with `daily-tasks`:
 
-Agent Skills stores voice guidance in `.nyssa-ai/agent-skills/writing-voice/`:
-`VOICE.md` for voice characteristics, optional `STYLE.md` for editorial standards,
-and `examples/` for approved curated examples. The maintenance skill owns the
-[detailed storage contract](skills/maintain-writing-voice/references/storage.md).
-Existing user-selected samples and profiles remain in place. Disposable calibration
-work belongs under `.temp/agent-skills/writing-voice/`.
+1. **Structured Work Records (`RecordKind`)**: Records with `type` in `project`, `milestone`, `task`, `blocker`, or `daily-plan` are governed by `state` (`ProjectState`, `MilestoneState`, `TaskState`: `not-started | in-progress | completed | cancelled`; `BlockerState`: `open | resolved`) and `## Definition of Done` (`- [ ]` / `- [x]` checklists):
+   - Projects: `1-projects/YYYY.MM.DD-<slug>/project-index.md` (canonical `daily-tasks` folder) or existing `1-projects/<slug>/`
+   - Milestones: `mN-<slug>/mN-<slug>.md`
+   - Tasks: `tN-<slug>.md` (project root or milestone folder)
+   - External Blockers: `blockers/bN-<slug>.md`
+   - Daily Plans: `2-areas/daily-plans/YYYY.MM.DD-daily-plan.md`
+2. **Knowledge Notes (`document-maturity`)**: Non-plan area notes (`2-areas/`) and reusable resource notes (`3-resources/`) use `document-maturity` (`draft`, `current`, `deprecated`, `historical`, `archived`, `template`, `fixture`). Structured `daily-tasks` work records do not require `document-maturity`, and `workflows/reconcile.md` preserves valid `daily-tasks` records in place rather than rewriting them into prose notes. The retired `task-state` frontmatter key is never written (recognized read-only only during authorized legacy migrations). See [vault conventions](skills/para-vault/references/vault-conventions.md) and [frontmatter schemas](skills/para-vault/references/frontmatter-schemas.md#legacy-metadata-compatibility).
+3. **Inbox Filing & `Source Record` Retention**: Filing from `0-inbox/` keeps one canonical working copy at its resolved PARA destination without creating an inbox shadow archive. Email and calendar services govern live source state; retain local snapshots only when requested or required as durable evidence. See [source record destinations](skills/para-vault/references/folder-conventions.md#source-record-destinations).
 
-Private profiles require a verified, narrowly scoped local Git exclusion or an
-accepted project ignore convention; a dot-prefixed directory alone provides no
-privacy. Do not ignore all `.nyssa-ai/`, as sibling plugins may share their data.
-Sharing profiles requires an explicit decision. Packages exclude user configuration,
-state, and scratch data. Ordinary drafting reads profiles without changing them.
+## `harness-adapter` Packaging and Activation
 
-[MIT License](LICENSE) Â© 2026 NyssaAI.
+Canonical plugin source lives under `skills/`, `rules/`, `hooks/`, and `harness-adapters/`. Root `harness-adapter` manifests (`plugin.json`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.tessl-plugin/plugin.json`, and `gemini-extension.json`) stay synchronized via `python3 scripts/assemble.py write`.
 
-Writing voice selects one complete bundle: explicit selection, project override, then user fallback. VOICE, STYLE and examples never merge across scopes. Existing malformed bundles report a diagnostic. Both installation scopes read both preference scopes. New setup defaults to an established project, or user scope without a project; “for all projects” writes user scope. Ordinary drafts leave preferences unchanged. Legacy `.nyssaai` and `.nyssa` aliases remain discoverable without automatic migration. See [storage](skills/maintain-writing-voice/references/storage.md) for exact precedence, privacy and scoped writes.
+`scripts/assemble.py` **never** writes `.agents/`, `.hermes/`, or `artifacts/` into `repo_root`. Instead, `python3 scripts/assemble.py write` updates tracked root `harness-adapter` manifests in place and stages host distribution bundles under `--output-dir` (defaulting to `<repo_root>/.temp/dist/`):
+
+- `.temp/dist/portable/` — portable bundle with `harness-adapters/codex/<skill>/openai.yaml` projected to `skills/<skill>/agents/openai.yaml` for Codex UI discovery.
+- `.temp/dist/antigravity/` — Antigravity plugin bundle with `always_on` rules (installed to a target workspace's `.agents/plugins/agent-skills/`).
+- `.temp/dist/hermes/` — Hermes Agent plugin bundle using `harness-adapters/hermes/plugin.py` (installed to a target workspace's `.hermes/plugins/agent-skills/`).
+
+`python3 scripts/assemble.py check` verifies exact synchronization of tracked manifests and staged bundles and fails if `.agents/`, `.hermes/`, or `artifacts/` appear inside `repo_root`.
+
+| Host | `harness-adapter` Route | Activation Notes |
+| --- | --- | --- |
+| Antigravity CLI / 2.0 / IDE | Staged `.temp/dist/antigravity/` installed to target workspace `.agents/plugins/agent-skills/` ([docs](https://antigravity.google/docs/plugins)). | `gemini-extension.json` is separate Gemini CLI metadata. |
+| Codex | Root `.codex-plugin/plugin.json` + staged `.temp/dist/portable/` (includes Codex UI `openai.yaml` projections) ([docs](https://developers.openai.com/plugins/build/plugins)). | Install via supported catalog/install flow and trust `hooks/hooks.json` for `SessionStart`. |
+| Claude Code & Cowork | `.claude-plugin/plugin.json` + `skills/` and `hooks/hooks.json` ([docs](https://code.claude.com/docs/en/plugins-reference)). | Install via Claude plugin manager or `--plugin-dir` outside `repo_root`. |
+| OpenClaw | Install compatible bundle with `openclaw plugins install <package-path>` ([docs](https://docs.openclaw.ai/plugins/bundles)). | Markdown skills load directly without a custom runtime shim. |
+| Hermes Agent | Staged `.temp/dist/hermes/` from `harness-adapters/hermes/plugin.py` installed to target `.hermes/plugins/agent-skills/` ([docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins)). | Install into target workspace/home plugin path (`HERMES_ENABLE_PROJECT_PLUGINS=true`). |
+| Cursor & Grok Bot | `.cursor-plugin/plugin.json` + `skills/` ([docs](https://cursor.com/docs/reference/plugins)). | Grok Bot shares the Cursor package without `SessionStart` hooks (foundation loads on demand). |
+
+See the [coverage matrix](evals/matrix.json) and [latest evaluation](evals/LATEST.md) for exact per-host verification evidence.
+
+## Configuration and `Writing Voice Profile` Bundles
+
+`NyssaAI.Configuration` resolves canonical `.nyssa-ai/` directories across `user_home` (`~/.nyssa-ai/`) and `repo_root` (`<repo_root>/.nyssa-ai/`). Legacy `.nyssaai` and `.nyssa` directory names are retired and never probed or written automatically.
+
+`write-like-me` stores atomic `Writing Voice Profile` bundles (`VOICE.md`, optional `STYLE.md`, optional `examples/`) at `~/.nyssa-ai/agent-skills/writing-voice/` (`user_home`) or `<repo_root>/.nyssa-ai/agent-skills/writing-voice/` (`repo_root`). Atomic bundle selection resolves explicit task pointer $\rightarrow$ `repo_root` override $\rightarrow$ `user_home` fallback without merging files across scopes. Disposable calibration comparisons and recovery snapshots belong under `<repo_root>/.temp/agent-skills/writing-voice/` (or `<runtime_root>/.temp/agent-skills/writing-voice/` / `<user_home>/.temp/agent-skills/writing-voice/`). See [scoped storage](skills/write-like-me/references/storage.md) for privacy verification and safe write rules.
+
+## Development, Testing, and Evaluation
+
+```bash
+python3 scripts/assemble.py write
+python3 scripts/assemble.py check
+python3 evals/run.py validate
+python3 evals/report.py check
+pytest test/unit test/use_case
+```
+
+Raw evaluation exports and failed attempt diagnostics live in gitignored `.temp/evals/{results,attempts}/`; durable human-readable summaries and verified receipts live in tracked [`evals/reports/`](evals/reports/) and [`evals/LATEST.md`](evals/LATEST.md). See [`evals/README.md`](evals/README.md) for full suite documentation.
+
+[MIT License](LICENSE) © 2026 NyssaAI.

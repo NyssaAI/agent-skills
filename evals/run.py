@@ -27,7 +27,7 @@ import zipfile
 
 from cases import build_cases
 
-SUITE_VERSION = "0.5.0"
+SUITE_VERSION = "0.7.3"
 
 
 def write_json(path, value):
@@ -95,10 +95,10 @@ def prepare(repository, run_id, suite_name="file-and-para-24"):
     run_root.mkdir(parents=True, exist_ok=False)
     candidate = run_root / "candidate"
     plugin = candidate / "plugin"
-    for relative in ["skills", "rules", "hooks", ".tessl-plugin", ".codex-plugin", ".claude-plugin", ".agents"]:
+    for relative in ["skills", "rules", "hooks", "harness-adapters", ".tessl-plugin", ".codex-plugin", ".claude-plugin", ".cursor-plugin"]:
         source = repository / relative
         if source.exists():
-            shutil.copytree(source, plugin / relative, ignore=shutil.ignore_patterns(".nyssa-ai", ".nyssaai", ".nyssa", ".temp", "__pycache__"))
+            shutil.copytree(source, plugin / relative, ignore=shutil.ignore_patterns(".nyssa-ai", ".temp", "__pycache__", ".pytest_cache"))
     for relative in ["plugin.json", "gemini-extension.json"]:
         source = repository / relative
         if source.exists():
@@ -280,7 +280,7 @@ def verify(export_path, repository):
         metadata = read_json(metadata_path) if metadata_path.exists() else None
         if metadata and not matches_sha256((export_path / "suite.json").read_bytes(), metadata["suite_sha256"]):
             raise ValueError("Frozen suite digest differs from revision identity")
-        definitions = read_json(Path(repository) / "evals/suites/verifiers/revisions.json")["revisions"] if metadata else []
+        definitions = read_json(Path(repository) / "evals/verifiers/revisions.json")["revisions"] if metadata else []
         definition = next((item for item in definitions if
                            item["suite"] == metadata["key"][0] and
                            item["revision"] == metadata["suite_revision"] and
@@ -304,7 +304,7 @@ def verify(export_path, repository):
                           "grader_directory": "."}
         if grader_files != definition["grader_files"]:
             raise ValueError("Frozen grader differs from trusted revision")
-        trusted = (Path(repository) / "evals/suites/verifiers" / definition["grader_directory"]) if metadata and definition["grader_directory"] != "." else Path(__file__).resolve().parent
+        trusted = (Path(repository) / "evals/verifiers" / definition["grader_directory"]) if metadata and definition["grader_directory"] != "." else Path(__file__).resolve().parent
         with zipfile.ZipFile(export_path / "grader.zip") as archive:
             if set(archive.namelist()) != set(grader_files):
                 raise ValueError("Frozen grader file inventory differs from export")

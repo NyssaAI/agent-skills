@@ -5,11 +5,11 @@
 
 ## Apply the right guidance
 
-Use the selected atomic explicit, project, or user bundle, resolved through [storage](storage.md). Follow current explicit directions and required format or destination standards first. Apply approved explicit preferences and the relevant context mode, then supported inferred habits. Read relevant examples on demand rather than copying every example into the task.
+Use the selected atomic explicit, `repo_root`, or `user_home` `Writing Voice Profile` bundle, resolved through [storage](storage.md). Follow current explicit directions and required format or destination standards first. Apply approved explicit preferences and the relevant context mode, then supported inferred habits. Read relevant examples on demand rather than copying every example into the task.
 
 An email may need an opening, context, and a clear request; chat may convey the same facts in one paragraph. Choose the mode supported by the profile and task. Avoid caricature: repeating a signature phrase or forcing every sentence to match one sample does not establish resemblance.
 
-House-style-governed output uses the required house style. Apply compatible personal habits only where appropriate. Do not rewrite quoted passages, native email/calendar evidence, or third-party material into the user's voice unless the task specifically calls for a transformed version; preserve source identity and attribution.
+House-style-governed output uses the required house style. Apply compatible personal habits only where appropriate. Do not rewrite quoted passages, `Source Record` exports (email/calendar evidence), or third-party material into the user's voice unless the task specifically calls for a transformed version; preserve source identity and attribution.
 
 If no profile is present, complete useful drafting with the explicit instructions and any samples authorized for this task. Briefly explain that a saved profile was unavailable and offer setup without requiring it. Do not create profile directories, save inferred rules, or claim the draft matches established preferences.
 

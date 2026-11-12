@@ -6,13 +6,13 @@ description: >-
   Covers safe filesystem operations, reference repair, and non-destructive moves.
   Do NOT use this skill for PARA vault classification (use `para-vault`) or drafting text (use `write-like-me`).
 metadata:
-  version: "0.1.3"
+  version: "0.7.3"
 ---
 
 # Manage File Operations
 
 > [!IMPORTANT] Scope Directive
-> This skill defines safe filesystem operations (move, rename, copy, import, archive), collision handling, reference repair, and recovery for existing workspace files and folders. It does NOT own PARA domain classification (delegated to `para-vault`) or writing voice emulation (delegated to `write-like-me`).
+> This skill defines safe filesystem operations (move, rename, copy, import, archive), collision handling, reference repair, and recovery for existing files and folders across `repo_root`, `runtime_root`, or `vault_root`. It does NOT own PARA domain classification (delegated to `para-vault`) or `Writing Voice Profile` emulation (delegated to `write-like-me`).
 
 Complete the requested operation while preserving content and navigation. Follow
 the user's instructions and applicable local conventions. If the host has not
@@ -20,17 +20,18 @@ loaded the [file-management foundation](core.md), read it before acting.
 
 ## 1. Establish the intended result
 
-Identify the source items, requested operation, and destination. Use the user's
-destination or the existing organization; do not invent a new top-level scheme.
-Preserve names and extensions unless renaming is part of the request. When a
-requested name depends on dates or naming exceptions, read the existing
-[naming guidance](references/naming.md).
+Identify the source items, requested operation, and destination within the active
+`repo_root`, `runtime_root`, or `vault_root`. Never write user state or `.temp/`
+scratch into `plugin_root`. Use the user's destination or the existing
+organization; do not invent a new top-level scheme. Preserve names and
+extensions unless renaming is part of the request. When a requested name depends
+on dates or naming exceptions, read [naming guidance](references/naming.md).
 
-For a recognized PARA vault, read [shared vault conventions](../para-vault/references/vault-conventions.md)
+For a recognized `vault_root`, read [shared vault conventions](../para-vault/references/vault-conventions.md)
 and, if placement is undecided, [classification](../para-vault/references/classification.md).
-For vault moves, renames, and archives, apply the [navigation checklist](../para-vault/references/navigation.md#move-checklist).
-For vault lifecycle and import semantics, compose with [para-vault](../para-vault/SKILL.md).
-Do not impose PARA on other workspaces or load unrelated vault workflows.
+For vault moves, renames, and archives, apply the [move checklist](../para-vault/references/navigation.md#move-checklist).
+For vault lifecycle and `Source Record` import semantics, compose with [para-vault](../para-vault/SKILL.md).
+Do not impose PARA categories on non-vault directories or load unrelated vault workflows.
 
 ## 2. Inspect identity and existing work
 
@@ -60,7 +61,8 @@ unrelated items.
 Verify destination content against the source or recorded pre-operation state,
 accounting for intentional changes. For a move, rename, or archive, repair
 incoming links and relative links inside relocated content, and update existing
-source and destination indexes or registers.
+source and destination indexes or registers (preserving `<!-- ref: UUID -->` and
+`## Definition of Done` item markers in `daily-tasks` work records).
 
 For a copy or import, resolve outgoing links from the destination: links between
 copied items should reach their copied counterparts, while links to items not

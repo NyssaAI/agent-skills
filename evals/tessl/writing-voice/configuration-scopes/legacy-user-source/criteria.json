@@ -2,7 +2,7 @@
   "criteria": [
     {
       "name": "scope behavior",
-      "description": "Legacy user profile used and updated at original path; no canonical copy or deletion; project unchanged."
+      "description": "Retired .nyssaai directory is not automatically loaded as a canonical .nyssa-ai profile; draft completes from supplied facts with a missing-profile limitation note, leaving all existing files unchanged."
     }
   ]
 }

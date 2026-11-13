@@ -13,3 +13,13 @@ Revise or reconcile the named documents in `vault_root` within the requested pur
 6. Check the result against the approved changes and preserved evidence. Update [relevant navigation](../references/navigation.md#index-ownership-and-links), mark applied proposals accurately, and report document paths, recovery history, acceptance/canonical state, and unresolved claims.
 
 Minor corrections and routine link maintenance can be applied directly with the recoverability required by the revision guidance (`vault_root/.temp/`, never `.nyssa-ai/`). Read the schema directly for metadata-only questions; consulting it does not require starting a revision workflow.
+
+---
+
+## Verification
+
+Before reporting completion of any document reconciliation or revision task:
+- [ ] Confirm valid `daily-tasks` structured work records (`RecordKind` governed by `state`, `## Definition of Done`, and `<!-- ref: UUID -->` markers) were preserved intact without converting them to prose notes or writing retired `task-state`.
+- [ ] Confirm substantive edits to `established` or `canonical: true` notes either remain as unapplied proposals or preserve restorable prior snapshots as authorized.
+- [ ] Confirm unique claims, provenance, and unresolved contradictions across reconciled notes were preserved rather than silently overwritten.
+- [ ] Confirm updated frontmatter, `canonical` authority flags, and affected index/MOC links resolve cleanly, with any temporary scratch confined to `vault_root/.temp/`.

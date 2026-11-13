@@ -1,0 +1,16 @@
+id: archive-files-non-destructive
+name: Trigger manage-file-operations to archive files safely
+description: Archiving export files outside a PARA vault using non-destructive filesystem operations belongs to manage-file-operations.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Archive files from our 2025 quarterly exports into exports/2025-archive using safe filesystem operations and non-destructive moves."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: manage-file-operations-positive-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: positive

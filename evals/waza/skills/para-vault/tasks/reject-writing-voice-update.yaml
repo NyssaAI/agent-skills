@@ -1,0 +1,16 @@
+id: reject-writing-voice-update
+name: Do not trigger para-vault for writing voice profile maintenance
+description: Updating a personal writing voice profile from sent messages belongs to write-like-me.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Update my writing voice profile based on these recent sent messages."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: para-vault-negative-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: negative

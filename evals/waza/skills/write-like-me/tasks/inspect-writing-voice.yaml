@@ -1,0 +1,17 @@
+id: inspect-writing-voice
+name: Trigger write-like-me to inspect the active writing voice profile
+description: Inspecting tone calibration and profile maintenance rules in the active voice profile belongs to write-like-me.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Inspect my writing voice and show me the active tone calibration and profile maintenance rules."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: write-like-me-positive-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: positive
+      threshold: 0.50

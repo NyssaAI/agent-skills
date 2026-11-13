@@ -1,0 +1,16 @@
+id: safe-move-files
+name: Trigger manage-file-operations for safe file moves with reference repair
+description: Moving files into an archive folder while updating references belongs to manage-file-operations.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Can you safely move files from these raw reports into the archive folder with reference repair?"
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: manage-file-operations-positive-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: positive

@@ -1,0 +1,11 @@
+{
+  "agent-skills": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "python \"./hooks/session-start.py\"",
+        "timeout": 60
+      }
+    ]
+  }
+}

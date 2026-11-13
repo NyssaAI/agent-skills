@@ -1,7 +1,7 @@
 # Workflow: File PARA Content
 
 > [!IMPORTANT] Scope Directive
-> This workflow handles classifying and filing `Inbox Capture` items and notes into `vault_root`, processing `0-inbox/`, and creating `Project` folders and `project-index.md` records aligned with `daily-tasks`. It does NOT own general file safety operations (owned by `manage-file-operations`), document reconciliation (owned by `reconcile.md`), or archiving/reactivation lifecycles (owned by `archive.md`).
+> This workflow handles classifying and filing `Inbox Capture` items and notes into `vault_root`, processing `0-inbox/`, and creating `Project` folders and `project-index.md` records aligned with `daily-tasks`. It does NOT own general file safety operations (owned by `manage-file-operations`), candidate task extraction/acceptance or daily planning (owned by `daily-tasks`), document reconciliation (owned by `reconcile.md`), or archiving/reactivation lifecycles (owned by `archive.md`).
 
 Choose a working home or file content in a recognized `vault_root`. This workflow also creates a requested `Project` folder and its `project-index.md`. For a placement-only request, give the `PARA Category` decision and rationale without changing files.
 
@@ -29,6 +29,17 @@ If a note is not useful, delete only with explicit user authorization; otherwise
 - For moves, copies, collisions, and recovery, use [manage-file-operations](../../manage-file-operations/SKILL.md); apply the vault navigation checklist linked above before source cleanup.
 - For supplied email/calendar `Source Record` identity, version precedence, or unresolved filing dates, use [import-records](import-records.md). It owns source interpretation; use this workflow only for its inbox filing steps.
 - For `Project` creation, use the [`Project` index schema](../references/frontmatter-schemas.md#project-index) (`1-projects/YYYY.MM.DD-<slug>/project-index.md` with `type: project` and `state: not-started`) and [project identity convention](../references/folder-conventions.md#project-identities); create only the milestone (`mN-<slug>/`), blocker (`blockers/`), or working folders the task needs and connect `project-index.md` to its owning Area MOC. An unagreed `target_date` / `deadline` stays absent.
+- When filed inbox notes surface candidate action items that the user wants tracked as tasks, milestones, or daily plans, route candidate extraction and acceptance to **`daily-tasks`**—never hand-author unaccepted `daily-tasks` task records during general note filing.
 - When the requested result is archiving/reactivation, use [archive](archive.md); when it is reconciling or revising accepted content, use [reconcile](reconcile.md).
 
 Report final homes, any retained history or `Source Record` evidence and why it was needed, navigation changes, and unresolved captures or placement decisions. Filing alone does not promote maturity or canonical authority.
+
+---
+
+## Verification
+
+Before reporting completion of any PARA filing or `Project` creation task:
+- [ ] Confirm each filed item has a single active home in the resolved `PARA Category` (`1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`) with no `0-inbox/archive/` shadow duplicate and zero `.nyssa-ai/` directories inside `vault_root`.
+- [ ] Confirm frontmatter conforms to [`../references/frontmatter-schemas.md`](../references/frontmatter-schemas.md) (`document-maturity` on prose notes; `type: project` and `state` on `project-index.md`, never writing retired `task-state`), and inbox-only intent fields (`filing-hint`, `context`) were preserved in body text before removal.
+- [ ] Confirm unaccepted candidate action items were routed to `daily-tasks` rather than hand-authored as structured task records during general note filing.
+- [ ] Confirm source and destination indexes, MOCs, and relative links resolve cleanly before removing any `0-inbox/` capture source.

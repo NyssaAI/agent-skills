@@ -1,0 +1,16 @@
+id: reject-third-party-house-style
+name: Do not trigger write-like-me for third-party documentation style guides
+description: Formatting API reference docs according to an external corporate style guide is not personal voice emulation.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Format this REST API changelog strictly according to the Google Developer Documentation Style Guide."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: write-like-me-negative-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: negative

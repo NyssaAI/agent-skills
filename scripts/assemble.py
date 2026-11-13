@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import sys
 
@@ -20,7 +21,18 @@ VOICE_RULE = ROOT / "rules" / "writing-voice.md"
 VOICE_BEGIN = "<!-- agent-skills:writing-voice:begin -->"
 VOICE_END = "<!-- agent-skills:writing-voice:end -->"
 HERMES_ADAPTER = ROOT / "harness-adapters" / "hermes" / "plugin.py"
-CODEX_ADAPTER_DIR = ROOT / "harness-adapters" / "codex"
+FILE_RULE_FRONTMATTER = (
+    "---\n"
+    "trigger: always_on\n"
+    "description: Core file-management naming and safety rules.\n"
+    "---\n\n"
+)
+VOICE_RULE_FRONTMATTER = (
+    "---\n"
+    "trigger: always_on\n"
+    "description: Apply the user's applicable writing voice.\n"
+    "---\n\n"
+)
 EXCLUDED_SKILL_PARTS = frozenset({"__pycache__", ".pytest_cache", ".nyssa-ai", ".temp"})
 FORBIDDEN_REPO_TREES = frozenset({".agents", ".hermes", "artifacts"})
 
@@ -34,16 +46,27 @@ def canonical_hash_content(content: bytes) -> bytes:
     return content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
 
 
+def strip_frontmatter(text: str) -> str:
+    """Strip leading YAML frontmatter when projecting rules into startup blocks."""
+    match = re.match(r"\A---\r?\n.*?\r?\n---\r?\n*", text, re.S)
+    return text[match.end():].strip() if match else text.strip()
+
+
+def file_management_rule() -> str:
+    return FILE_RULE_FRONTMATTER + strip_frontmatter(CORE.read_text(encoding="utf-8")) + "\n"
+
+
 def startup_text() -> str:
-    core = CORE.read_text(encoding="utf-8").strip()
-    voice = VOICE_RULE.read_text(encoding="utf-8").strip()
+    core = strip_frontmatter(CORE.read_text(encoding="utf-8"))
+    voice = strip_frontmatter(VOICE_RULE.read_text(encoding="utf-8"))
     return f"{BEGIN}\n{core}\n{END}\n\n{VOICE_BEGIN}\n{voice}\n{VOICE_END}"
 
 
 def anchored_agents() -> str:
     original = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     for begin, end, source in ((BEGIN, END, CORE), (VOICE_BEGIN, VOICE_END, VOICE_RULE)):
-        block = f"{begin}\n{source.read_text(encoding='utf-8').strip()}\n{end}"
+        body = strip_frontmatter(source.read_text(encoding="utf-8"))
+        block = f"{begin}\n{body}\n{end}"
         if begin in original or end in original:
             if original.count(begin) != 1 or original.count(end) != 1 or original.index(begin) > original.index(end):
                 raise ValueError("AGENTS.md has an invalid managed foundation block")
@@ -67,24 +90,26 @@ def skill_files() -> dict[str, bytes]:
     return output
 
 
-def codex_skill_metadata() -> dict[str, bytes]:
-    """Map Codex UI harness-adapter metadata into portable skill paths."""
-    output: dict[str, bytes] = {}
-    if not CODEX_ADAPTER_DIR.is_dir():
-        return output
-    for source in sorted(CODEX_ADAPTER_DIR.glob("*/openai.yaml")):
-        skill_name = source.parent.name
-        if (ROOT / "skills" / skill_name / "SKILL.md").is_file():
-            output[f"skills/{skill_name}/agents/openai.yaml"] = source.read_bytes()
-    return output
-
-
 def source_hash(files: dict[str, bytes]) -> str:
     digest = hashlib.sha256()
     for name in sorted(files):
         content = canonical_hash_content(files[name])
         digest.update(name.encode("utf-8") + b"\0" + content + b"\0")
     return digest.hexdigest()
+
+
+def antigravity_hooks(identity: dict[str, object]) -> dict[str, object]:
+    return {
+        str(identity["name"]): {
+            "SessionStart": [
+                {
+                    "type": "command",
+                    "command": 'python "./hooks/session-start.py"',
+                    "timeout": 60,
+                }
+            ]
+        }
+    }
 
 
 def root_harness_manifests() -> dict[str, bytes]:
@@ -94,9 +119,10 @@ def root_harness_manifests() -> dict[str, bytes]:
         "version": identity["version"],
         "description": identity["description"],
         "author": identity["author"],
+        "homepage": identity["homepage"],
         "repository": identity["repository"],
         "license": identity["license"],
-        "keywords": ["nyssa", "agent", "skills", "workflows", "tools"],
+        "keywords": identity["keywords"],
     }
     codex = {
         "name": identity["name"],
@@ -106,7 +132,7 @@ def root_harness_manifests() -> dict[str, bytes]:
         "homepage": identity["homepage"],
         "repository": identity["repository"],
         "license": identity["license"],
-        "keywords": ["nyssa", "skills", "agent", "para-vault", "workflows"],
+        "keywords": identity["keywords"],
         "skills": "./skills/",
         "interface": {
             "displayName": "NyssaAI Agent Skills",
@@ -130,21 +156,20 @@ def root_harness_manifests() -> dict[str, bytes]:
         "homepage": identity["homepage"],
         "repository": identity["repository"],
         "license": identity["license"],
-        "keywords": ["nyssa", "skills", "para-vault", "workflows"],
+        "keywords": identity["keywords"],
     }
     tessl = {
         "name": f"nyssa-ai/{identity['name']}",
         "version": identity["version"],
-        "description": "Private evaluation of NyssaAI file operations, PARA, and writing voice skills",
+        "description": identity["description"],
         "private": True,
         "skills": "./skills",
         "rules": "./rules",
     }
     gemini = {
         "name": identity["name"],
-        "description": identity["description"],
         "version": identity["version"],
-        "contextFileName": "GEMINI.md",
+        "description": identity["description"],
     }
     return {
         ".claude-plugin/plugin.json": _encode_json(claude),
@@ -152,6 +177,7 @@ def root_harness_manifests() -> dict[str, bytes]:
         ".cursor-plugin/plugin.json": _encode_json(cursor),
         ".tessl-plugin/plugin.json": _encode_json(tessl),
         "gemini-extension.json": _encode_json(gemini),
+        "hooks.json": _encode_json(antigravity_hooks(identity)),
     }
 
 
@@ -164,11 +190,10 @@ def portable_expected_files() -> dict[str, bytes]:
         **manifests,
         "hooks/hooks.json": (ROOT / "hooks" / "hooks.json").read_bytes(),
         "hooks/session-start.py": (ROOT / "hooks" / "session-start.py").read_bytes(),
-        "rules/file-management.md": (CORE.read_text(encoding="utf-8").strip() + "\n").encode("utf-8"),
+        "rules/file-management.md": file_management_rule().encode("utf-8"),
         "rules/writing-voice.md": VOICE_RULE.read_bytes(),
     }
     output.update(skill_files())
-    output.update(codex_skill_metadata())
     output["assembly.json"] = _encode_json({
         "format": "portable-plugin",
         "source": "scripts/assemble.py",
@@ -183,20 +208,19 @@ def expected_files() -> dict[str, bytes]:
     manifest = {
         "$schema": "https://antigravity.google/schemas/v1/plugin.json",
         "name": identity["name"],
+        "version": identity["version"],
         "description": identity["description"],
+        "author": identity["author"],
+        "homepage": identity["homepage"],
+        "repository": identity["repository"],
     }
-    output: dict[str, bytes] = {"plugin.json": _encode_json(manifest)}
-    rule_header = (
-        "---\n"
-        "trigger: always_on\n"
-        "description: Core file-management naming and safety rules.\n"
-        "---\n\n"
-    ).encode("utf-8")
-    output["rules/file-management.md"] = rule_header + CORE.read_bytes().rstrip() + b"\n"
-    output["rules/writing-voice.md"] = (
-        b"---\ntrigger: always_on\ndescription: Apply the user's applicable writing voice.\n---\n\n"
-        + VOICE_RULE.read_bytes().rstrip() + b"\n"
-    )
+    output: dict[str, bytes] = {
+        "plugin.json": _encode_json(manifest),
+        "hooks.json": _encode_json(antigravity_hooks(identity)),
+        "hooks/session-start.py": (ROOT / "hooks" / "session-start.py").read_bytes(),
+        "rules/file-management.md": file_management_rule().encode("utf-8"),
+        "rules/writing-voice.md": VOICE_RULE.read_bytes(),
+    }
     output.update(skill_files())
     output["assembly.json"] = _encode_json({
         "format": "antigravity-plugin",
@@ -218,6 +242,7 @@ def hermes_expected_files() -> dict[str, bytes]:
         "plugin.yaml": manifest.encode("utf-8"),
         "__init__.py": HERMES_ADAPTER.read_bytes(),
         "rules/writing-voice.md": VOICE_RULE.read_bytes(),
+        "skills/manage-file-operations/core.md": CORE.read_bytes(),
     }
     output.update(skill_files())
     output["assembly.json"] = _encode_json({
@@ -296,7 +321,7 @@ def assemble(argv: list[str] | None = None) -> int:
     output_dir = validate_output_dir(args.output_dir or DEFAULT_OUTPUT_DIR)
 
     target_agents = anchored_agents()
-    target_rule = CORE.read_text(encoding="utf-8").strip() + "\n"
+    target_rule = file_management_rule()
     manifests = root_harness_manifests()
     packages = build_packages()
 
@@ -307,8 +332,10 @@ def assemble(argv: list[str] | None = None) -> int:
                 errors.append(f"Forbidden directory present in repo_root: {forbidden}/")
         if (ROOT / "AGENTS.md").read_text(encoding="utf-8") != target_agents:
             errors.append("AGENTS.md foundation differs from canonical core")
-        if not TESSL_RULE.is_file() or TESSL_RULE.read_text(encoding="utf-8") != target_rule:
+        if not TESSL_RULE.is_file() or canonical_hash_content(TESSL_RULE.read_bytes()) != canonical_hash_content(target_rule.encode("utf-8")):
             errors.append("Tessl foundation rule differs from canonical core")
+        if not VOICE_RULE.is_file() or not VOICE_RULE.read_text(encoding="utf-8").replace("\r\n", "\n").startswith(VOICE_RULE_FRONTMATTER):
+            errors.append("Writing voice rule lacks canonical always_on frontmatter")
         for rel_manifest, expected_bytes in manifests.items():
             manifest_path = ROOT / rel_manifest
             if not manifest_path.is_file() or canonical_hash_content(manifest_path.read_bytes()) != canonical_hash_content(expected_bytes):

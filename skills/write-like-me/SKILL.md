@@ -4,13 +4,16 @@ description: >-
   Use this skill when the user asks to "draft this email in my voice", "rewrite this message like me",
   "sound like me", "learn my writing style", "update my voice profile", or "inspect my writing voice".
   Covers personal writing style emulation, tone calibration, and profile maintenance.
-  Do NOT use this skill for filing notes or organizing vaults (use `para-vault`) or raw file operations (use `manage-file-operations`).
+  Do NOT use this skill for filing notes or organizing vaults (use `para-vault`), Daily Tasks planning, check-ins, or task capture (use `daily-tasks`), or raw file operations (use `manage-file-operations`).
 ---
 
 # Write Like Me
 
 > [!IMPORTANT] Scope Directive
-> This is the unified **Sibling Facade Skill** and orchestrator for authentic user **Writing Voice Profile** emulation and profile maintenance. It routes between runtime drafting and administrative `Writing Voice Profile` management. It owns voice emulation, style calibration, and learning from approved edits. It does NOT own filing drafted notes into a PARA vault at `vault_root` (delegated to `para-vault`) or raw filesystem mechanics (delegated to `manage-file-operations`).
+> This is the unified **Sibling Facade Skill** and orchestrator for authentic user **Writing Voice Profile** emulation and profile maintenance. It routes between runtime drafting and administrative `Writing Voice Profile` management, owning voice emulation, style calibration, and learning from approved edits. Cross-plugin and sibling routing boundaries:
+> - **PARA vault filing & organization (`para-vault`)**: Route filing drafted notes, `Source Record` imports, and `vault_root` lifecycle management to **`para-vault`**.
+> - **Structured task capture, planning & check-ins (`daily-tasks`)**: Route candidate task capture, daily planning sessions, check-ins, and structured work-record updates to **`daily-tasks`**.
+> - **Standalone filesystem operations (`manage-file-operations`)**: Route raw non-destructive file copies, relocations, collision handling, and link repair to **`manage-file-operations`**.
 
 ---
 
@@ -30,7 +33,7 @@ Match the user's intent to the appropriate workflow:
 1. **Facts & Intent Preservation**: Emulating voice never authorizes changing supplied facts, commitments, constraints, or uncertainty levels.
 2. **Drafting Reads; Maintenance Writes**: Ordinary drafting reads profile files and leaves their bytes unchanged. Profile updates occur only when explicitly requested or when draft corrections are approved for learning.
 3. **Evidence-Backed Calibration**: Base tone guidelines strictly on authentic user samples, never on agent hallucinations or third-party boilerplate.
-4. **Scope Precedence**: Follow `NyssaAI.Configuration` canonical `.nyssa-ai/` discovery across `user_home` (`~/.nyssa-ai/`) and `repo_root` (`<repo_root>/.nyssa-ai/`). For atomic `Writing Voice Profile` bundle selection, resolve in canonical order: explicit pointer $\rightarrow$ `repo_root` override (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`) $\rightarrow$ `user_home` fallback (`~/.nyssa-ai/agent-skills/writing-voice/`). Never read or write legacy `.nyssaai` or `.nyssa` directories, and never store `.nyssa-ai/` inside `vault_root` or `plugin_root`.
+4. **Scope Precedence**: Follow `NyssaAI.Configuration` canonical `.nyssa-ai/` discovery across `user_home` (`~/.nyssa-ai/agent-skills/config.json`) and `repo_root` (`<repo_root>/.nyssa-ai/agent-skills/config.json`). For atomic `Writing Voice Profile` bundle selection, resolve in canonical order: explicit pointer $\rightarrow$ `repo_root` override (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`) $\rightarrow$ `user_home` fallback (`~/.nyssa-ai/agent-skills/writing-voice/`). Never probe retired `.nyssaai` or `.nyssa` directories automatically (accepted only when explicitly passed by the user for one-off migration), never read retired `NYSSA_PLUGIN_STATE_DIR`, and never store `.nyssa-ai/` inside `vault_root` or `plugin_root`.
 
 ---
 

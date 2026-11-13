@@ -1,0 +1,17 @@
+id: calibrate-tone-from-edits
+name: Trigger write-like-me for tone calibration from approved edits
+description: Calibrating personal writing style and updating the voice profile from approved edits belongs to write-like-me.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Sound like me when drafting this memo, then run tone calibration to update my voice profile from my approved edits."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: write-like-me-positive-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: positive
+      threshold: 0.50

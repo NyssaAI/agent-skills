@@ -1,0 +1,17 @@
+id: update-voice-profile
+name: Trigger write-like-me to learn style habits and update voice profile
+description: Learning personal writing style from samples and updating the voice profile belongs to write-like-me.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Learn my writing style from these three blog posts and update my voice profile."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: write-like-me-positive-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: positive
+      threshold: 0.50

@@ -1,0 +1,17 @@
+id: process-vault-inbox
+name: Trigger para-vault to process and triage vault inbox notes
+description: Processing a vault inbox and classifying notes across Projects, Areas, and Resources belongs to para-vault.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Please process vault inbox and triage these fleeting notes into Projects, Areas, and Resources."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: para-vault-positive-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: positive
+      threshold: 0.50

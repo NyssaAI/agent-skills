@@ -1,0 +1,16 @@
+id: reject-git-branch-merge
+name: Do not trigger manage-file-operations for git commit and PR merge workflows
+description: Committing staged code and merging a GitHub PR belongs to git/shipping workflows, not manage-file-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Commit our staged changes on feature/auth, push the branch to origin, and merge the pull request to main."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: manage-file-operations-negative-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: negative

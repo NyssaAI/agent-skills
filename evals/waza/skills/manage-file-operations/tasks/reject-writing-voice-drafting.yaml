@@ -1,0 +1,16 @@
+id: reject-writing-voice-drafting
+name: Do not trigger manage-file-operations for personal voice drafting
+description: Drafting an email in the user's authentic voice belongs to write-like-me, not manage-file-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Draft this email response to our client in my authentic voice and tone."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: manage-file-operations-negative-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: negative

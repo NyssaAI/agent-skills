@@ -1,0 +1,16 @@
+id: reject-daily-tasks-day-planning
+name: Do not trigger para-vault for live Daily Tasks MCP check-in sessions
+description: Interactive daily task session check-ins and blocker updates belong to daily-tasks, not para-vault.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Start a Daily Tasks session to plan my day, review external blockers, and accept candidate tasks."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: para-vault-negative-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: negative

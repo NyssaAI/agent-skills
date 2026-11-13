@@ -63,6 +63,7 @@ def source_inventory() -> dict[str, str]:
         for name in (
             "plugin.json",
             "gemini-extension.json",
+            "hooks.json",
             "tessl.json",
             "AGENTS.md",
             "CLAUDE.md",
@@ -432,7 +433,7 @@ def render_with_ledger() -> tuple[str, bool, dict | None]:
         selected_attempt = latest([(p, d) for p, d in attempts if tuple(d["key"]) == key(row)])
         if selected:
             path, data = selected
-            result_link = f"[{path.parent.name}](../.temp/evals/results/{path.parent.name}/metadata.json)"
+            result_link = f"`{path.parent.name}`"
             outcome = f"{data['outcome']} / {data['score']}/100"
             freshness = (
                 "Current"
@@ -445,7 +446,7 @@ def render_with_ledger() -> tuple[str, bool, dict | None]:
         attempt_text = row["remaining"]
         if selected_attempt and (not selected or selected_attempt[1]["completed_at"] > selected[1]["completed_at"]):
             path, attempt = selected_attempt
-            attempt_link = f"[{path.parent.name}](../.temp/evals/attempts/{path.parent.name}/metadata.json)"
+            attempt_link = f"`{path.parent.name}`"
             if attempt["candidate_sha256"] == current:
                 attempt_text = f"{attempt_link}: {attempt['state']}; {attempt['next_check']}"
             else:

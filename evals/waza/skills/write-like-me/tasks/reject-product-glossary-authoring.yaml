@@ -1,0 +1,16 @@
+id: reject-product-glossary-authoring
+name: Do not trigger write-like-me for Ubiquitous Language glossary authoring
+description: Defining domain terms in docs/GLOSSARY.md and authoring feature contracts belongs to plan-product.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Define Ubiquitous Language domain terms in docs/GLOSSARY.md and author the authentication feature contract."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: write-like-me-negative-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: negative

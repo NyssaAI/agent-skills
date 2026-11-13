@@ -1,0 +1,17 @@
+id: resume-interrupted-operation
+name: Trigger manage-file-operations to resume an interrupted directory copy
+description: Recovering and verifying an interrupted directory copy or file move belongs to manage-file-operations.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Our directory copy process died halfway through. Can you resume the interrupted file operation and verify the integrity of the moved content?"
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: manage-file-operations-positive-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: positive
+      threshold: 0.50

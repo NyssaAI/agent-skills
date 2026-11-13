@@ -1,0 +1,17 @@
+id: rewrite-message-like-me
+name: Trigger write-like-me to rewrite a status message to sound like the user
+description: Rewriting a Slack status message so it sounds like the user belongs to write-like-me.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Rewrite this message like me so the status update will sound like me before I post it to Slack."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: write-like-me-positive-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: positive
+      threshold: 0.50

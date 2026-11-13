@@ -1,0 +1,17 @@
+id: draft-email-in-voice
+name: Trigger write-like-me to draft an email in the user's voice
+description: Drafting an email in the user's personal writing style belongs to write-like-me.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Draft this email in my voice to the executive sponsor with personal writing style emulation."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: write-like-me-positive-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: positive
+      threshold: 0.50

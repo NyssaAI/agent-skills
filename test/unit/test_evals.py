@@ -5,6 +5,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -16,7 +17,8 @@ sys.path.insert(0, str(REPOSITORY / "evals"))
 
 from cases import build_cases, build_writing_voice_cases, check, note
 from calibrate import calibrate, mutations
-from plugin_checks import validate_plugin
+from plugin_checks import validate_evals_directory, validate_plugin
+import report
 from run import execute, file_hash, inventory, prepare, read_json, safe_child, score, suite_definition, verify, write_json
 from scoring import evaluate_check, score_run
 
@@ -44,6 +46,216 @@ class OutcomeScoringTests(unittest.TestCase):
         result = validate_plugin(REPOSITORY)
         self.assertTrue(result["passed"], f"Plugin validation findings: {result['findings']}")
         self.assertEqual(result["findings"], [])
+
+    def test_validate_plugin_enforces_host_manifest_parity_license_changelog_and_single_skill_version(self):
+        import shutil
+
+        fixture = self.root / "repo-copy"
+        fixture.mkdir()
+        for rel_dir in (
+            "docs",
+            "skills",
+            "rules",
+            "hooks",
+            "harness-adapters",
+            "scripts",
+            ".claude-plugin",
+            ".codex-plugin",
+            ".cursor-plugin",
+            ".tessl-plugin",
+        ):
+            shutil.copytree(
+                REPOSITORY / rel_dir,
+                fixture / rel_dir,
+                ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache", ".temp", ".nyssa-ai"),
+            )
+        for rel_file in ("plugin.json", "gemini-extension.json", "hooks.json", "LICENSE", "CHANGELOG.md", ".gitattributes"):
+            shutil.copy2(REPOSITORY / rel_file, fixture / rel_file)
+
+        baseline = validate_plugin(fixture)
+        self.assertTrue(baseline["passed"], baseline["findings"])
+
+        for manifest_rel in (".claude-plugin/plugin.json", ".codex-plugin/plugin.json", ".cursor-plugin/plugin.json"):
+            original_text = (fixture / manifest_rel).read_text(encoding="utf-8")
+            for field, mutated_value in (
+                ("homepage", "https://example.invalid/drift"),
+                ("repository", "https://example.invalid/drift-repo"),
+                ("license", "MIT"),
+                ("author", {"name": "DriftAuthor"}),
+                ("keywords", ["drift"]),
+            ):
+                mutated = json.loads(original_text)
+                mutated[field] = mutated_value
+                (fixture / manifest_rel).write_text(json.dumps(mutated, indent=2) + "\n", encoding="utf-8")
+                drift_result = validate_plugin(fixture)
+                self.assertFalse(drift_result["passed"])
+                self.assertIn(f"{manifest_rel} {field} differs from root plugin.json", drift_result["findings"])
+            (fixture / manifest_rel).write_text(original_text, encoding="utf-8")
+
+        # Duplicate metadata.version in SKILL.md must be rejected
+        skill_path = fixture / "skills" / "manage-file-operations" / "SKILL.md"
+        original_skill = skill_path.read_text(encoding="utf-8")
+        head, tail = original_skill.split("\n---\n", 1)
+        skill_path.write_text(f'{head}\nmetadata:\n  version: "0.7.3"\n---\n{tail}', encoding="utf-8")
+        dup_version = validate_plugin(fixture)
+        self.assertFalse(dup_version["passed"])
+        self.assertTrue(any("duplicate metadata.version" in item for item in dup_version["findings"]))
+        skill_path.write_text(original_skill, encoding="utf-8")
+
+        # Stale MIT LICENSE or missing CHANGELOG.md must be rejected
+        (fixture / "LICENSE").write_text("MIT License\n", encoding="utf-8")
+        (fixture / "CHANGELOG.md").unlink()
+        stale_lic = validate_plugin(fixture)
+        self.assertFalse(stale_lic["passed"])
+        self.assertIn("LICENSE must contain the canonical NyssaAI Apache License 2.0 text", stale_lic["findings"])
+        self.assertIn("Missing tracked release history: CHANGELOG.md", stale_lic["findings"])
+
+    def test_validate_plugin_enforces_layout_lockdown_verification_sections_and_path_leak_ban(self):
+        import shutil
+
+        fixture = self.root / "layout-copy"
+        fixture.mkdir()
+        for rel_dir in (
+            "docs",
+            "skills",
+            "rules",
+            "hooks",
+            "harness-adapters",
+            "scripts",
+            ".claude-plugin",
+            ".codex-plugin",
+            ".cursor-plugin",
+            ".tessl-plugin",
+        ):
+            shutil.copytree(
+                REPOSITORY / rel_dir,
+                fixture / rel_dir,
+                ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache", ".temp", ".nyssa-ai"),
+            )
+        for rel_file in ("plugin.json", "gemini-extension.json", "hooks.json", "LICENSE", "CHANGELOG.md", ".gitattributes"):
+            shutil.copy2(REPOSITORY / rel_file, fixture / rel_file)
+
+        # Stdlib YAML fallback must validate the repository cleanly without PyYAML
+        with patch("plugin_checks.yaml", None):
+            fallback_result = validate_plugin(REPOSITORY)
+        self.assertTrue(fallback_result["passed"], fallback_result["findings"])
+
+        # scripts/validate.py CLI entrypoint must pass on valid repo and fail on invalid repo
+        cli_ok = subprocess.run(
+            [sys.executable, str(REPOSITORY / "scripts" / "validate.py"), str(fixture)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(cli_ok.returncode, 0, cli_ok.stdout + cli_ok.stderr)
+        self.assertTrue(json.loads(cli_ok.stdout)["passed"])
+
+        # 1. Top-level directory & loose root file allowlist
+        (fixture / "rogue-dir").mkdir()
+        (fixture / "rogue.txt").write_text("loose\n", encoding="utf-8")
+        rogue_res = validate_plugin(fixture)
+        self.assertFalse(rogue_res["passed"])
+        self.assertIn("Unexpected top-level directory in repo_root: rogue-dir/", rogue_res["findings"])
+        self.assertIn("Unexpected loose root file in repo_root: rogue.txt", rogue_res["findings"])
+        cli_fail = subprocess.run(
+            [sys.executable, str(REPOSITORY / "scripts" / "validate.py"), str(fixture)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertNotEqual(cli_fail.returncode, 0)
+        (fixture / "rogue-dir").rmdir()
+        (fixture / "rogue.txt").unlink()
+
+        # 2. .gitattributes LF check
+        orig_gitattr = (fixture / ".gitattributes").read_text(encoding="utf-8")
+        (fixture / ".gitattributes").write_text("* text=auto\n", encoding="utf-8")
+        no_lf = validate_plugin(fixture)
+        self.assertFalse(no_lf["passed"])
+        self.assertIn(".gitattributes must enforce LF line endings (eol=lf)", no_lf["findings"])
+        (fixture / ".gitattributes").unlink()
+        missing_gitattr = validate_plugin(fixture)
+        self.assertFalse(missing_gitattr["passed"])
+        self.assertIn("Missing .gitattributes with LF line-ending normalization (eol=lf)", missing_gitattr["findings"])
+        (fixture / ".gitattributes").write_text(orig_gitattr, encoding="utf-8")
+
+        # 3. docs/ Allowed-Set Lockdown & not gitignored
+        (fixture / ".gitignore").write_text("docs/\n", encoding="utf-8")
+        (fixture / "docs" / "roadmap.md").write_text("# Disallowed\n", encoding="utf-8")
+        (fixture / "docs" / "reviews").mkdir()
+        (fixture / "docs" / "specs").mkdir()
+        (fixture / "docs" / "specs" / "prose.md").write_text("# Disallowed\n", encoding="utf-8")
+        docs_res = validate_plugin(fixture)
+        self.assertFalse(docs_res["passed"])
+        self.assertIn("docs/ directory must not be gitignored", docs_res["findings"])
+        self.assertTrue(any("Disallowed file in docs/: docs/roadmap.md" in f for f in docs_res["findings"]))
+        self.assertTrue(any("Disallowed directory in docs/: docs/reviews/" in f for f in docs_res["findings"]))
+        self.assertTrue(any("Disallowed prose markdown in docs/specs/: docs/specs/prose.md" in f for f in docs_res["findings"]))
+        (fixture / ".gitignore").unlink()
+        (fixture / "docs" / "roadmap.md").unlink()
+        shutil.rmtree(fixture / "docs" / "reviews")
+        shutil.rmtree(fixture / "docs" / "specs")
+
+        # 4. test/ isolation
+        (fixture / "test" / "unit").mkdir(parents=True)
+        (fixture / "test" / "test_loose.py").write_text("def test_x(): pass\n", encoding="utf-8")
+        (fixture / "test" / "integration").mkdir()
+        (fixture / "skills" / "test_stray.py").write_text("def test_y(): pass\n", encoding="utf-8")
+        test_res = validate_plugin(fixture)
+        self.assertFalse(test_res["passed"])
+        self.assertTrue(any("Loose file in test/ root: test/test_loose.py" in f for f in test_res["findings"]))
+        self.assertTrue(any("Non-canonical test subdirectory: test/integration/" in f for f in test_res["findings"]))
+        self.assertTrue(any("Co-mingled test file outside test/: skills/test_stray.py" in f for f in test_res["findings"]))
+        shutil.rmtree(fixture / "test")
+        (fixture / "skills" / "test_stray.py").unlink()
+
+        # 5. Scope Directive & ## Verification check
+        wf_path = fixture / "skills" / "para-vault" / "workflows" / "archive.md"
+        orig_wf = wf_path.read_text(encoding="utf-8")
+        wf_path.write_text(
+            orig_wf.replace("> [!IMPORTANT] Scope Directive", "> Note").replace("## Verification", "## Summary"),
+            encoding="utf-8",
+        )
+        ref_path = fixture / "skills" / "para-vault" / "references" / "lifecycle.md"
+        orig_ref = ref_path.read_text(encoding="utf-8")
+        ref_path.write_text(orig_ref.replace("> [!IMPORTANT] Scope Directive", "> Note"), encoding="utf-8")
+        scope_res = validate_plugin(fixture)
+        self.assertFalse(scope_res["passed"])
+        self.assertIn(
+            "skills/para-vault/workflows/archive.md: missing '> [!IMPORTANT] Scope Directive'",
+            scope_res["findings"],
+        )
+        self.assertIn(
+            "skills/para-vault/workflows/archive.md: missing '## Verification' section",
+            scope_res["findings"],
+        )
+        self.assertIn(
+            "skills/para-vault/references/lifecycle.md: missing '> [!IMPORTANT] Scope Directive'",
+            scope_res["findings"],
+        )
+        wf_path.write_text(orig_wf, encoding="utf-8")
+        ref_path.write_text(orig_ref, encoding="utf-8")
+
+        # 6. Machine-local path leak ban across skills/, rules/, and hooks/
+        hook_path = fixture / "hooks" / "session-start.py"
+        orig_hook = hook_path.read_text(encoding="utf-8")
+        hook_path.write_text(
+            orig_hook
+            + "\n# /srv/repos/NyssaAI/agent-skills\n"
+            + "# /root/.gemini/antigravity-cli/brain/123\n"
+            + "# C:\\Users\\dev\\secret\n",
+            encoding="utf-8",
+        )
+        leak_res = validate_plugin(fixture)
+        self.assertFalse(leak_res["passed"])
+        self.assertIn("hooks/session-start.py: leaked machine-local path (/srv/repos/NyssaAI/)", leak_res["findings"])
+        self.assertIn(
+            "hooks/session-start.py: leaked machine-local path (/root/.gemini/antigravity-cli/brain/)",
+            leak_res["findings"],
+        )
+        self.assertIn("hooks/session-start.py: leaked machine-local path (C:\\Users\\)", leak_res["findings"])
+        hook_path.write_text(orig_hook, encoding="utf-8")
+        self.assertTrue(validate_plugin(fixture)["passed"])
 
     def test_native_preservation_detects_content_changes(self):
         self.write("record.ics", "BEGIN:VCALENDAR\nEND:VCALENDAR\n")
@@ -227,9 +439,15 @@ class OutcomeScoringTests(unittest.TestCase):
         command = [sys.executable, str(REPOSITORY / "hooks/session-start.py")]
         first = subprocess.run(command, cwd=project, env=environment, capture_output=True, text=True, check=True)
         core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
-        voice = (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8").strip()
+        voice = re.sub(
+            r"\A---\r?\n.*?\r?\n---\r?\n*",
+            "",
+            (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8"),
+            flags=re.S,
+        ).strip()
         foundation = core + "\n\n" + voice
         self.assertEqual(first.stdout.strip(), foundation)
+        self.assertNotIn("trigger: always_on", first.stdout)
         (project / "AGENTS.md").write_text(
             "<!-- agent-skills:file-management:begin -->\n" + core + "\n<!-- agent-skills:file-management:end -->",
             encoding="utf-8",
@@ -261,7 +479,12 @@ class OutcomeScoringTests(unittest.TestCase):
 
     def test_startup_hook_loads_core_when_project_instructions_may_not_load_agents(self):
         core = (REPOSITORY / "skills/manage-file-operations/core.md").read_text(encoding="utf-8").strip()
-        voice = (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8").strip()
+        voice = re.sub(
+            r"\A---\r?\n.*?\r?\n---\r?\n*",
+            "",
+            (REPOSITORY / "rules/writing-voice.md").read_text(encoding="utf-8"),
+            flags=re.S,
+        ).strip()
         foundation = core + "\n\n" + voice
         block = "<!-- agent-skills:file-management:begin -->\n" + core + "\n<!-- agent-skills:file-management:end -->"
         for instruction_file, root_variable in (
@@ -679,6 +902,129 @@ class EvidenceExportTests(unittest.TestCase):
             root = prepare(self.root, "timeout")
         self.assertEqual(execute(root, [sys.executable, "-c", "import time; time.sleep(10)"], 0.1), 1)
         self.assertTrue(read_json(root / "control/manifest.json")["execution"]["timed_out"])
+
+
+class WazaAndReportIntegrityTests(unittest.TestCase):
+    def setUp(self):
+        scratch = REPOSITORY / ".temp" / "eval-unit-tests"
+        scratch.mkdir(parents=True, exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(dir=scratch)
+        self.root = Path(self.temporary.name)
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def _write_valid_evals_fixture(self) -> None:
+        (self.root / "skills" / "demo").mkdir(parents=True, exist_ok=True)
+        (self.root / "skills" / "demo" / "SKILL.md").write_text(
+            "---\nname: demo\ndescription: Demo skill\n---\n",
+            encoding="utf-8",
+        )
+        evals_dir = self.root / "evals"
+        evals_dir.mkdir(parents=True, exist_ok=True)
+        (evals_dir / "README.md").write_text("# Evals\n", encoding="utf-8")
+        (evals_dir / "LATEST.md").write_text("# Latest plugin evaluation\n\n`demo-run-01`\n", encoding="utf-8")
+        write_json(
+            evals_dir / "matrix.json",
+            {
+                "schema": 1,
+                "suite_revision": "1.0-test",
+                "rows": [
+                    {
+                        "suite": "file-and-para-24",
+                        "harness": "Codex",
+                        "platform": "windows-x86_64",
+                        "config": "default",
+                        "required": True,
+                        "remaining": "Run cases.",
+                    }
+                ],
+            },
+        )
+        waza_dir = evals_dir / "waza" / "skills" / "demo"
+        (waza_dir / "tasks").mkdir(parents=True, exist_ok=True)
+        (waza_dir / "eval.yaml").write_text(
+            'name: demo-eval\nskill: demo\nschemaVersion: "1.4"\nversion: "0.7.3"\ntasks:\n  - "tasks/*.yaml"\n',
+            encoding="utf-8",
+        )
+        (waza_dir / "tasks" / "positive-1.yaml").write_text(
+            "id: positive-1\n"
+            "name: Positive demo trigger\n"
+            "inputs:\n"
+            '  prompt: "Run demo skill"\n'
+            "expected:\n"
+            "  should_trigger: true\n"
+            "graders:\n"
+            "  - type: trigger\n"
+            "    name: demo-positive-trigger\n"
+            "    config:\n"
+            "      skill_path: skills/demo/SKILL.md\n"
+            "      mode: positive\n",
+            encoding="utf-8",
+        )
+
+    def test_staged_bundle_without_evals_skips_evals_validation(self):
+        checks, findings = validate_evals_directory(self.root, {"demo"})
+        self.assertEqual(checks, 0)
+        self.assertEqual(findings, [])
+
+    def test_waza_single_testcase_validation_accepts_valid_and_rejects_invalid_schemas(self):
+        self._write_valid_evals_fixture()
+        checks, findings = validate_evals_directory(self.root, {"demo"})
+        self.assertGreater(checks, 0)
+        self.assertEqual(findings, [])
+
+        # Reject legacy multi-task list YAML
+        task_path = self.root / "evals" / "waza" / "skills" / "demo" / "tasks" / "positive-1.yaml"
+        task_path.write_text("- id: legacy-list\n  prompt: bad\n", encoding="utf-8")
+        _, list_findings = validate_evals_directory(self.root, {"demo"})
+        self.assertTrue(any("single TestCase mapping (dict)" in item for item in list_findings))
+
+        # Reject invalid mode and missing skill_path target
+        task_path.write_text(
+            "id: bad-grader\n"
+            "name: Bad grader\n"
+            "inputs:\n"
+            '  prompt: "Run demo"\n'
+            "graders:\n"
+            "  - type: trigger\n"
+            "    name: demo-trigger\n"
+            "    config:\n"
+            "      skill_path: skills/nonexistent/SKILL.md\n"
+            "      mode: invalid\n",
+            encoding="utf-8",
+        )
+        _, grader_findings = validate_evals_directory(self.root, {"demo"})
+        self.assertTrue(any("config.mode" in item for item in grader_findings))
+        self.assertTrue(any("skill_path does not exist" in item for item in grader_findings))
+
+        # Reject dead ../.temp/ links in LATEST.md and duplicate matrix rows
+        self._write_valid_evals_fixture()
+        (self.root / "evals" / "LATEST.md").write_text(
+            "[run](../.temp/evals/results/run/metadata.json)\n",
+            encoding="utf-8",
+        )
+        dup_row = {
+            "suite": "file-and-para-24",
+            "harness": "Codex",
+            "platform": "windows-x86_64",
+            "config": "default",
+            "required": True,
+            "remaining": "Run cases.",
+        }
+        write_json(
+            self.root / "evals" / "matrix.json",
+            {"schema": 1, "suite_revision": "1.0-test", "rows": [dup_row, dup_row]},
+        )
+        _, meta_findings = validate_evals_directory(self.root, {"demo"})
+        self.assertTrue(any("dead ../.temp/ links" in item for item in meta_findings))
+        self.assertTrue(any("duplicate row key" in item for item in meta_findings))
+
+    def test_latest_md_rendering_is_link_free_and_uses_inline_code_receipts(self):
+        rendered, _ = report.render()
+        self.assertNotIn("../.temp/", rendered)
+        self.assertIn("`configuration-scopes-para-portable-20261011`", rendered)
+        self.assertIn("`native-061-codex-yolo-20261009`", rendered)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+id: reject-code-refactoring
+name: Do not trigger manage-file-operations for source code refactoring
+description: Extracting a TypeScript helper function is application code refactoring, not filesystem operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Refactor the authentication middleware in auth.ts to extract token verification into a helper function."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: manage-file-operations-negative-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: negative

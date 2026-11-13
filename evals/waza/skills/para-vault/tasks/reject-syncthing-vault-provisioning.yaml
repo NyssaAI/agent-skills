@@ -1,0 +1,16 @@
+id: reject-syncthing-vault-provisioning
+name: Do not trigger para-vault for Linux VPS Syncthing service provisioning
+description: Provisioning systemd Syncthing units and UFW firewall ports on a VPS belongs to vps-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Provision a shared Syncthing systemd service under /srv/vaults/ops and open the UFW firewall port on this Linux VPS."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: para-vault-negative-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: negative

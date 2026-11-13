@@ -1,42 +1,25 @@
 # File-management foundation
 
 > [!IMPORTANT] Scope Directive
-> This foundation defines file management invariants, naming standards, single-root `.temp/` scratch rules, `NyssaAI.Configuration` root precedence (`user_home`, `repo_root`, `runtime_root`, `vault_root`, `plugin_root`), and PARA vault placement basics. It does NOT define voice profile emulation (owned by `writing-voice.md`).
+> File-management invariants, naming, `.temp/` scratch, `NyssaAI.Configuration` roots (`user_home`, `repo_root`, `runtime_root`, `vault_root`, `plugin_root`), and PARA basics (`writing-voice.md` owns voice).
 
 ## File Operations & Naming
 
-- **Do** apply these conventions whenever creating, moving, renaming, copying, or modifying files and folders.
-- **Do** prioritize user instructions and established local directory schemes before falling back to defaults; do not invent new top-level directories.
-- **Do** preserve existing file names and file extensions unless a rename or conversion is explicitly requested.
-- **Do** format new file and folder names in lowercase kebab-case (`kebab-case`).
-- **Do** prefix time-bound deliverables with the true creation or production date in `YYYY.MM.DD-descriptive-slug` format.
-- **Do Not** invent unknown dates or substitute file import/copy dates for creation dates.
-- **Do Not** overwrite existing files without first verifying identity and collision state.
-- **Do Not** remove source files before verifying that target content, cross-references, and index links are intact.
-- **Do Not** delete retained content without explicit user authorization; archive within the existing scheme instead.
-- **Do** use `manage-file-operations` to safely move, rename, copy, import, archive, resolve collisions, or resume interrupted operations.
+- **Do** follow user instructions and local schemes before defaults without inventing top-level folders; keep names/extensions unless requested, using `kebab-case` for new items (`YYYY.MM.DD-slug` true creation/production dates on time-bound deliverables, never invented/import dates).
+- **Do Not** overwrite before checking identity/collisions, remove sources before verifying targets/links, or delete retained items without authorization (archive instead); use `manage-file-operations` to move, rename, copy, import, archive, resolve collisions, or resume work.
 
 ## Temporary Scratch (`.temp/`)
 
-- **Do** isolate disposable task output, intermediate work, and staged build outputs under a single `.temp/` directory at `repo_root`, `runtime_root`, or `vault_root`.
-- **Do** preserve existing, unrelated temporary work residing in `.temp/`.
-- **Do Not** place disposable scratch in tracked delivery folders, `artifacts/`, or `plugin_root`.
+- **Do** isolate disposable work and staged builds under one `.temp/` at `repo_root`, `runtime_root`, or `vault_root` (keeping unrelated `.temp/` items); never put scratch in tracked folders, `artifacts/`, or `plugin_root`.
 
-## Canonical Roots & Plugin Configuration (`NyssaAI.Configuration`)
+## Canonical Roots & Configuration
 
-- **Do** keep `plugin_root` strictly read-only; never write user configuration, mutable runtime state, or `.temp/` scratch inside `plugin_root`.
-- **Do** resolve `NyssaAI.Configuration` settings and namespaces via `.nyssa-ai/` in order **`user_home` (`~/.nyssa-ai/<plugin>/`) $\rightarrow$ `repo_root` (`<repo_root>/.nyssa-ai/<plugin>/`)**.
-- **Do** resolve `runtime_root` for mutable operational state in order: `--runtime-root` $\rightarrow$ `NYSSA_RUNTIME_ROOT` $\rightarrow$ agent persona `cwd` containing `SOUL.md` + `IDENTITY.md` $\rightarrow$ `~/.nyssa-ai/<plugin>/runtime/` (`user_home`) or `<repo_root>/.nyssa-ai/<plugin>/runtime/` (`repo_root`).
-- **Do** resolve `user_home` and `repo_root` independently using exact paths; do not recursively scan `user_home` or treat nested subdirectories as new roots.
-- **Do** apply explicit task instructions as runtime overrides without persisting them to saved configuration.
-- **Do Not** read or write retired legacy `.nyssaai/` or `.nyssa/` configuration directories.
-- **Do Not** place `.nyssa-ai/` configuration, secrets, or machine-local runtime state inside `vault_root` (only `vault_root/.temp/` is permitted for scratch).
-- **Do Not** include private configuration, credentials, or scratch files in published packages.
+- **Do** keep `plugin_root` read-only; layer `.nyssa-ai/<plugin>/config.json` (`~/.nyssa-ai/<plugin>/config.json` -> `<repo_root>/.nyssa-ai/<plugin>/config.json`) via exact `user_home`/`repo_root` paths (no `user_home` scans or nested roots) with non-persisted task overrides.
+- **Do** resolve `runtime_root`: `--runtime-root` -> `NYSSA_RUNTIME_ROOT` (`/.nyssa-ai/<plugin>/runtime/` if `SOUL.md`+`IDENTITY.md`) -> `<persona_cwd>/.nyssa-ai/<plugin>/runtime/` (`SOUL.md`+`IDENTITY.md`) -> `config.json` `runtimeRoot` -> `<repo_root>/.nyssa-ai/<plugin>/runtime/` (if `<repo_root>/.nyssa-ai/<plugin>/` exists) -> `~/.nyssa-ai/<plugin>/runtime/`.
+- **Do** keep telemetry opt-in (`telemetry.enabled: false` default in `config.json`): create zero `usage/` dirs/files unless `telemetry.enabled === true` (`<runtime_root>/usage/events.jsonl`).
+- **Do Not** auto-probe retired `.nyssaai/`/`.nyssa/` (explicit migration only), read `NYSSA_PLUGIN_STATE_DIR`, put `.nyssa-ai/` or runtime state in `vault_root` (only `vault_root/.temp/`), or ship private config/secrets/scratch.
 
 ## PARA Vault & Work-Record Basics
 
-- **Do** apply PARA guidelines exclusively within a recognized `vault_root`; follow local conventions before catalog defaults.
-- **Do** assign each item in `vault_root` exactly one current working home (`PARA Category`: `1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`) based strictly on current operational use.
-- **Do** align `1-projects/` and `2-areas/daily-plans/` with `daily-tasks` structured work records (`RecordKind`: `project`, `milestone`, `task`, `blocker`, `daily-plan`) governed by `state` rather than `task-state`.
-- **Do** use `para-vault` whenever filing `Inbox Capture` items, organizing vaults, reconciling notes, archiving projects, or importing `Source Record` payloads.
-- **Do Not** classify PARA items by age, format, `document-maturity`, or `canonical` authority.
+- **Do** apply PARA only in `vault_root` (local schemes first), giving each item one active home (`PARA Category`: `1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`) by operational use, aligned with `daily-tasks` (`RecordKind`: `project`, `milestone`, `task`, `blocker`, `daily-plan`) via `state` (never `task-state`).
+- **Do** use `para-vault` for `Inbox Capture` filing, vault organization, reconciliation, archiving, or `Source Record` imports; never classify by age, format, `document-maturity`, or `canonical`.

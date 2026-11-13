@@ -12,3 +12,13 @@ Build an evidence-backed `user_home` or `repo_root` `Writing Voice Profile` the 
 5. Persist approved guidance and approved excerpts using the storage procedure. Preserve originals, recoverable history, unrelated files, and existing project conventions. Verify the written files and private-data exclusion, then report paths, changed guidance, and any remaining hypotheses.
 
 Keep ordinary drafting read-only with respect to profiles. Use [draft](draft.md) to apply the profile to a requested draft; a drafting request alone does not authorize learning or persistence.
+
+---
+
+## Verification
+
+Before reporting completion of any `Writing Voice Profile` maintenance task:
+- [ ] Confirm written `VOICE.md`, `STYLE.md`, and curated examples reside strictly in the authorized `user_home` (`~/.nyssa-ai/agent-skills/writing-voice/`) or `repo_root` (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`) scope—never inside `vault_root` or `plugin_root`.
+- [ ] Confirm extracted style habits are grounded in authentic user writing samples or explicit preferences (separating stylistic edits from factual changes), with uncertain inferences proposed rather than silently persisted.
+- [ ] Confirm `VOICE.md` and `STYLE.md` conform to [`../references/profile-schema.md`](../references/profile-schema.md) and retain recoverable backups of prior profile state when updating existing guidance.
+- [ ] Confirm project `.gitignore` exclusions protect private `.nyssa-ai/agent-skills/writing-voice/` and `.temp/agent-skills/writing-voice/` paths when writing in `repo_root`, without clobbering existing rules.

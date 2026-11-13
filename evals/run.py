@@ -27,7 +27,7 @@ import zipfile
 
 from cases import build_cases
 
-SUITE_VERSION = "0.7.3"
+SUITE_VERSION = "0.7.4"
 
 
 def write_json(path, value):
@@ -99,7 +99,7 @@ def prepare(repository, run_id, suite_name="file-and-para-24"):
         source = repository / relative
         if source.exists():
             shutil.copytree(source, plugin / relative, ignore=shutil.ignore_patterns(".nyssa-ai", ".temp", "__pycache__", ".pytest_cache"))
-    for relative in ["plugin.json", "gemini-extension.json"]:
+    for relative in ["plugin.json", "gemini-extension.json", "hooks.json"]:
         source = repository / relative
         if source.exists():
             (plugin / relative).write_bytes(source.read_bytes())

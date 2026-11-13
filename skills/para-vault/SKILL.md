@@ -5,14 +5,18 @@ description: >-
   "reconcile vault documents", "propose note revision", "archive this project", "reactivate archived note",
   "check vault navigation", "repair broken MOC links", or "import calendar/email records into vault".
   Covers the full PARA knowledge lifecycle (Projects, Areas, Resources, Archives).
-  Do NOT use this skill for raw filesystem moves outside a PARA vault (use `manage-file-operations`)
-  or drafting user communications (use `write-like-me`).
+  Do NOT use this skill for live `daily-tasks` planning sessions, check-ins, action-item extraction, or structured task/milestone/blocker authoring (use `daily-tasks`),
+  standalone filesystem moves, renames, or copies outside PARA vault classification (use `manage-file-operations`),
+  or personal-voice email/communication drafting and style emulation (use `write-like-me`).
 ---
 
 # PARA Vault Manager
 
 > [!IMPORTANT] Scope Directive
-> This is the Sibling Facade Skill and orchestrator for PARA knowledge and work-record vault management inside `vault_root`. It routes vault operations through internal progressive workflows and references, aligned directly with `daily-tasks` for `1-projects/` and `2-areas/daily-plans/`. It does NOT own standalone filesystem safety mechanics (delegated to `manage-file-operations`), live `daily-tasks` planning sessions, or personal voice drafting (delegated to `write-like-me`).
+> This is the Sibling Facade Skill and orchestrator for PARA knowledge and work-record vault management inside `vault_root`. It routes vault operations through internal progressive workflows and references, aligned directly with `daily-tasks` for `1-projects/` and `2-areas/daily-plans/`. Cross-plugin and sibling routing boundaries:
+> - **Live planning, check-ins & structured work-record authoring (`daily-tasks`)**: Route live `daily-tasks` planning sessions, daily-plan selection, check-ins, unaccepted action-item extraction, and structured `task`/`milestone`/`blocker` authoring to **`daily-tasks`**.
+> - **Standalone filesystem operations (`manage-file-operations`)**: Route standalone non-destructive filesystem moves, renames, and copies outside PARA vault classification to **`manage-file-operations`**.
+> - **Personal-voice drafting & style emulation (`write-like-me`)**: Route first-person email/communication drafting and personal-voice style emulation to **`write-like-me`**.
 
 ---
 

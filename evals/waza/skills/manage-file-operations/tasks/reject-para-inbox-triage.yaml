@@ -1,0 +1,16 @@
+id: reject-para-inbox-triage
+name: Do not trigger manage-file-operations for PARA vault inbox triage
+description: Triaging fleeting inbox notes into Projects, Areas, and Resources belongs to para-vault.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Process my vault inbox and classify these fleeting notes into Projects, Areas, and Resources."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: manage-file-operations-negative-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: negative

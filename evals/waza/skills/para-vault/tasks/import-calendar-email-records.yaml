@@ -1,0 +1,17 @@
+id: import-calendar-email-records
+name: Trigger para-vault to import calendar and email records into vault
+description: Importing Source Records (calendar and email records) into vault history belongs to para-vault.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Import calendar/email records into vault history and reconcile vault documents under Archives."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: para-vault-positive-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: positive
+      threshold: 0.50

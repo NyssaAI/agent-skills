@@ -2,7 +2,7 @@ name: para-vault-eval
 description: Fast local trigger checks for the para-vault skill.
 skill: para-vault
 schemaVersion: "1.4"
-version: "0.6.4"
+version: "0.7.4"
 config:
   trials_per_task: 1
   timeout_seconds: 10

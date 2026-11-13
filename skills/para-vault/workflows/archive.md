@@ -10,3 +10,13 @@ Complete the requested lifecycle transition in `vault_root` while preserving the
 3. Prepare [archive metadata](../references/frontmatter-schemas.md#archive-fields), unchanged evidence, and companion notes as the lifecycle procedure requires. On reactivation preserve archive values in dated body history before clearing the current archive fields. Preserve `state` (`ProjectState`, `MilestoneState`, `TaskState`, `BlockerState`) on `daily-tasks` work records without writing retired `task-state`. Use [protected revisions](../references/revisions.md#protected-revisions) before replacing `established` content.
 4. Use [manage-file-operations](../../manage-file-operations/SKILL.md) for transfers, collisions, and recovery. Follow the vault [move checklist](../references/navigation.md#move-checklist) for indexes, attachments, companion links, and verification before source cleanup.
 5. Report final locations, lifecycle and canonical authority changes, preserved history, and unresolved decisions or references. Archiving or reactivation alone changes neither `document-maturity` nor `canonical` authority.
+
+---
+
+## Verification
+
+Before reporting completion of any vault lifecycle transition:
+- [ ] Confirm archived items in `4-archives/` record accurate `archived`, `archived-from`, and `archive-reason` metadata (or on reactivation, preserve prior archive metadata in dated body history before clearing those fields).
+- [ ] Confirm `daily-tasks` work records (`RecordKind`) retain valid `state` (`ProjectState`, `MilestoneState`, `TaskState`, `BlockerState`), `## Definition of Done` checklists, and `<!-- ref: UUID -->` anchors without writing retired `task-state`.
+- [ ] Confirm `Project` bundles, native `Source Record` bytes, `document-maturity`, and `canonical` authority were preserved unchanged unless explicitly authorized.
+- [ ] Confirm affected parent indexes, MOCs, and relative links resolve cleanly before removing the working source.

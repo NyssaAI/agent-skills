@@ -1,0 +1,16 @@
+id: reject-rename-folder
+name: Do not trigger write-like-me for folder renames and symlink repair
+description: Renaming directories and fixing broken links is a raw filesystem operation owned by manage-file-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Safely rename folder projects/old-app to projects/legacy-app and fix broken symlinks."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: write-like-me-negative-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: negative

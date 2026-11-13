@@ -1,0 +1,16 @@
+id: reject-para-vault-inbox
+name: Do not trigger write-like-me for PARA vault inbox triage
+description: Processing a vault inbox and classifying notes into Areas belongs to para-vault, not write-like-me.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Process vault inbox and move unclassified notes to appropriate Areas."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: write-like-me-negative-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: negative

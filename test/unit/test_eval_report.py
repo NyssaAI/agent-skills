@@ -199,8 +199,9 @@ class ReportTests(unittest.TestCase):
         with patch.object(report, "valid_completed", return_value=None):
             text, ready = report.render()
         self.assertTrue(ready)
-        self.assertIn("[run-1]", text)
-        self.assertNotIn("[later-history]", text)
+        self.assertIn("`run-1`", text)
+        self.assertNotIn("`later-history`", text)
+        self.assertNotIn("../.temp/", text)
 
     def test_ledger_reproduces_identical_report_when_temp_evals_absent(self):
         self.result("Fail")

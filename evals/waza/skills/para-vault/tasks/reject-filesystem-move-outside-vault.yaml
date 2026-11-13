@@ -1,0 +1,16 @@
+id: reject-filesystem-move-outside-vault
+name: Do not trigger para-vault for raw filesystem moves outside a vault
+description: Safely moving files between downloads and temp folders outside a vault belongs to manage-file-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Safely move files from downloads to temp folder and resolve any naming collisions."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: para-vault-negative-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: negative

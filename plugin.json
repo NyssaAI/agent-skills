@@ -1,18 +1,21 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "agent-skills",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Foundational skills and conventions for Jeremy and NyssaAI's AI agents.",
   "author": {
     "name": "NyssaAI"
   },
   "homepage": "https://github.com/NyssaAI/agent-skills",
   "repository": "https://github.com/NyssaAI/agent-skills",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
     "nyssa",
+    "agent-skills",
     "skills",
-    "para",
+    "para-vault",
+    "write-like-me",
+    "manage-file-operations",
     "workflows"
   ]
 }

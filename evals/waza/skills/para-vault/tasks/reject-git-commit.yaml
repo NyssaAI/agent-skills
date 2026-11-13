@@ -1,0 +1,16 @@
+id: reject-git-commit
+name: Do not trigger para-vault for git commit operations
+description: Creating a git commit in a repository is a version-control workflow, not PARA vault lifecycle management.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Create a git commit with a clear message summarizing our changes."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: para-vault-negative-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: negative

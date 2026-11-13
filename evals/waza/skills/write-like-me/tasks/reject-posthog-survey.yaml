@@ -1,0 +1,16 @@
+id: reject-posthog-survey
+name: Do not trigger write-like-me for product analytics survey configuration
+description: Creating a PostHog NPS survey is an analytics configuration task, unrelated to personal voice emulation.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "Create a PostHog NPS survey targeting users who signed up in the last 7 days."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: write-like-me-negative-trigger
+    config:
+      skill_path: skills/write-like-me/SKILL.md
+      mode: negative

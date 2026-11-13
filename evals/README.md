@@ -10,6 +10,7 @@ The scored suites exercise the three canonical `agent-skills` skills (`manage-fi
 
 - `evals/cases.py`, `evals/configuration_cases.py`, `evals/scoring.py`, `evals/run.py`, `evals/calibrate.py`, `evals/plugin_checks.py`, `evals/report.py` — evaluation harness and validators.
 - `evals/verifiers/` — hash-pinned historical verifier snapshots (`revisions.json`, `file-and-para-24-0.6.0/`, `configuration-scopes/`) used to replay historical exports without executing untrusted receipt code.
+- `evals/waza/` — fast offline Waza trigger suites (`evals/waza/skills/{manage-file-operations,para-vault,write-like-me}/`) using single-`TestCase` YAML definitions.
 - `evals/tessl/` — Tessl scenario definitions (`para-composition/`, `source-record-boundaries/`, `calendar-routing/`, `writing-voice/`).
 - `evals/reports/` — tracked durable evaluation reports and verified receipt ledger (`evidence-ledger.json`).
 - `evals/LATEST.md` — tracked generated summary table verified by `python3 evals/report.py check`.

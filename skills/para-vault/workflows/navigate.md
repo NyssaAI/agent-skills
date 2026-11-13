@@ -13,3 +13,13 @@ Review or repair the requested collection's navigation in `vault_root` without r
 Known moves use the [move checklist](../references/navigation.md#move-checklist), composed with [manage-file-operations](../../manage-file-operations/SKILL.md); they do not require an audit of every index. Copy/import links follow that skill's copy rules, retaining original references and resolving links from the copy.
 
 Routine navigation edits do not need a proposal. If an edit changes accepted assertions or policy, apply [protected revisions](../references/revisions.md#protected-revisions). This workflow runs when requested or needed for the current task; it is not a background monitor.
+
+---
+
+## Verification
+
+Before reporting completion of any vault navigation review or repair:
+- [ ] For review-only requests, confirm zero files or directories in `vault_root` were modified, created, or removed.
+- [ ] Confirm repaired markdown links and wikilinks resolve unambiguously to existing target files, headings, and blocks within scope (excluding `vault_root/.temp/` and external tool dot-folders).
+- [ ] Confirm `daily-tasks` `<!-- ref: UUID -->` anchors, Carried Selection (`↺`) markers, `project-index.md` links, and `2-areas/daily-plans/` references remain intact.
+- [ ] Confirm uncertain or unverified links were preserved and reported rather than guessed or deleted.

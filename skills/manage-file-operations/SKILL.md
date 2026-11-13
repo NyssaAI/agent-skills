@@ -4,15 +4,16 @@ description: >-
   Use this skill when the user asks to "safely move files", "rename folder", "copy directory",
   "archive files", "resolve destination collision", or "resume interrupted file operation".
   Covers safe filesystem operations, reference repair, and non-destructive moves.
-  Do NOT use this skill for PARA vault classification (use `para-vault`) or drafting text (use `write-like-me`).
-metadata:
-  version: "0.7.3"
+  Do NOT use this skill for PARA vault classification (use `para-vault`), structured `daily-tasks` planning, check-ins, or work-record state mutations (use `daily-tasks`), or personal-voice text drafting (use `write-like-me`).
 ---
 
 # Manage File Operations
 
 > [!IMPORTANT] Scope Directive
-> This skill defines safe filesystem operations (move, rename, copy, import, archive), collision handling, reference repair, and recovery for existing files and folders across `repo_root`, `runtime_root`, or `vault_root`. It does NOT own PARA domain classification (delegated to `para-vault`) or `Writing Voice Profile` emulation (delegated to `write-like-me`).
+> This skill defines safe filesystem operations (move, rename, copy, import, archive), collision handling, reference repair, and recovery for existing files and folders across `repo_root`, `runtime_root`, or `vault_root`. While it preserves `daily-tasks` `<!-- ref: UUID -->` and `## Definition of Done` markers intact during moves and renames, it does NOT own:
+> - **PARA vault classification & lifecycle (`para-vault`)**: Route `vault_root` category placement, reconciliation, project archiving, and `Source Record` ingestion to **`para-vault`**.
+> - **Structured work-record mutations & planning (`daily-tasks`)**: Route live planning sessions, check-ins, candidate-task acceptance, and structured `RecordKind` state mutations to **`daily-tasks`**.
+> - **Personal-voice drafting & style maintenance (`write-like-me`)**: Route first-person communication drafting and `Writing Voice Profile` maintenance to **`write-like-me`**.
 
 Complete the requested operation while preserving content and navigation. Follow
 the user's instructions and applicable local conventions. If the host has not

@@ -1,6 +1,6 @@
 # NyssaAI Agent Skills
 
-Version: **0.7.3** (see [authoritative glossary](docs/GLOSSARY.md) and [latest evaluation](evals/LATEST.md)).
+Version: **0.7.4** (see [authoritative glossary](docs/GLOSSARY.md) and [latest evaluation](evals/LATEST.md)).
 
 Three canonical skills share one maintained source tree at `repo_root`, a concise [startup foundation](skills/manage-file-operations/core.md), and a [writing voice convention](rules/writing-voice.md). The PARA section applies exclusively to recognized PARA vaults (`vault_root`); detailed runbooks and references load on demand.
 
@@ -14,10 +14,10 @@ Three canonical skills share one maintained source tree at `repo_root`, a concis
 
 See [`docs/GLOSSARY.md`](docs/GLOSSARY.md) for full definitions:
 
-- **`user_home` (`~`)**: Account-level `.nyssa-ai/` configuration (`~/.nyssa-ai/agent-skills/writing-voice/`).
-- **`repo_root`**: Git repository root containing tracked source (`skills/`, `rules/`, `hooks/`, `harness-adapters/`, `docs/`, `scripts/`, `test/`, `evals/`) and optional repository-scoped `.nyssa-ai/` overrides (`<repo_root>/.nyssa-ai/agent-skills/writing-voice/`). Never self-loads `.agents/`, `.hermes/`, or `artifacts/`.
+- **`user_home` (`~`)**: Account-level `.nyssa-ai/` configuration (`~/.nyssa-ai/agent-skills/config.json` and `~/.nyssa-ai/agent-skills/writing-voice/`).
+- **`repo_root`**: Git repository root containing tracked source (`skills/`, `rules/`, `hooks/`, `harness-adapters/`, `docs/`, `scripts/`, `test/`, `evals/`) and optional repository-scoped `.nyssa-ai/` overrides (`<repo_root>/.nyssa-ai/agent-skills/config.json` and `<repo_root>/.nyssa-ai/agent-skills/writing-voice/`). Never self-loads `.agents/`, `.hermes/`, or `artifacts/`.
 - **`vault_root`**: Shared Markdown PARA vault (`0-inbox/`, `1-projects/`, `2-areas/`, `3-resources/`, `4-archives/`). Zero `.nyssa-ai/` config or runtime files are ever stored inside `vault_root` (only disposable scratch at `vault_root/.temp/`).
-- **`runtime_root`**: Autonomous agent persona working directory (`--runtime-root` $\rightarrow$ `NYSSA_RUNTIME_ROOT` $\rightarrow$ persona `cwd` with `SOUL.md` + `IDENTITY.md` $\rightarrow$ `~/.nyssa-ai/<plugin>/runtime/` or `<repo_root>/.nyssa-ai/<plugin>/runtime/`).
+- **`runtime_root`**: Mutable plugin runtime directory resolved in 4 steps (`--runtime-root` $\rightarrow$ `NYSSA_RUNTIME_ROOT` $\rightarrow$ `<persona_cwd>/.nyssa-ai/<plugin>/runtime/` when `cwd` has `SOUL.md` + `IDENTITY.md` $\rightarrow$ layered `config.json` `runtimeRoot`, else `<repo_root>/.nyssa-ai/<plugin>/runtime/` when `<repo_root>/.nyssa-ai/<plugin>/` exists, else `~/.nyssa-ai/<plugin>/runtime/`).
 - **`plugin_root`**: Installed read-only plugin bundle root (`CLAUDE_PLUGIN_ROOT`, `CURSOR_PLUGIN_ROOT`, etc.).
 
 ## `para-vault` and `daily-tasks` Vault Alignment
@@ -35,12 +35,12 @@ See [`docs/GLOSSARY.md`](docs/GLOSSARY.md) for full definitions:
 
 ## `harness-adapter` Packaging and Activation
 
-Canonical plugin source lives under `skills/`, `rules/`, `hooks/`, and `harness-adapters/`. Root `harness-adapter` manifests (`plugin.json`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.tessl-plugin/plugin.json`, and `gemini-extension.json`) stay synchronized via `python3 scripts/assemble.py write`.
+Canonical plugin source lives under `skills/`, `rules/`, `hooks/`, and `harness-adapters/`. Root `harness-adapter` manifests (`plugin.json`, `hooks.json`, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.tessl-plugin/plugin.json`, and `gemini-extension.json`) stay synchronized via `python3 scripts/assemble.py write`.
 
 `scripts/assemble.py` **never** writes `.agents/`, `.hermes/`, or `artifacts/` into `repo_root`. Instead, `python3 scripts/assemble.py write` updates tracked root `harness-adapter` manifests in place and stages host distribution bundles under `--output-dir` (defaulting to `<repo_root>/.temp/dist/`):
 
-- `.temp/dist/portable/` — portable bundle with `harness-adapters/codex/<skill>/openai.yaml` projected to `skills/<skill>/agents/openai.yaml` for Codex UI discovery.
-- `.temp/dist/antigravity/` — Antigravity plugin bundle with `always_on` rules (installed to a target workspace's `.agents/plugins/agent-skills/`).
+- `.temp/dist/portable/` — portable cross-host bundle with root manifests, `hooks/`, `always_on` `rules/`, and `skills/`.
+- `.temp/dist/antigravity/` — Antigravity plugin bundle with `hooks.json`, `hooks/session-start.py`, and `always_on` `rules/` (installed to a target workspace's `.agents/plugins/agent-skills/`).
 - `.temp/dist/hermes/` — Hermes Agent plugin bundle using `harness-adapters/hermes/plugin.py` (installed to a target workspace's `.hermes/plugins/agent-skills/`).
 
 `python3 scripts/assemble.py check` verifies exact synchronization of tracked manifests and staged bundles and fails if `.agents/`, `.hermes/`, or `artifacts/` appear inside `repo_root`.
@@ -48,7 +48,7 @@ Canonical plugin source lives under `skills/`, `rules/`, `hooks/`, and `harness-
 | Host | `harness-adapter` Route | Activation Notes |
 | --- | --- | --- |
 | Antigravity CLI / 2.0 / IDE | Staged `.temp/dist/antigravity/` installed to target workspace `.agents/plugins/agent-skills/` ([docs](https://antigravity.google/docs/plugins)). | `gemini-extension.json` is separate Gemini CLI metadata. |
-| Codex | Root `.codex-plugin/plugin.json` + staged `.temp/dist/portable/` (includes Codex UI `openai.yaml` projections) ([docs](https://developers.openai.com/plugins/build/plugins)). | Install via supported catalog/install flow and trust `hooks/hooks.json` for `SessionStart`. |
+| Codex | Root `.codex-plugin/plugin.json` + staged `.temp/dist/portable/` ([docs](https://developers.openai.com/plugins/build/plugins)). | Install via supported catalog/install flow and trust `hooks/hooks.json` for `SessionStart`. |
 | Claude Code & Cowork | `.claude-plugin/plugin.json` + `skills/` and `hooks/hooks.json` ([docs](https://code.claude.com/docs/en/plugins-reference)). | Install via Claude plugin manager or `--plugin-dir` outside `repo_root`. |
 | OpenClaw | Install compatible bundle with `openclaw plugins install <package-path>` ([docs](https://docs.openclaw.ai/plugins/bundles)). | Markdown skills load directly without a custom runtime shim. |
 | Hermes Agent | Staged `.temp/dist/hermes/` from `harness-adapters/hermes/plugin.py` installed to target `.hermes/plugins/agent-skills/` ([docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/plugins)). | Install into target workspace/home plugin path (`HERMES_ENABLE_PROJECT_PLUGINS=true`). |
@@ -56,9 +56,9 @@ Canonical plugin source lives under `skills/`, `rules/`, `hooks/`, and `harness-
 
 See the [coverage matrix](evals/matrix.json) and [latest evaluation](evals/LATEST.md) for exact per-host verification evidence.
 
-## Configuration and `Writing Voice Profile` Bundles
+## Configuration, Telemetry, and `Writing Voice Profile` Bundles
 
-`NyssaAI.Configuration` resolves canonical `.nyssa-ai/` directories across `user_home` (`~/.nyssa-ai/`) and `repo_root` (`<repo_root>/.nyssa-ai/`). Legacy `.nyssaai` and `.nyssa` directory names are retired and never probed or written automatically.
+`NyssaAI.Configuration` resolves canonical static plugin settings at `.nyssa-ai/agent-skills/config.json` layered `user_home` (`~/.nyssa-ai/agent-skills/config.json`) $\rightarrow$ `repo_root` (`<repo_root>/.nyssa-ai/agent-skills/config.json`). Retired `.nyssaai` and `.nyssa` directory names are never probed automatically (accepted only when explicitly passed by the user for one-off migration), and `NYSSA_PLUGIN_STATE_DIR` is retired. Opt-in usage telemetry defaults to `"telemetry": { "enabled": false }` in `config.json`; zero `usage/` directories or files are created unless `telemetry.enabled === true` (writing `<runtime_root>/usage/events.jsonl` when enabled).
 
 `write-like-me` stores atomic `Writing Voice Profile` bundles (`VOICE.md`, optional `STYLE.md`, optional `examples/`) at `~/.nyssa-ai/agent-skills/writing-voice/` (`user_home`) or `<repo_root>/.nyssa-ai/agent-skills/writing-voice/` (`repo_root`). Atomic bundle selection resolves explicit task pointer $\rightarrow$ `repo_root` override $\rightarrow$ `user_home` fallback without merging files across scopes. Disposable calibration comparisons and recovery snapshots belong under `<repo_root>/.temp/agent-skills/writing-voice/` (or `<runtime_root>/.temp/agent-skills/writing-voice/` / `<user_home>/.temp/agent-skills/writing-voice/`). See [scoped storage](skills/write-like-me/references/storage.md) for privacy verification and safe write rules.
 
@@ -74,4 +74,4 @@ pytest test/unit test/use_case
 
 Raw evaluation exports and failed attempt diagnostics live in gitignored `.temp/evals/{results,attempts}/`; durable human-readable summaries and verified receipts live in tracked [`evals/reports/`](evals/reports/) and [`evals/LATEST.md`](evals/LATEST.md). See [`evals/README.md`](evals/README.md) for full suite documentation.
 
-[MIT License](LICENSE) © 2026 NyssaAI.
+Licensed under the [Apache License 2.0](LICENSE) © 2026 NyssaAI. See [CHANGELOG.md](CHANGELOG.md) for release history.

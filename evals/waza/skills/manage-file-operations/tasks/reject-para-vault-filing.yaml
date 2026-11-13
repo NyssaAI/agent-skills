@@ -1,0 +1,16 @@
+id: reject-para-vault-filing
+name: Do not trigger manage-file-operations for PARA vault note classification
+description: Filing a capture note into PARA categories is owned by para-vault, not manage-file-operations.
+tags:
+  - trigger
+  - negative
+inputs:
+  prompt: "File this new capture note into my PARA vault under Resources/Programming."
+expected:
+  should_trigger: false
+graders:
+  - type: trigger
+    name: manage-file-operations-negative-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: negative

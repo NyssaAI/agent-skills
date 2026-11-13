@@ -8,7 +8,7 @@ resemblance or native host delivery.
 Fresh local Codex sessions exercised these ten scenarios on 2026-10-09.
 Independent artifact/trace review awarded 60/60 across the six synthetic
 performance cases and passed all four activation controls; 29 observable
-artifact checks passed. See the [local probe receipt](../../attempts/local-writing-voice-20261009/metadata.json).
+artifact checks passed. See local probe receipt `local-writing-voice-20261009` (recorded in `evals/reports/evidence-ledger.json` / `.temp/evals/attempts/`).
 This is unverified release evidence: local skill-folder discovery does not
 certify marketplace installation, trusted startup-hook delivery, hosted
 baseline comparisons, or personal voice resemblance.
@@ -49,8 +49,7 @@ scored baseline-versus-context performance evaluation on `performance/` with
 another label. For natural-selection performance keep
 `--skip-forced-context-activation` and omit `--skip-scoring`. Preserve model and
 agent identifiers actually returned by Tessl; missing identifiers stay unknown.
-Keep private raw results and analysis under ignored `docs/`, and disposable
-execution artifacts in `.temp/`. Do not fabricate results or host receipts.
+Keep raw execution results, traces, and disposable artifacts under gitignored `.temp/evals/` (never inside tracked `docs/` or `evals/`). Do not fabricate results or host receipts.
 
 The pending matrix row records the work to execute; `report.py` currently has no
 writing-voice export verifier and cannot certify a passing result for this suite.

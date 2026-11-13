@@ -1,0 +1,17 @@
+id: check-vault-navigation
+name: Trigger para-vault to audit vault navigation and repair MOC links
+description: Checking vault navigation and repairing broken MOC links is owned by para-vault.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Check vault navigation and repair broken MOC links across my PARA vault."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: para-vault-positive-trigger
+    config:
+      skill_path: skills/para-vault/SKILL.md
+      mode: positive
+      threshold: 0.50

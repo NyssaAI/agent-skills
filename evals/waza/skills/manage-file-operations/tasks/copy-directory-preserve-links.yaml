@@ -1,0 +1,16 @@
+id: copy-directory-preserve-links
+name: Trigger manage-file-operations for directory copy with reference repair
+description: Copying a directory while repairing relative links is a core manage-file-operations workflow.
+tags:
+  - trigger
+  - positive
+inputs:
+  prompt: "Please copy directory assets/v1-diagrams to assets/v2-diagrams and perform safe filesystem operations with reference repair."
+expected:
+  should_trigger: true
+graders:
+  - type: trigger
+    name: manage-file-operations-positive-trigger
+    config:
+      skill_path: skills/manage-file-operations/SKILL.md
+      mode: positive

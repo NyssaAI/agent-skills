@@ -14,7 +14,7 @@ skills/
     └── references/       # Detailed schemas, checklists, and rules loaded on-demand
 ```
 
-Host-specific `harness-adapter` metadata (such as Codex UI `harness-adapters/codex/<skill-name>/openai.yaml` and Hermes `harness-adapters/hermes/plugin.py`) lives under [`../harness-adapters/`](../harness-adapters/), never inside `skills/<skill-name>/agents/`.
+Host-specific `harness-adapter` glue (such as Hermes `harness-adapters/hermes/plugin.py`) lives under [`../harness-adapters/`](../harness-adapters/), never inside `skills/<skill-name>/agents/`.
 
 ## Anatomy of a `SKILL.md`
 
